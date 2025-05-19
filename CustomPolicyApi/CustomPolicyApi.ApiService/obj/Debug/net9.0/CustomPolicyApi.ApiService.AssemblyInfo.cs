@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CustomPolicyApi.ApiService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3cf288835a9be8f45918d701533ecb5434f57dc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f44dd741ec98ffca17a8a1dcdb37a2c3123e5647")]
 [assembly: System.Reflection.AssemblyProductAttribute("CustomPolicyApi.ApiService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CustomPolicyApi.ApiService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

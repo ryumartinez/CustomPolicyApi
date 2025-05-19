@@ -1,14 +1,24 @@
-﻿namespace CustomPolicyApi.ApiService.UserExternalData;
+﻿using System.Text.Json.Serialization;
+
+namespace CustomPolicyApi.ApiService.UserExternalData;
 
 public record UserExternalDataResponse(string Email, string ProfileImage);
 
 public class GitHubEmail
 {
-    public string Email { get; set; } = string.Empty;
+    [JsonPropertyName("email")]
+    public string Email { get; set; } = "";
+
+    [JsonPropertyName("verified")]
     public bool Verified { get; set; }
+
+    [JsonPropertyName("primary")]
+    public bool Primary { get; set; }
 }
 
 public class GitHubUser
 {
-    public string AvatarUrl { get; set; } = string.Empty;
+    [JsonPropertyName("avatar_url")]
+    public string AvatarUrl { get; set; } = "";
 }
+

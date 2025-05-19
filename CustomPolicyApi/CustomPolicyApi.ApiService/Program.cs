@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole(); // ✅ This enables console output
 builder.Logging.SetMinimumLevel(LogLevel.Debug); // Or Information, depending on how much you want
+builder.Logging.AddFilter("CustomPolicyApi", LogLevel.Debug);
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
