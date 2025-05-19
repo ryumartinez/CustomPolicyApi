@@ -1,0 +1,62 @@
+info: Aspire.Hosting.DistributedApplication[0]
+      Aspire version: 9.0.0+01ed51919f8df692ececce51048a140615dc759d
+info: Aspire.Hosting.DistributedApplication[0]
+      Distributed application starting.
+info: Aspire.Hosting.DistributedApplication[0]
+      Application host directory is: C:\AAGitRepos\CustomPolicyApi\CustomPolicyApi.AppHost
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      1: 2025-05-19T17:21:34.3119495Z Waiting for resource 'apiservice' to enter the 'Running' state.
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      2: 2025-05-19T17:21:35.6859384Z Finished waiting for resource 'apiservice'.
+info: Aspire.Hosting.DistributedApplication[0]
+      Distributed application started. Press Ctrl+C to shut down.
+info: System.Net.Http.HttpClient.Default.LogicalHandler[100]
+      Start processing HTTP request GET http://localhost:63631/
+info: System.Net.Http.HttpClient.Default.ClientHandler[100]
+      Sending HTTP request GET http://localhost:63631/
+info: CustomPolicyApi.AppHost.Resources.apiservice[0]
+      1: 2025-05-19T17:21:36.3350000Z info: Microsoft.Hosting.Lifetime[14]
+info: CustomPolicyApi.AppHost.Resources.apiservice[0]
+      2: 2025-05-19T17:21:36.3360000Z       Now listening on: https://localhost:63632
+info: CustomPolicyApi.AppHost.Resources.apiservice[0]
+      3: 2025-05-19T17:21:36.3380000Z info: Microsoft.Hosting.Lifetime[14]
+info: CustomPolicyApi.AppHost.Resources.apiservice[0]
+      4: 2025-05-19T17:21:36.3380000Z       Now listening on: http://localhost:63633
+info: CustomPolicyApi.AppHost.Resources.apiservice[0]
+      5: 2025-05-19T17:21:36.3900000Z info: Microsoft.Hosting.Lifetime[0]
+info: CustomPolicyApi.AppHost.Resources.apiservice[0]
+      6: 2025-05-19T17:21:36.3910000Z       Application started. Press Ctrl+C to shut down.
+info: CustomPolicyApi.AppHost.Resources.apiservice[0]
+      7: 2025-05-19T17:21:36.3910000Z info: Microsoft.Hosting.Lifetime[0]
+info: CustomPolicyApi.AppHost.Resources.apiservice[0]
+      8: 2025-05-19T17:21:36.3920000Z       Hosting environment: LocalDev
+info: CustomPolicyApi.AppHost.Resources.apiservice[0]
+      9: 2025-05-19T17:21:36.3930000Z info: Microsoft.Hosting.Lifetime[0]
+info: CustomPolicyApi.AppHost.Resources.apiservice[0]
+      10: 2025-05-19T17:21:36.3930000Z       Content root path: C:\AAGitRepos\CustomPolicyApi\CustomPolicyApi.ApiService
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      3: 2025-05-19T17:21:36.9750000Z info: Microsoft.Hosting.Lifetime[14]
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      4: 2025-05-19T17:21:36.9760000Z       Now listening on: https://localhost:63636
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      5: 2025-05-19T17:21:36.9780000Z info: Microsoft.Hosting.Lifetime[14]
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      6: 2025-05-19T17:21:36.9780000Z       Now listening on: http://localhost:63637
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      7: 2025-05-19T17:21:36.9990000Z info: Microsoft.Hosting.Lifetime[0]
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      8: 2025-05-19T17:21:37.0000000Z       Application started. Press Ctrl+C to shut down.
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      9: 2025-05-19T17:21:37.0010000Z info: Microsoft.Hosting.Lifetime[0]
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      10: 2025-05-19T17:21:37.0010000Z       Hosting environment: LocalDev
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      11: 2025-05-19T17:21:37.0010000Z info: Microsoft.Hosting.Lifetime[0]
+info: CustomPolicyApi.AppHost.Resources.webfrontend[0]
+      12: 2025-05-19T17:21:37.0020000Z       Content root path: C:\AAGitRepos\CustomPolicyApi\CustomPolicyApi.Web
+info: System.Net.Http.HttpClient.Default.ClientHandler[101]
+      Received HTTP response headers after 1456.7049ms - 200
+info: Polly[3]
+      Execution attempt. Source: '-standard//Standard-Retry', Operation Key: '', Result: '200', Handled: 'False', Attempt: '0', Execution Time: 1473,4382ms
+info: System.Net.Http.HttpClient.Default.LogicalHandler[101]
+      End processing HTTP request after 1512.4452ms - 200
