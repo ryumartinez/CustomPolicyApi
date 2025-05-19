@@ -3,6 +3,11 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// 🔧 Add logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(); // ✅ This enables console output
+builder.Logging.SetMinimumLevel(LogLevel.Debug); // Or Information, depending on how much you want
+
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
 

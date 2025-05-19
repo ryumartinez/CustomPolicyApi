@@ -25,15 +25,12 @@ public class WebTests
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
     
-    [TestCase("github", "GITHUB_TEST_TOKEN")]
+    [TestCase("github", "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")]
     [TestCase("google", "GOOGLE_TEST_TOKEN")]
     [TestCase("linkedin", "LINKEDIN_TEST_TOKEN")]
-    public async Task GetExternalUserDataWithTokenReturnsOkStatusCode(string provider, string envVar)
+    public async Task GetExternalUserDataWithTokenReturnsOkStatusCode(string provider, string token)
     {
         // Arrange
-        var token = Environment.GetEnvironmentVariable(envVar);
-        Assume.That(!string.IsNullOrWhiteSpace(token), $"Missing environment variable: {envVar}");
-
         var appHost = await DistributedApplicationTestingBuilder.CreateAsync<Projects.CustomPolicyApi_AppHost>();
         appHost.Services.ConfigureHttpClientDefaults(clientBuilder =>
         {
@@ -45,12 +42,12 @@ public class WebTests
         await app.StartAsync();
 
         // Act
-        var httpClient = app.CreateHttpClient("webfrontend");
+        var httpClient = app.CreateHttpClient("apiservice"); // ✅ FIX: was "webfrontend"
         await resourceNotificationService
-            .WaitForResourceAsync("webfrontend", KnownResourceStates.Running)
+            .WaitForResourceAsync("apiservice", KnownResourceStates.Running)
             .WaitAsync(TimeSpan.FromSeconds(30));
 
-        var request = new HttpRequestMessage(HttpMethod.Get, "/api/externaluserdata");
+        var request = new HttpRequestMessage(HttpMethod.Get, "/api/ExternalUserData");
         request.Headers.Add("Authorization", $"Bearer {token}");
         request.Headers.Add("identity-provider", provider);
 
