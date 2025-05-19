@@ -81,63 +81,51 @@ public class ExternalUserDataService : IExternalUserDataService
         }
     }
 
-    private async Task<UserExternalDataResponse> GetLinkedInDataAsync(HttpClient client, string token)
+    private async Task<UserExternalDataResponse> GetLinkedInDataAsync(HttpClient client, string token) {
+    _logger.LogInformation("Sending LinkedIn API requests...");
+
+    var emailReq = new HttpRequestMessage(HttpMethod.Get,
+        "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))");
+    var profileReq = new HttpRequestMessage(HttpMethod.Get,
+        "https://api.linkedin.com/v2/me?projection=(profilePicture(displayImage~:playableStreams))");
+
+    emailReq.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    profileReq.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+    var emailRes = await client.SendAsync(emailReq);
+    var profileRes = await client.SendAsync(profileReq);
+
+    _logger.LogInformation("LinkedIn email status: {Status}", emailRes.StatusCode);
+    _logger.LogInformation("LinkedIn profile status: {Status}", profileRes.StatusCode);
+
+    var emailJson = await emailRes.Content.ReadAsStringAsync();
+    var profileJson = await profileRes.Content.ReadAsStringAsync();
+
+    _logger.LogDebug("LinkedIn email response: {Json}", emailJson);
+    _logger.LogDebug("LinkedIn profile response: {Json}", profileJson);
+
+    if (!emailRes.IsSuccessStatusCode || !profileRes.IsSuccessStatusCode)
+        return new UserExternalDataResponse("unknown", "unknown");
+
+    try
     {
-        _logger.LogInformation("Sending LinkedIn API requests...");
+        var emailData = JsonSerializer.Deserialize<LinkedInEmailResponse>(emailJson);
+        var profileData = JsonSerializer.Deserialize<LinkedInProfileResponse>(profileJson);
 
-        var emailReq = new HttpRequestMessage(HttpMethod.Get,
-            "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))");
-        var profileReq = new HttpRequestMessage(HttpMethod.Get,
-            "https://api.linkedin.com/v2/me?projection=(profilePicture(displayImage~:playableStreams))");
+        var email = emailData?.Elements?.FirstOrDefault()?.Handle?.EmailAddress ?? "unknown";
+        var image = profileData?.ProfilePicture?.DisplayImage?.Elements?.FirstOrDefault()
+            ?.Identifiers?.FirstOrDefault()?.Identifier ?? "unknown";
 
-        emailReq.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-        profileReq.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        _logger.LogInformation("Resolved LinkedIn email: {Email}", email);
+        _logger.LogInformation("Resolved LinkedIn image: {Image}", image);
 
-        var emailRes = await client.SendAsync(emailReq);
-        var profileRes = await client.SendAsync(profileReq);
-
-        _logger.LogInformation("LinkedIn email status: {Status}", emailRes.StatusCode);
-        _logger.LogInformation("LinkedIn profile status: {Status}", profileRes.StatusCode);
-
-        var emailJson = await emailRes.Content.ReadAsStringAsync();
-        var profileJson = await profileRes.Content.ReadAsStringAsync();
-
-        _logger.LogDebug("LinkedIn email response: {Json}", emailJson);
-        _logger.LogDebug("LinkedIn profile response: {Json}", profileJson);
-
-        if (!emailRes.IsSuccessStatusCode || !profileRes.IsSuccessStatusCode)
-            return new UserExternalDataResponse("unknown", "unknown");
-
-        try
-        {
-            var emailData = JsonDocument.Parse(emailJson);
-            var profileData = JsonDocument.Parse(profileJson);
-
-            var email = emailData
-                .RootElement.GetProperty("elements")[0]
-                .GetProperty("handle~")
-                .GetProperty("emailAddress")
-                .GetString() ?? "unknown";
-
-            var profileImage = profileData
-                .RootElement.GetProperty("profilePicture")
-                .GetProperty("displayImage~")
-                .GetProperty("elements")[0]
-                .GetProperty("identifiers")[0]
-                .GetProperty("identifier")
-                .GetString() ?? "unknown";
-
-            _logger.LogInformation("Resolved LinkedIn email: {Email}", email);
-            _logger.LogInformation("Resolved LinkedIn image: {Image}", profileImage);
-
-            return new UserExternalDataResponse(email, profileImage);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to parse LinkedIn responses.");
-            return new UserExternalDataResponse("unknown", "unknown");
-        }
+        return new UserExternalDataResponse(email, image);
     }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Failed to parse LinkedIn responses.");
+        return new UserExternalDataResponse("unknown", "unknown");
+    } }
 
     private async Task<UserExternalDataResponse> GetGoogleDataAsync(HttpClient client, string token)
     {
@@ -157,10 +145,9 @@ public class ExternalUserDataService : IExternalUserDataService
 
         try
         {
-            var profile = JsonDocument.Parse(profileJson);
-
-            var email = profile.RootElement.GetProperty("email").GetString() ?? "unknown";
-            var picture = profile.RootElement.GetProperty("picture").GetString() ?? "unknown";
+            var profile = JsonSerializer.Deserialize<GoogleProfileResponse>(profileJson);
+            var email = profile?.Email ?? "unknown";
+            var picture = profile?.Picture ?? "unknown";
 
             _logger.LogInformation("Resolved Google email: {Email}", email);
             _logger.LogInformation("Resolved Google picture: {Picture}", picture);
