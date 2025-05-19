@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CustomPolicyApi.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3cf288835a9be8f45918d701533ecb5434f57dc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d5c8689b603d56f41c5ff009fd8214f10d9c48f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CustomPolicyApi.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CustomPolicyApi.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
