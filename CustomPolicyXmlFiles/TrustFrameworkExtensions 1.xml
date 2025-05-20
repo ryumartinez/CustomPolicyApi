@@ -209,10 +209,9 @@
             <Item Key="ServiceUrl">https://yourapi.com/api/validate-prelogin</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">None</Item>
-            <Item Key="AllowInsecureAuthInProduction">true</Item> <!-- Remove in prod -->
           </Metadata>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="signInName" /> <!-- Email/Username -->
+            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
             <InputClaim ClaimTypeReferenceId="password" />
           </InputClaims>
           <OutputClaims>
