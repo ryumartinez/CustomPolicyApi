@@ -25,6 +25,7 @@ builder.Services.AddHttpClient(); // Generic fallback client
 builder.Services.AddHttpClient<IAuth0LoginService, Auth0LoginService>();
 builder.Services.AddScoped<IGraphUserService, GraphUserService>();
 builder.Services.AddScoped<IExternalUserDataService, ExternalUserDataService>();
+builder.Services.AddScoped<IAuth0UserLookupService, Auth0UserLookupService>();
 builder.Services.AddControllers();
 
 // 🌐 OpenAPI

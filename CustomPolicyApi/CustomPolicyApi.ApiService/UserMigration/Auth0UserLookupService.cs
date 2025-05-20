@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace CustomPolicyApi.ApiService.UserMigration;
 
-public class Auth0UserLookupService
+public class Auth0UserLookupService : IAuth0UserLookupService
 {
       private readonly HttpClient _httpClient;
     private readonly ILogger<Auth0UserLookupService> _logger;
