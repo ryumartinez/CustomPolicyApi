@@ -38,21 +38,44 @@ This guide explains how to manually obtain OAuth access tokens for **GitHub**, *
 
 ### ⚠️ Google OAuth does **not support** username/password authentication. You must use OAuth tools.
 
-1. Go to: [OAuth 2.0 Playground](https://developers.google.com/oauthplayground/)
-2. Click the gear icon ⚙️ and enable:
-   - ✅ Use your own OAuth credentials
-3. Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Create a project and OAuth 2.0 client
-   - Copy your **Client ID** and **Client Secret**
-4. Back in the Playground:
-   - Enter your credentials
-   - Select scope: `https://www.googleapis.com/auth/userinfo.email`
-5. Authorize and click **"Exchange authorization code for tokens"**
-6. Copy the access token and store it:
+## ✅ Step 1: Create OAuth Credentials in Google Cloud Console
 
-   ```bash
-   $env:GOOGLE_TEST_TOKEN = "ya29..."
+1. Go to: [https://console.cloud.google.com/](https://console.cloud.google.com/)
+2. Create or select an existing project.
+3. Enable required APIs:
+   - Go to **API Library** → Enable:
+      - `People API` or `Google+ API`
+4. Create OAuth credentials:
+   - Go to **Credentials** tab
+   - Click **“+ CREATE CREDENTIALS” → OAuth client ID**
+   - Choose:
+      - **Application Type**: Web application
+      - **Name**: e.g., Test Client
+   - Under **Authorized redirect URIs**, add:
+     ```
+     https://developers.google.com/oauthplayground
+     ```
+   - Click **Create**
+5. Copy the **Client ID** and **Client Secret**
+
+---
+
+## 🧪 Step 2: Use OAuth 2.0 Playground to Get the Token
+
+1. Go to: [OAuth 2.0 Playground](https://developers.google.com/oauthplayground)
+2. Click the ⚙️ icon and:
+   - ✅ Enable “Use your own OAuth credentials”
+   - Paste your **Client ID** and **Client Secret**
+3. Under scopes, enter:
    ```
+   https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile
+   ```
+4. Click **Authorize APIs**
+5. Sign in with the test Google account (must be listed in the consent screen)
+6. Click **Exchange authorization code for tokens**
+7. Copy the **Access Token**
+
+---
 
 ---
 
