@@ -12,6 +12,7 @@ builder.Logging.AddFilter("CustomPolicyApi", LogLevel.Debug);
 
 // 🔐 Bind Auth0 options from configuration (appsettings.json or environment variables)
 builder.Services.Configure<Auth0Options>(builder.Configuration.GetSection("Auth0"));
+builder.Services.Configure<GraphOptions>(builder.Configuration.GetSection("Graph"));
 
 // Add service defaults & Aspire client integrations
 builder.AddServiceDefaults();
@@ -22,7 +23,7 @@ builder.Services.AddHttpClient(); // Generic fallback client
 
 // ✅ Register the typed HttpClient for Auth0 login
 builder.Services.AddHttpClient<IAuth0LoginService, Auth0LoginService>();
-
+builder.Services.AddScoped<IGraphUserService, GraphUserService>();
 builder.Services.AddScoped<IExternalUserDataService, ExternalUserDataService>();
 builder.Services.AddControllers();
 
