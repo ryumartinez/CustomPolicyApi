@@ -1,0 +1,10 @@
+
+CustomPolicyApi/CustomPolicyApi.ApiService/obj/
+
+CustomPolicyApi/CustomPolicyApi.AppHost/obj/
+
+CustomPolicyApi/CustomPolicyApi.ServiceDefaults/obj/
+
+CustomPolicyApi/CustomPolicyApi.Tests/obj/
+
+CustomPolicyApi/CustomPolicyApi.Web/obj/
