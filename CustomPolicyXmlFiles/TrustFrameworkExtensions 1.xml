@@ -174,9 +174,9 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
-    <!--Token Enrichment REST APIs https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-api-connector-token-enrichment?pivots=b2c-custom-policy#add-the-restful-api-technical-profile-->
+    <!--REST API Calls https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-api-connector-token-enrichment?pivots=b2c-custom-policy#add-the-restful-api-technical-profile-->
     <ClaimsProvider>
-      <DisplayName>Token Enrichment Technical Profiles</DisplayName>
+      <DisplayName>REST API Calls</DisplayName>
       <TechnicalProfiles>
         <TechnicalProfile Id="GetUserEmail">
           <DisplayName>Get missing user email</DisplayName>
@@ -200,6 +200,23 @@
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="profileImage"/>
             <OutputClaim ClaimTypeReferenceId="email" />
+          </OutputClaims>
+        </TechnicalProfile>
+        <TechnicalProfile Id="PreLoginValidation">
+          <DisplayName>Pre-Login Check</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
+          <Metadata>
+            <Item Key="ServiceUrl">https://yourapi.com/api/validate-prelogin</Item>
+            <Item Key="SendClaimsIn">Body</Item>
+            <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item> <!-- Remove in prod -->
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="signInName" /> <!-- Email/Username -->
+            <InputClaim ClaimTypeReferenceId="password" />
+          </InputClaims>
+          <OutputClaims>
+            <!-- Optional: for example, flags or messaging -->
           </OutputClaims>
         </TechnicalProfile>
       </TechnicalProfiles>
