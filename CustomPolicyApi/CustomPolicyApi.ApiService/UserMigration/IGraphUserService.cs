@@ -5,4 +5,5 @@ namespace CustomPolicyApi.ApiService.UserMigration;
 public interface IGraphUserService
 {
     Task<User?> CreateUserAsync(string email, string password, string displayName);
+    Task<bool> UserExistsAsync(string email);
 }

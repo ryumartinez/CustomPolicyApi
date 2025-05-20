@@ -5,7 +5,7 @@ using Microsoft.Graph.Models;
 
 namespace CustomPolicyApi.ApiService.UserMigration;
 
-public class GraphUserService: IGraphUserService
+public class GraphUserService : IGraphUserService
 {
     private readonly GraphServiceClient _graphClient;
     private readonly ILogger<GraphUserService> _logger;
@@ -23,7 +23,7 @@ public class GraphUserService: IGraphUserService
 
         _graphClient = new GraphServiceClient(credential);
     }
-    
+
     public async Task<User?> CreateUserAsync(string email, string password, string displayName)
     {
         try
@@ -38,7 +38,7 @@ public class GraphUserService: IGraphUserService
                     new ObjectIdentity
                     {
                         SignInType = "emailAddress",
-                        Issuer = $"{_options.TenantId}.onmicrosoft.com", // Or set this to your verified domain
+                        Issuer = $"{_options.TenantId}.onmicrosoft.com",
                         IssuerAssignedId = email
                     }
                 },
@@ -50,7 +50,6 @@ public class GraphUserService: IGraphUserService
             };
 
             var createdUser = await _graphClient.Users.PostAsync(user);
-
             _logger.LogInformation("Created new user {UserPrincipalName}", createdUser.UserPrincipalName);
             return createdUser;
         }
@@ -58,6 +57,31 @@ public class GraphUserService: IGraphUserService
         {
             _logger.LogError(ex, "Microsoft Graph API error: {Message}", ex.Message);
             return null;
+        }
+    }
+
+    public async Task<bool> UserExistsAsync(string email)
+    {
+        try
+        {
+            var issuer = $"{_options.TenantId}.onmicrosoft.com";
+
+            var filter = $"identities/any(id:id/issuerAssignedId eq '{email}' and id/issuer eq '{issuer}')";
+            var result = await _graphClient.Users
+                .GetAsync(config =>
+                {
+                    config.QueryParameters.Filter = filter;
+                    config.QueryParameters.Top = 1;
+                });
+
+            var exists = result?.Value?.Any() == true;
+            _logger.LogInformation("Checked existence of user {Email}: {Exists}", email, exists);
+            return exists;
+        }
+        catch (ServiceException ex)
+        {
+            _logger.LogError(ex, "Error checking user existence in Graph: {Message}", ex.Message);
+            return false;
         }
     }
 }
