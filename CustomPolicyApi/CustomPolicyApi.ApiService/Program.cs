@@ -1,4 +1,5 @@
 using CustomPolicyApi.ApiService.UserExternalData;
+using CustomPolicyApi.ApiService.UserMigration;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.AddServiceDefaults();
 builder.Services.AddProblemDetails();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IExternalUserDataService, ExternalUserDataService>();
+builder.Services.AddScoped<IAuth0LoginService, Auth0LoginService>();
 builder.Services.AddControllers();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
