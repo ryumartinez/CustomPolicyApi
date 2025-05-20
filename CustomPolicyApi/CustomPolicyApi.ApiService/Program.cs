@@ -6,33 +6,38 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 🔧 Add logging
 builder.Logging.ClearProviders();
-builder.Logging.AddConsole(); // ✅ This enables console output
-builder.Logging.SetMinimumLevel(LogLevel.Debug); // Or Information, depending on how much you want
+builder.Logging.AddConsole(); // ✅ Enables console output
+builder.Logging.SetMinimumLevel(LogLevel.Debug);
 builder.Logging.AddFilter("CustomPolicyApi", LogLevel.Debug);
 
-// Add service defaults & Aspire client integrations.
+// 🔐 Bind Auth0 options from configuration (appsettings.json or environment variables)
+builder.Services.Configure<Auth0Options>(builder.Configuration.GetSection("Auth0"));
+
+// Add service defaults & Aspire client integrations
 builder.AddServiceDefaults();
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddProblemDetails();
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient(); // Generic fallback client
+
+// ✅ Register the typed HttpClient for Auth0 login
+builder.Services.AddHttpClient<IAuth0LoginService, Auth0LoginService>();
+
 builder.Services.AddScoped<IExternalUserDataService, ExternalUserDataService>();
-builder.Services.AddScoped<IAuth0LoginService, Auth0LoginService>();
 builder.Services.AddControllers();
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// 🌐 OpenAPI
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// 🔥 Exception handler
 app.UseExceptionHandler();
 
 app.MapOpenApi();
 app.MapScalarApiReference();
 
 app.MapControllers();
-
 app.MapDefaultEndpoints();
 
 app.Run();
