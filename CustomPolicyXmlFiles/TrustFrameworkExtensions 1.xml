@@ -174,9 +174,9 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
-    <!--REST API Calls https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-api-connector-token-enrichment?pivots=b2c-custom-policy#add-the-restful-api-technical-profile-->
+    <!--Token Enrichment REST API Calls https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-api-connector-token-enrichment?pivots=b2c-custom-policy#add-the-restful-api-technical-profile-->
     <ClaimsProvider>
-      <DisplayName>REST API Calls</DisplayName>
+      <DisplayName>Token Enrichment REST API Calls</DisplayName>
       <TechnicalProfiles>
         <TechnicalProfile Id="GetUserEmail">
           <DisplayName>Get missing user email</DisplayName>
@@ -200,22 +200,6 @@
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="profileImage"/>
             <OutputClaim ClaimTypeReferenceId="email" />
-          </OutputClaims>
-        </TechnicalProfile>
-        <TechnicalProfile Id="PreLoginValidation">
-          <DisplayName>Pre-Login Check</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
-          <Metadata>
-            <Item Key="ServiceUrl">https://yourapi.com/api/validate-prelogin</Item>
-            <Item Key="SendClaimsIn">Body</Item>
-            <Item Key="AuthenticationType">None</Item>
-          </Metadata>
-          <InputClaims>
-            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
-            <InputClaim ClaimTypeReferenceId="password" />
-          </InputClaims>
-          <OutputClaims>
-            <!-- Optional: for example, flags or messaging -->
           </OutputClaims>
         </TechnicalProfile>
       </TechnicalProfiles>
@@ -258,6 +242,55 @@
             <OutputClaimsTransformation ReferenceId="CreateSubjectClaimFromAlternativeSecurityId" />
           </OutputClaimsTransformations>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-SocialLogin" />
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <!--Self asserted technical profile with REST api call-->
+    <ClaimsProvider>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="PreLoginValidation">
+          <DisplayName>Pre-Login Check</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
+          <Metadata>
+            <Item Key="ServiceUrl">https://yourapi.com/api/validate-prelogin</Item>
+            <Item Key="SendClaimsIn">Body</Item>
+            <Item Key="AuthenticationType">None</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
+            <InputClaim ClaimTypeReferenceId="password" />
+          </InputClaims>
+          <OutputClaims>
+            <!-- Optional: for example, flags or messaging -->
+          </OutputClaims>
+        </TechnicalProfile>
+        <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
+          <DisplayName>Local Account Signin</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="SignUpTarget">SignUpWithLogonEmailExchange</Item>
+            <Item Key="setting.operatingMode">Email</Item>
+            <Item Key="ContentDefinitionReferenceId">api.localaccountsignin</Item>
+            <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
+          </Metadata>
+          <IncludeInSso>false</IncludeInSso>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="signInName" DefaultValue="{OIDC:LoginHint}" AlwaysUseDefaultValue="true" />
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="Username-Password-Authentication" />
+            <OutputClaim ClaimTypeReferenceId="connectionType" DefaultValue="microsoft-entra-b2c" AlwaysUseDefaultValue="true" />
+            <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="password" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="objectId" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" />
+          </OutputClaims>
+          <ValidationTechnicalProfiles>
+            <ValidationTechnicalProfile ReferenceId="PreLoginValidation"/>
+            <ValidationTechnicalProfile ReferenceId="login-NonInteractive" />
+          </ValidationTechnicalProfiles>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
