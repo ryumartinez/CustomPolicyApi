@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Options;
 
 namespace CustomPolicyApi.ApiService.UserMigration;
 
@@ -28,55 +29,58 @@ namespace CustomPolicyApi.ApiService.UserMigration;
 // 11 - The user is redirected to the next orchestration step or the final redirect URI (e.g., back to the app)
 
 
-public class Auth0LoginService
+public class Auth0LoginService : IAuth0LoginService
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger<Auth0LoginService> _logger;
+    private readonly Auth0Options _options;
 
-    public Auth0LoginService(HttpClient httpClient, ILogger<Auth0LoginService> logger)
+    public Auth0LoginService(
+        HttpClient httpClient,
+        ILogger<Auth0LoginService> logger,
+        IOptions<Auth0Options> options)
     {
         _httpClient = httpClient;
         _logger = logger;
+        _options = options.Value;
     }
 
-    public async Task<string?> LoginAsync(string domain, string clientId, string clientSecret, string audience, string username, string password)
+    public async Task<bool> ValidateCredentialsAsync(string email, string password)
     {
-        var url = $"https://{domain}/oauth/token";
-
-        var payload = new
+        var requestPayload = new
         {
             grant_type = "password",
-            username,
-            password,
-            audience,
-            client_id = clientId,
-            client_secret = clientSecret,
-            scope = "openid profile email"
+            username = email,
+            password = password,
+            audience = _options.Audience,
+            client_id = _options.ClientId,
+            client_secret = _options.ClientSecret,
+            scope = "openid"
         };
 
-        var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+        var json = JsonSerializer.Serialize(requestPayload);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var response = await _httpClient.PostAsync(url, content);
-
-        var responseJson = await response.Content.ReadAsStringAsync();
-
-        if (!response.IsSuccessStatusCode)
-        {
-            _logger.LogWarning("Auth0 login failed: {StatusCode} - {Response}", response.StatusCode, responseJson);
-            return null;
-        }
+        var tokenEndpoint = $"https://{_options.Domain}/oauth/token";
 
         try
         {
-            using var doc = JsonDocument.Parse(responseJson);
-            var token = doc.RootElement.GetProperty("access_token").GetString();
-            _logger.LogInformation("Successfully obtained Auth0 token.");
-            return token;
+            var response = await _httpClient.PostAsync(tokenEndpoint, content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                _logger.LogInformation("Auth0 credentials valid for user {Email}", email);
+                return true;
+            }
+
+            var error = await response.Content.ReadAsStringAsync();
+            _logger.LogWarning("Auth0 login failed for {Email}: {Error}", email, error);
+            return false;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to parse Auth0 token response.");
-            return null;
+            _logger.LogError(ex, "Error calling Auth0 token endpoint");
+            return false;
         }
     }
 }
