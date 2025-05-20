@@ -36,8 +36,6 @@ This guide explains how to manually obtain OAuth access tokens for **GitHub**, *
 
 ## 🔍 Google Access Token
 
-### ⚠️ Google OAuth does **not support** username/password authentication. You must use OAuth tools.
-
 ## ✅ Step 1: Create OAuth Credentials in Google Cloud Console
 
 1. Go to: [https://console.cloud.google.com/](https://console.cloud.google.com/)
