@@ -33,43 +33,29 @@ public class PreLoginValidationController : ControllerBase
             });
         }
 
-        try
+        var result = await _auth0LoginService.ValidateCredentialsAsync(request.SignInName, request.Password);
+
+        if (!result.IsValid)
         {
-            var isValid = await _auth0LoginService.ValidateCredentialsAsync(request.SignInName, request.Password);
+            _logger.LogWarning("Auth0 validation failed for {Email} with status {StatusCode}. Error: {Error}",
+                request.SignInName, result.StatusCode, result.Error);
 
-            if (!isValid)
-            {
-                _logger.LogWarning("Invalid credentials for: {Email}", request.SignInName);
-
-                return BadRequest(new
-                {
-                    version = "1.0.0",
-                    status = 400,
-                    action = "ValidationError",
-                    userMessage = "Invalid email or password."
-                });
-            }
-
-            _logger.LogInformation("Pre-login validation succeeded for: {Email}", request.SignInName);
-
-            return Ok(new
+            return BadRequest(new
             {
                 version = "1.0.0",
-                status = 200,
-                action = "Continue"
-            });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Exception while validating user: {Email}", request.SignInName);
-
-            return StatusCode(500, new
-            {
-                version = "1.0.0",
-                status = 500,
+                status = 400,
                 action = "ValidationError",
-                userMessage = "An internal error occurred. Please try again later."
+                userMessage = "Invalid email or password."
             });
         }
+
+        _logger.LogInformation("Auth0 validation succeeded for {Email}", request.SignInName);
+
+        return Ok(new
+        {
+            version = "1.0.0",
+            status = 200,
+            action = "Continue"
+        });
     }
 }

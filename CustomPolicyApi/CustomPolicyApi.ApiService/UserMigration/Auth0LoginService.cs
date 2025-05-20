@@ -45,8 +45,10 @@ public class Auth0LoginService : IAuth0LoginService
         _options = options.Value;
     }
 
-    public async Task<bool> ValidateCredentialsAsync(string email, string password)
+    public async Task<Auth0LoginResult> ValidateCredentialsAsync(string email, string password)
     {
+        var tokenEndpoint = $"https://{_options.Domain}/oauth/token";
+
         var requestPayload = new
         {
             grant_type = "password",
@@ -61,26 +63,40 @@ public class Auth0LoginService : IAuth0LoginService
         var json = JsonSerializer.Serialize(requestPayload);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var tokenEndpoint = $"https://{_options.Domain}/oauth/token";
-
         try
         {
             var response = await _httpClient.PostAsync(tokenEndpoint, content);
+            var responseBody = await response.Content.ReadAsStringAsync();
 
             if (response.IsSuccessStatusCode)
             {
                 _logger.LogInformation("Auth0 credentials valid for user {Email}", email);
-                return true;
+                return new Auth0LoginResult
+                {
+                    IsValid = true,
+                    StatusCode = (int)response.StatusCode,
+                    RawResponse = responseBody
+                };
             }
 
-            var error = await response.Content.ReadAsStringAsync();
-            _logger.LogWarning("Auth0 login failed for {Email}: {Error}", email, error);
-            return false;
+            _logger.LogWarning("Auth0 login failed for {Email}: {Error}", email, responseBody);
+            return new Auth0LoginResult
+            {
+                IsValid = false,
+                StatusCode = (int)response.StatusCode,
+                Error = responseBody,
+                RawResponse = responseBody
+            };
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error calling Auth0 token endpoint");
-            return false;
+            return new Auth0LoginResult
+            {
+                IsValid = false,
+                StatusCode = 500,
+                Error = ex.Message
+            };
         }
     }
 }

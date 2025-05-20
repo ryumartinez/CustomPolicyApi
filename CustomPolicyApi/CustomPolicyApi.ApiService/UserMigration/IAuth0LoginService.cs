@@ -2,5 +2,5 @@
 
 public interface IAuth0LoginService
 {
-    Task<bool> ValidateCredentialsAsync(string email, string password);
+    Task<Auth0LoginResult> ValidateCredentialsAsync(string email, string password);
 }

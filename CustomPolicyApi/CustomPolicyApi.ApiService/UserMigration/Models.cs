@@ -22,3 +22,11 @@ public class PreLoginRequest
     public string SignInName { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
 }
+
+public class Auth0LoginResult
+{
+    public bool IsValid { get; set; }
+    public int StatusCode { get; set; }
+    public string? Error { get; set; }
+    public string? RawResponse { get; set; }
+}
