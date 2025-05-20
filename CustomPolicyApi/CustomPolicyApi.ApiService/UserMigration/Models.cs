@@ -7,3 +7,9 @@ public class Auth0User
     public bool EmailVerified { get; set; }
     public string? Name { get; set; }
 }
+
+public class PreLoginRequest
+{
+    public string SignInName { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+}
