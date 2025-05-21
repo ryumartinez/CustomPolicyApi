@@ -47,9 +47,4 @@ var apiService = builder.AddProject<Projects.CustomPolicyApi_ApiService>("apiser
     .WithEnvironment("OAuth__Auth0__Domain", auth0Domain)
     .WithEnvironment("OAuth__Auth0__Audience", auth0Audience);
 
-builder.AddProject<Projects.CustomPolicyApi_Web>("webfrontend")
-    .WithExternalHttpEndpoints()
-    .WithReference(apiService)
-    .WaitFor(apiService);
-
 builder.Build().Run();

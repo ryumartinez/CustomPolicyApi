@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CustomPolicyApi.ApiService\CustomPolicyApi.ApiService.csproj" />
-    <ProjectReference Include="..\CustomPolicyApi.Web\CustomPolicyApi.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>
