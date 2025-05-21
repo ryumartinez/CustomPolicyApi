@@ -64,8 +64,8 @@ public class WebTests
         {
             Content = new StringContent("""
                                         {
-                                            "email": "your-test-user@example.com",
-                                            "password": "correct-password"
+                                            "email": "ryueduardo@gmail.com",
+                                            "password": "Hola1234**"
                                         }
                                         """, Encoding.UTF8, "application/json")
         };
