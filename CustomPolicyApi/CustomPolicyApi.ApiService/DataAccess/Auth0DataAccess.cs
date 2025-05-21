@@ -2,20 +2,30 @@
 using Auth0.ManagementApi.Models;
 using CustomPolicyApi.ApiService.DataAccess.Contract;
 using CustomPolicyApi.ApiService.Models;
+using CustomPolicyApi.ApiService.UserMigration;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.Extensions.Options;
+using System.Text;
+using System.Text.Json;
 using static Azure.Core.HttpHeader;
 
 namespace CustomPolicyApi.ApiService.DataAccess
 {
     public class Auth0DataAccess : IAuth0DataAccess
     {
+        private readonly HttpClient _httpClient;
+        private readonly ILogger<Auth0DataAccess> _logger;
+        private readonly Models.OAuthOptions _oauthOptions;
         private readonly ManagementApiClient _managementApiClient;
 
-        public Auth0DataAccess(IOptions<OAuthOptions> authSettings)
+        public Auth0DataAccess(HttpClient httpClient, ILogger<Auth0DataAccess> logger, IOptions<Models.OAuthOptions> authSettings)
         {
             var managementToken = authSettings.Value.Auth0.ManagementToken;
             var uriIdentifier = new Uri(authSettings.Value.Auth0.UriIdentifier);
             _managementApiClient = new ManagementApiClient(managementToken, uriIdentifier);
+            _httpClient = httpClient;
+            _logger = logger;
+            _oauthOptions = authSettings.Value;
         }
 
 
@@ -43,6 +53,75 @@ namespace CustomPolicyApi.ApiService.DataAccess
         {
             var user = await _managementApiClient.Users.GetUsersByEmailAsync(email);
             return user.First();
+        }
+
+        public async Task<Auth0LoginResult> ValidateCredentialsAsync(string email, string password)
+        {
+            var auth0 = _oauthOptions.Auth0;
+
+            if (string.IsNullOrWhiteSpace(auth0.ClientId) ||
+                string.IsNullOrWhiteSpace(auth0.ClientSecret) ||
+                string.IsNullOrWhiteSpace(auth0.Domain))
+            {
+                _logger.LogError("Auth0 configuration is incomplete. Please check your environment variables or parameters.");
+                return new Auth0LoginResult
+                {
+                    IsValid = false,
+                    StatusCode = 500,
+                    Error = "Auth0 configuration is missing required values."
+                };
+            }
+
+            var tokenEndpoint = $"https://{auth0.Domain}/oauth/token";
+
+            var requestPayload = new
+            {
+                grant_type = "password",
+                username = email,
+                password = password,
+                client_id = auth0.ClientId,
+                client_secret = auth0.ClientSecret,
+                scope = "openid"
+            };
+
+            var json = JsonSerializer.Serialize(requestPayload);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await _httpClient.PostAsync(tokenEndpoint, content);
+                var responseBody = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    _logger.LogInformation("Auth0 credentials valid for user {Email}", email);
+                    return new Auth0LoginResult
+                    {
+                        IsValid = true,
+                        StatusCode = (int)response.StatusCode,
+                        RawResponse = responseBody
+                    };
+                }
+
+                _logger.LogWarning("Auth0 login failed for {Email}: {Error}", email, responseBody);
+                return new Auth0LoginResult
+                {
+                    IsValid = false,
+                    StatusCode = (int)response.StatusCode,
+                    Error = responseBody,
+                    RawResponse = responseBody
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error calling Auth0 token endpoint");
+                return new Auth0LoginResult
+                {
+                    IsValid = false,
+                    StatusCode = 500,
+                    Error = ex.Message
+                };
+            }
         }
     }
 }
