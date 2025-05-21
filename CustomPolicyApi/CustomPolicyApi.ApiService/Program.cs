@@ -1,4 +1,5 @@
 using CustomPolicyApi.ApiService.Models;
+using CustomPolicyApi.ApiService.TestingSetup;
 using CustomPolicyApi.ApiService.UserExternalData;
 using CustomPolicyApi.ApiService.UserMigration;
 using Scalar.AspNetCore;
@@ -31,6 +32,7 @@ builder.Services.AddHttpClient<IAuth0LoginService, Auth0LoginService>();
 builder.Services.AddScoped<IGraphUserService, GraphUserService>();
 builder.Services.AddScoped<IExternalUserDataService, ExternalUserDataService>();
 builder.Services.AddScoped<IAuth0UserLookupService, Auth0UserLookupService>();
+builder.Services.AddScoped<IOAuthCredentialLoginService, OAuthCredentialLoginService>();
 
 builder.Services.AddControllers();
 
