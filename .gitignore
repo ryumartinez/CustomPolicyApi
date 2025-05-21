@@ -11,3 +11,11 @@ CustomPolicyApi/CustomPolicyApi.Web/obj/
 CustomPolicyApi/.vs/
 CustomPolicyApi/.idea/
 CustomPolicyXmlFiles/.idea/
+
+CustomPolicyApi/CustomPolicyApi.ApiService/bin/
+
+CustomPolicyApi/CustomPolicyApi.AppHost/bin/
+
+CustomPolicyApi/CustomPolicyApi.ServiceDefaults/bin/
+
+CustomPolicyApi/CustomPolicyApi.Web/bin/
