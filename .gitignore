@@ -8,5 +8,6 @@ CustomPolicyApi/CustomPolicyApi.ServiceDefaults/obj/
 CustomPolicyApi/CustomPolicyApi.Tests/obj/
 
 CustomPolicyApi/CustomPolicyApi.Web/obj/
-
+CustomPolicyApi/.vs/
+CustomPolicyApi/.idea/
 CustomPolicyXmlFiles/.idea/
