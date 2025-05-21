@@ -21,3 +21,5 @@ CustomPolicyApi/CustomPolicyApi.ServiceDefaults/bin/
 CustomPolicyApi/CustomPolicyApi.Web/bin/
 
 CustomPolicyApi/CustomPolicyApi.Tests/bin/
+
+CustomPolicyApi/CustomPolicyApi.AppHost/appsettings.Development.json
