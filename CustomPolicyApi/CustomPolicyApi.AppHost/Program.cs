@@ -22,6 +22,8 @@ var auth0ClientId = builder.AddParameter("oauth-auth0-client-id");
 var auth0ClientSecret = builder.AddParameter("oauth-auth0-client-secret", secret: true);
 var auth0Domain = builder.AddParameter("oauth-auth0-domain");
 var auth0Audience = builder.AddParameter("oauth-auth0-audience");
+var auth0ManagementToken = builder.AddParameter("oauth-auth0-management-token");
+var auth0UriIdentifier = builder.AddParameter("oauth-auth0-uri-identifier");
 
 var apiService = builder.AddProject<Projects.CustomPolicyApi_ApiService>("apiservice")
     // GitHub
@@ -42,9 +44,12 @@ var apiService = builder.AddProject<Projects.CustomPolicyApi_ApiService>("apiser
     .WithEnvironment("OAuth__MicrosoftGraph__TenantId", msGraphTenantId)
 
     // Auth0
+    .WithEnvironment("OAuth__Auth0__ManagementToken", auth0ManagementToken)
+    .WithEnvironment("OAuth__Auth0__UriIdentifier", auth0UriIdentifier)
     .WithEnvironment("OAuth__Auth0__ClientId", auth0ClientId)
     .WithEnvironment("OAuth__Auth0__ClientSecret", auth0ClientSecret)
     .WithEnvironment("OAuth__Auth0__Domain", auth0Domain)
     .WithEnvironment("OAuth__Auth0__Audience", auth0Audience);
+    
 
 builder.Build().Run();

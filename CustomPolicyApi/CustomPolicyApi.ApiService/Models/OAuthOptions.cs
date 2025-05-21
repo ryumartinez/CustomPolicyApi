@@ -23,4 +23,6 @@ public class MicrosoftGraphOptions : ProviderOptions
 public class Auth0Options : ProviderOptions
 {
     public string Domain { get; set; } = "";
+    public string UriIdentifier { get; set; } = "";
+    public string ManagementToken { get; set; } = "";
 }
