@@ -1,4 +1,4 @@
-﻿using CustomPolicyApi.ApiService.UserMigration;
+﻿using CustomPolicyApi.ApiService.Models;
 
 namespace CustomPolicyApi.ApiService.DataAccess.Contract
 {

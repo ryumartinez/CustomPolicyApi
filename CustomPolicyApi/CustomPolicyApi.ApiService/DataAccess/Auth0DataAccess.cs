@@ -2,7 +2,6 @@
 using Auth0.ManagementApi.Models;
 using CustomPolicyApi.ApiService.DataAccess.Contract;
 using CustomPolicyApi.ApiService.Models;
-using CustomPolicyApi.ApiService.UserMigration;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.Extensions.Options;
 using System.Text;

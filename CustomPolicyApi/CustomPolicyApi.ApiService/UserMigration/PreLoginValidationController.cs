@@ -1,4 +1,5 @@
 ﻿using CustomPolicyApi.ApiService.DataAccess.Contract;
+using CustomPolicyApi.ApiService.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

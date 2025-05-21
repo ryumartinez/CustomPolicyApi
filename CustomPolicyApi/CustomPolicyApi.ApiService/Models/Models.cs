@@ -1,4 +1,4 @@
-﻿namespace CustomPolicyApi.ApiService.UserMigration;
+﻿namespace CustomPolicyApi.ApiService.Models;
 
 public class Auth0User
 {
