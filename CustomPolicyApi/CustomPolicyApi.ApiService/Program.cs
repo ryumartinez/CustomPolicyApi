@@ -1,44 +1,44 @@
+using CustomPolicyApi.ApiService.Models;
 using CustomPolicyApi.ApiService.UserExternalData;
 using CustomPolicyApi.ApiService.UserMigration;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔧 Add logging
+// 🔧 Logging
 builder.Logging.ClearProviders();
-builder.Logging.AddConsole(); // ✅ Enables console output
+builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 builder.Logging.AddFilter("CustomPolicyApi", LogLevel.Debug);
 
-// 🔐 Bind Auth0 options from configuration (appsettings.json or environment variables)
-builder.Services.Configure<Auth0Options>(builder.Configuration.GetSection("Auth0"));
-builder.Services.Configure<GraphOptions>(builder.Configuration.GetSection("Graph"));
+// 🔐 Bind OAuth options (coming from AppHost WithEnvironment)
+builder.Services.Configure<OAuthOptions>(builder.Configuration.GetSection("OAuth"));
 
-// Add service defaults & Aspire client integrations
+// ➕ Aspire service defaults
 builder.AddServiceDefaults();
 
-// Add services to the container
+// 🔧 System-wide services
 builder.Services.AddProblemDetails();
-builder.Services.AddHttpClient(); // Generic fallback client
+builder.Services.AddHttpClient(); // Fallback HttpClient
 
-// ✅ Register the typed HttpClient for Auth0 login
+// 🔐 Register typed OAuth-related services
 builder.Services.AddHttpClient<IAuth0LoginService, Auth0LoginService>();
 builder.Services.AddScoped<IGraphUserService, GraphUserService>();
 builder.Services.AddScoped<IExternalUserDataService, ExternalUserDataService>();
 builder.Services.AddScoped<IAuth0UserLookupService, Auth0UserLookupService>();
+
 builder.Services.AddControllers();
 
-// 🌐 OpenAPI
+// 🌐 OpenAPI + Scalar API Reference
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// 🔥 Exception handler
+// ⚠️ Centralized error handling
 app.UseExceptionHandler();
 
 app.MapOpenApi();
 app.MapScalarApiReference();
-
 app.MapControllers();
 app.MapDefaultEndpoints();
 
