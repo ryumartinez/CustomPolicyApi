@@ -19,3 +19,5 @@ CustomPolicyApi/CustomPolicyApi.AppHost/bin/
 CustomPolicyApi/CustomPolicyApi.ServiceDefaults/bin/
 
 CustomPolicyApi/CustomPolicyApi.Web/bin/
+
+CustomPolicyApi/CustomPolicyApi.Tests/bin/
