@@ -14,11 +14,6 @@ builder.Logging.AddFilter("CustomPolicyApi", LogLevel.Debug);
 
 // 🔐 Bind OAuth options (coming from AppHost WithEnvironment)
 builder.Services.Configure<OAuthOptions>(builder.Configuration.GetSection("OAuth"));
-builder.Services.Configure<OAuthTestCredentials>(config =>
-{
-    config.Email = builder.Configuration["OAuth:Test:Email"] ?? "";
-    config.Password = builder.Configuration["OAuth:Test:Password"] ?? "";
-});
 
 // ➕ Aspire service defaults
 builder.AddServiceDefaults();
@@ -32,7 +27,6 @@ builder.Services.AddHttpClient<IAuth0LoginService, Auth0LoginService>();
 builder.Services.AddScoped<IGraphUserService, GraphUserService>();
 builder.Services.AddScoped<IExternalUserDataService, ExternalUserDataService>();
 builder.Services.AddScoped<IAuth0UserLookupService, Auth0UserLookupService>();
-builder.Services.AddScoped<IOAuthCredentialLoginService, OAuthCredentialLoginService>();
 
 builder.Services.AddControllers();
 

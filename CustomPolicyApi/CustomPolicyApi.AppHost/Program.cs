@@ -23,14 +23,7 @@ var auth0ClientSecret = builder.AddParameter("oauth-auth0-client-secret", secret
 var auth0Domain = builder.AddParameter("oauth-auth0-domain");
 var auth0Audience = builder.AddParameter("oauth-auth0-audience");
 
-// Testing
-var testEmail = builder.AddParameter("oauth-test-email", secret: true);
-var testPassword = builder.AddParameter("oauth-test-password", secret: true);
-
 var apiService = builder.AddProject<Projects.CustomPolicyApi_ApiService>("apiservice")
-    //Testing email and password
-    .WithEnvironment("OAuth__Test__Email", testEmail)
-    .WithEnvironment("OAuth__Test__Password", testPassword)
     // GitHub
     .WithEnvironment("OAuth__GitHub__ClientId", githubClientId)
     .WithEnvironment("OAuth__GitHub__ClientSecret", githubClientSecret)
