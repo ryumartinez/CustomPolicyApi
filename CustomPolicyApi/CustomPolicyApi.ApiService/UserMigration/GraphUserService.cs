@@ -1,4 +1,5 @@
 ﻿using Azure.Identity;
+using CustomPolicyApi.ApiService.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
@@ -9,17 +10,17 @@ public class GraphUserService : IGraphUserService
 {
     private readonly GraphServiceClient _graphClient;
     private readonly ILogger<GraphUserService> _logger;
-    private readonly GraphOptions _options;
+    private readonly OAuthOptions _options;
 
-    public GraphUserService(IOptions<GraphOptions> options, ILogger<GraphUserService> logger)
+    public GraphUserService(IOptions<OAuthOptions> oauthOptions, ILogger<GraphUserService> logger)
     {
-        _options = options.Value;
+        _options = oauthOptions.Value;
         _logger = logger;
 
         var credential = new ClientSecretCredential(
-            _options.TenantId,
-            _options.ClientId,
-            _options.ClientSecret);
+            _options.MicrosoftGraph.TenantId,
+            _options.MicrosoftGraph.ClientId,
+            _options.MicrosoftGraph.ClientSecret);
 
         _graphClient = new GraphServiceClient(credential);
     }
@@ -38,7 +39,7 @@ public class GraphUserService : IGraphUserService
                     new ObjectIdentity
                     {
                         SignInType = "emailAddress",
-                        Issuer = $"{_options.TenantId}.onmicrosoft.com",
+                        Issuer = $"{_options.MicrosoftGraph.TenantId}.onmicrosoft.com",
                         IssuerAssignedId = email
                     }
                 },
@@ -50,7 +51,7 @@ public class GraphUserService : IGraphUserService
             };
 
             var createdUser = await _graphClient.Users.PostAsync(user);
-            _logger.LogInformation("Created new user {UserPrincipalName}", createdUser.UserPrincipalName);
+            _logger.LogInformation("Created new user {UserPrincipalName}", createdUser?.UserPrincipalName);
             return createdUser;
         }
         catch (ServiceException ex)
@@ -64,15 +65,14 @@ public class GraphUserService : IGraphUserService
     {
         try
         {
-            var issuer = $"{_options.TenantId}.onmicrosoft.com";
+            var issuer = $"{_options.MicrosoftGraph.TenantId}.onmicrosoft.com";
 
             var filter = $"identities/any(id:id/issuerAssignedId eq '{email}' and id/issuer eq '{issuer}')";
-            var result = await _graphClient.Users
-                .GetAsync(config =>
-                {
-                    config.QueryParameters.Filter = filter;
-                    config.QueryParameters.Top = 1;
-                });
+            var result = await _graphClient.Users.GetAsync(config =>
+            {
+                config.QueryParameters.Filter = filter;
+                config.QueryParameters.Top = 1;
+            });
 
             var exists = result?.Value?.Any() == true;
             _logger.LogInformation("Checked existence of user {Email}: {Exists}", email, exists);

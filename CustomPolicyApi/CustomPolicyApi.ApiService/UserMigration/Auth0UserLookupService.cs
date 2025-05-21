@@ -1,30 +1,25 @@
 ﻿using System.Net.Http.Headers;
 using System.Text.Json;
+using CustomPolicyApi.ApiService.Models;
+using Microsoft.Extensions.Options;
 
 namespace CustomPolicyApi.ApiService.UserMigration;
 
 public class Auth0UserLookupService : IAuth0UserLookupService
 {
-      private readonly HttpClient _httpClient;
+    private readonly HttpClient _httpClient;
     private readonly ILogger<Auth0UserLookupService> _logger;
-
-    private readonly string _domain;
-    private readonly string _clientId;
-    private readonly string _clientSecret;
+    private readonly Auth0Options _auth0;
     private string? _managementToken;
 
     public Auth0UserLookupService(
         HttpClient httpClient,
         ILogger<Auth0UserLookupService> logger,
-        string domain,
-        string clientId,
-        string clientSecret)
+        IOptions<OAuthOptions> oauthOptions)
     {
         _httpClient = httpClient;
         _logger = logger;
-        _domain = domain;
-        _clientId = clientId;
-        _clientSecret = clientSecret;
+        _auth0 = oauthOptions.Value.Auth0;
     }
 
     public async Task<bool> UserExistsAsync(string email)
@@ -38,7 +33,7 @@ public class Auth0UserLookupService : IAuth0UserLookupService
 
         var request = new HttpRequestMessage(
             HttpMethod.Get,
-            $"https://{_domain}/api/v2/users-by-email?email={Uri.EscapeDataString(email)}");
+            $"https://{_auth0.Domain}/api/v2/users-by-email?email={Uri.EscapeDataString(email)}");
 
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -71,13 +66,13 @@ public class Auth0UserLookupService : IAuth0UserLookupService
         var payload = new Dictionary<string, string>
         {
             ["grant_type"] = "client_credentials",
-            ["client_id"] = _clientId,
-            ["client_secret"] = _clientSecret,
-            ["audience"] = $"https://{_domain}/api/v2/"
+            ["client_id"] = _auth0.ClientId,
+            ["client_secret"] = _auth0.ClientSecret,
+            ["audience"] = $"https://{_auth0.Domain}/api/v2/"
         };
 
         var response = await _httpClient.PostAsync(
-            $"https://{_domain}/oauth/token",
+            $"https://{_auth0.Domain}/oauth/token",
             new FormUrlEncodedContent(payload));
 
         var content = await response.Content.ReadAsStringAsync();
