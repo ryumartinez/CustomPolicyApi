@@ -10,18 +10,15 @@ public class PreLoginValidationController : ControllerBase
 {
     private readonly IMsGraphDataAccess _msGraphDataAccess;
     private readonly IAuth0DataAccess _auth0DataAccess;
-    private readonly IAuth0LoginService _auth0LoginService;
     private readonly ILogger<PreLoginValidationController> _logger;
 
     public PreLoginValidationController(
         IMsGraphDataAccess msGraphDataAccess,
         IAuth0DataAccess auth0DataAccess,
-        IAuth0LoginService auth0LoginService,
         ILogger<PreLoginValidationController> logger)
     {
         _msGraphDataAccess = msGraphDataAccess;
         _auth0DataAccess = auth0DataAccess;
-        _auth0LoginService = auth0LoginService;
         _logger = logger;
     }
 
@@ -47,7 +44,7 @@ public class PreLoginValidationController : ControllerBase
         }
 
         // Step 3: Validate credentials in Auth0
-        var authResult = await _auth0LoginService.ValidateCredentialsAsync(request.Email, request.Password);
+        var authResult = await _auth0DataAccess.ValidateCredentialsAsync(request.Email, request.Password);
         if (authResult.StatusCode != 200)
         {
             _logger.LogWarning("Auth0 password validation failed: {Message}", authResult.Error ?? "Unknown error");
