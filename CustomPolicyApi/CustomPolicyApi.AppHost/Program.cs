@@ -1,26 +1,27 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-// GitHub OAuth
-var githubClientId = builder.AddParameter("OAuth:GitHub:ClientId");
-var githubClientSecret = builder.AddParameter("OAuth:GitHub:ClientSecret", secret: true);
+// GitHub
+var githubClientId = builder.AddParameter("oauth-github-client-id");
+var githubClientSecret = builder.AddParameter("oauth-github-client-secret", secret: true);
 
-// Google OAuth
-var googleClientId = builder.AddParameter("OAuth:Google:ClientId");
-var googleClientSecret = builder.AddParameter("OAuth:Google:ClientSecret", secret: true);
+// Google
+var googleClientId = builder.AddParameter("oauth-google-client-id");
+var googleClientSecret = builder.AddParameter("oauth-google-client-secret", secret: true);
 
-// LinkedIn OAuth
-var linkedinClientId = builder.AddParameter("OAuth:LinkedIn:ClientId");
-var linkedinClientSecret = builder.AddParameter("OAuth:LinkedIn:ClientSecret", secret: true);
+// LinkedIn
+var linkedinClientId = builder.AddParameter("oauth-linkedin-client-id");
+var linkedinClientSecret = builder.AddParameter("oauth-linkedin-client-secret", secret: true);
 
 // Microsoft Graph
-var msGraphClientId = builder.AddParameter("OAuth:MicrosoftGraph:ClientId");
-var msGraphClientSecret = builder.AddParameter("OAuth:MicrosoftGraph:ClientSecret", secret: true);
-var msGraphTenantId = builder.AddParameter("OAuth:MicrosoftGraph:TenantId");
+var msGraphClientId = builder.AddParameter("oauth-microsoftgraph-client-id");
+var msGraphClientSecret = builder.AddParameter("oauth-microsoftgraph-client-secret", secret: true);
+var msGraphTenantId = builder.AddParameter("oauth-microsoftgraph-tenant-id");
 
 // Auth0
-var auth0ClientId = builder.AddParameter("OAuth:Auth0:ClientId");
-var auth0ClientSecret = builder.AddParameter("OAuth:Auth0:ClientSecret", secret: true);
-var auth0Domain = builder.AddParameter("OAuth:Auth0:Domain");
+var auth0ClientId = builder.AddParameter("oauth-auth0-client-id");
+var auth0ClientSecret = builder.AddParameter("oauth-auth0-client-secret", secret: true);
+var auth0Domain = builder.AddParameter("oauth-auth0-domain");
+var auth0Audience = builder.AddParameter("oauth-auth0-audience");
 
 var apiService = builder.AddProject<Projects.CustomPolicyApi_ApiService>("apiservice")
     // GitHub
@@ -43,7 +44,8 @@ var apiService = builder.AddProject<Projects.CustomPolicyApi_ApiService>("apiser
     // Auth0
     .WithEnvironment("OAuth__Auth0__ClientId", auth0ClientId)
     .WithEnvironment("OAuth__Auth0__ClientSecret", auth0ClientSecret)
-    .WithEnvironment("OAuth__Auth0__Domain", auth0Domain);
+    .WithEnvironment("OAuth__Auth0__Domain", auth0Domain)
+    .WithEnvironment("OAuth__Auth0__Audience", auth0Audience);
 
 builder.AddProject<Projects.CustomPolicyApi_Web>("webfrontend")
     .WithExternalHttpEndpoints()
