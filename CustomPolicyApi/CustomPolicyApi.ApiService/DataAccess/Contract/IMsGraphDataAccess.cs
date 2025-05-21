@@ -2,7 +2,7 @@
 {
     public interface IMsGraphDataAccess
     {
-        Task<Microsoft.Graph.Models.User> GetUserByEmail(string email);
-        Task CreateUserAsync(string email, string password);
+        Task<Microsoft.Graph.Models.User?> GetUserByEmail(string email);
+        Task<Microsoft.Graph.Models.User?> CreateUserAsync(string email, string password);
     }
 }

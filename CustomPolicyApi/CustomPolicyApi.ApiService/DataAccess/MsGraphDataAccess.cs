@@ -25,7 +25,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
             _graphClient = new GraphServiceClient(clientSecretCredential, scopes);
         }
 
-        public async Task CreateUserAsync(string email, string password)
+        public async Task<Microsoft.Graph.Models.User?> CreateUserAsync(string email, string password)
         {
             var newUser = new User
             {
