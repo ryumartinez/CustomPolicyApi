@@ -1,7 +1,5 @@
 ﻿using Azure.Identity;
 using CustomPolicyApi.ApiService.DataAccess.Contract;
-using CustomPolicyApi.ApiService.Models;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.Extensions.Options;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;

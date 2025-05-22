@@ -2,7 +2,6 @@ using CustomPolicyApi.ApiService.DataAccess;
 using CustomPolicyApi.ApiService.DataAccess.Contract;
 using CustomPolicyApi.ApiService.Models;
 using CustomPolicyApi.ApiService.UserExternalData;
-using CustomPolicyApi.ApiService.UserMigration;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,4 +1,6 @@
-﻿namespace CustomPolicyApi.ApiService.UserExternalData;
+﻿using CustomPolicyApi.ApiService.Models;
+
+namespace CustomPolicyApi.ApiService.UserExternalData;
 
 public interface IExternalUserDataService
 {

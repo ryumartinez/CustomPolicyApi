@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CustomPolicyApi.ApiService.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CustomPolicyApi.ApiService.UserExternalData;
 

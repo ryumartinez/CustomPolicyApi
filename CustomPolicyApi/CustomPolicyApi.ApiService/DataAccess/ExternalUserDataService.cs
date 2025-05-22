@@ -1,8 +1,9 @@
 ﻿using System.Net.Http.Headers;
 using System.Text.Json;
-using Microsoft.Extensions.Logging;
+using CustomPolicyApi.ApiService.Models;
+using CustomPolicyApi.ApiService.UserExternalData;
 
-namespace CustomPolicyApi.ApiService.UserExternalData;
+namespace CustomPolicyApi.ApiService.DataAccess;
 
 public class ExternalUserDataService : IExternalUserDataService
 {

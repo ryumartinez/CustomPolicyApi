@@ -1,9 +1,8 @@
 ﻿using CustomPolicyApi.ApiService.DataAccess.Contract;
 using CustomPolicyApi.ApiService.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace CustomPolicyApi.ApiService.UserMigration;
+namespace CustomPolicyApi.ApiService.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
