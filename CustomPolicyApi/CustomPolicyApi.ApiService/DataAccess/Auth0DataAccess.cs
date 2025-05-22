@@ -116,5 +116,30 @@ namespace CustomPolicyApi.ApiService.DataAccess
                 };
             }
         }
+
+        public async Task DeleteUserByEmailAsync(string email)
+        {
+            try
+            {
+                // Get user by email (returns a list, so pick the first match)
+                var users = await _managementApiClient.Users.GetUsersByEmailAsync(email);
+
+                var user = users.FirstOrDefault();
+                if (user is null)
+                {
+                    _logger.LogInformation("User with email {Email} not found in Auth0.", email);
+                    return; // Nothing to delete
+                }
+
+                // Delete the user by user ID
+                await _managementApiClient.Users.DeleteAsync(user.UserId);
+                _logger.LogInformation("Deleted Auth0 user {UserId} ({Email})", user.UserId, email);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to delete Auth0 user with email {Email}", email);
+                throw;
+            }
+        }
     }
 }

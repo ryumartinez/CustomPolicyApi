@@ -8,5 +8,7 @@ namespace CustomPolicyApi.ApiService.DataAccess.Contract
         Task<Auth0.ManagementApi.Models.User?> GetUserByEmailAsync(string email);
         Task<Auth0.ManagementApi.Models.User?> CreateUserAsync(string email, string password);
         Task<Auth0LoginResult> ValidateCredentialsAsync(string email, string password);
+        
+        Task DeleteUserByEmailAsync(string email);
     }
 }

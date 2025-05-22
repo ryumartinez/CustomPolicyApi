@@ -50,6 +50,23 @@ namespace CustomPolicyApi.ApiService.DataAccess
             return await _graphClient.Users.PostAsync(newUser);
         }
 
+        public async Task DeleteUserByEmailAsync(string email)
+        {
+            try
+            {
+                var user = await GetUserByEmail(email);
+                if (user != null)
+                {
+                    await _graphClient.Users[user.Id].DeleteAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or rethrow as needed
+                throw new ApplicationException($"Failed to delete user '{email}' from Graph.", ex);
+            }
+        }
+
         public async Task<User?> GetUserByEmail(string email)
         {
             var filter = $"identities/any(id:id/issuerAssignedId eq '{email}' and id/issuer eq '<your-b2c-tenant-name>.onmicrosoft.com')";

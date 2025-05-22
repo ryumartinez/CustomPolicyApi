@@ -4,5 +4,7 @@
     {
         Task<Microsoft.Graph.Models.User?> GetUserByEmail(string email);
         Task<Microsoft.Graph.Models.User?> CreateUserAsync(string email, string password);
+        
+        Task DeleteUserByEmailAsync(string email);
     }
 }
