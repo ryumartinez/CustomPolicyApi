@@ -249,6 +249,7 @@
     <!--Self asserted technical profile with REST api call https://github.com/azure-ad-b2c/user-migration/blob/master/jit-migration-v1/readme.md-->
     <ClaimsProvider>
       <TechnicalProfiles>
+        <!--REST Call used as validation technical profile-->
         <TechnicalProfile Id="PreLoginValidation">
           <DisplayName>Pre-Login Check</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
@@ -265,6 +266,7 @@
             <!-- Optional: for example, flags or messaging -->
           </OutputClaims>
         </TechnicalProfile>
+        <!--Technical Profile Executed on form submit-->
         <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email-With-REST-Call">
           <DisplayName>Local Account Signin</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
