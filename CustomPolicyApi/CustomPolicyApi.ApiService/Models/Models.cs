@@ -101,3 +101,14 @@ public class GoogleProfileResponse
     public string Picture { get; set; } = "";
 }
 
+public class CreateUserRequest
+{
+    public required string Email { get; set; }
+    public required string Password { get; set; }
+}
+
+public class ValidateCredentialsRequest
+{
+    public required string Email { get; set; }
+    public required string Password { get; set; }
+}
