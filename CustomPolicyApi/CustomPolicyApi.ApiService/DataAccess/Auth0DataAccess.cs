@@ -26,7 +26,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
         }
 
 
-        public async Task CreateUserAsync(string email, string password)
+        public async Task<Auth0.ManagementApi.Models.User?> CreateUserAsync(string email, string password)
         {
             var userCreateRequest = new UserCreateRequest
             {
@@ -34,14 +34,10 @@ namespace CustomPolicyApi.ApiService.DataAccess
                 Password = password,
                 Connection = "Username-Password-Authentication", // required: your DB connection name
                 EmailVerified = false,
-                AppMetadata = new Dictionary<string, object>     // optional
-        {
-            { "role", "user" }
-        }
             };
 
             var createdUser = await _managementApiClient.Users.CreateAsync(userCreateRequest);
-
+            return createdUser;
             // You can return or log the user if needed
             Console.WriteLine($"Created user with ID: {createdUser.UserId}");
         }
