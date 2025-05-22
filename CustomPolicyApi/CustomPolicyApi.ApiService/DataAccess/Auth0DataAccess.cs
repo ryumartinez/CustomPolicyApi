@@ -33,7 +33,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
                 Email = email,
                 Password = password,
                 Connection = "Username-Password-Authentication", // required: your DB connection name
-                EmailVerified = false,
+                EmailVerified = true,
             };
 
             var createdUser = await _managementApiClient.Users.CreateAsync(userCreateRequest);
@@ -44,8 +44,8 @@ namespace CustomPolicyApi.ApiService.DataAccess
 
         public async Task<Auth0.ManagementApi.Models.User?> GetUserByEmailAsync(string email)
         {
-            var user = await _managementApiClient.Users.GetUsersByEmailAsync(email);
-            return user.First();
+            var users = await _managementApiClient.Users.GetUsersByEmailAsync(email);
+            return users.FirstOrDefault(); 
         }
 
         public async Task<Auth0LoginResult> ValidateCredentialsAsync(string email, string password)
