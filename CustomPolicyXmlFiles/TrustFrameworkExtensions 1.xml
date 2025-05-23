@@ -277,6 +277,15 @@
             <Item Key="setting.operatingMode">Email</Item>
             <Item Key="ContentDefinitionReferenceId">api.localaccountsignin</Item>
             <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
+            <!--Message to show if the rest call validation return error 409-->
+            <!--The endpoint error should return a response in this format
+            {
+              "version": "1.0.0",
+               "status": 409,
+               "userMessage": "Your account is blocked. Please contact support."
+             }-->
+            <Item Key="RaiseErrorIfClaimsPrincipalDoesNotExist">true</Item>
+            <Item Key="UserMessageIfClaimsPrincipalDoesNotExist">Pre-login validation failed.</Item>
           </Metadata>
           <IncludeInSso>false</IncludeInSso>
           <InputClaims>
