@@ -189,12 +189,11 @@
             <Item Key="ServiceUrl">https://my-worker.ryueduardo.workers.dev/api/user</Item> <!--Endpoint to get user emails depending on the identity provider-->
             <Item Key="HttpBinding">GET</Item> <!--Defining a GET method-->
             <Item Key="SendClaimsIn">Header</Item> <!--Defining the input claims as headers in the request-->
-            <Item Key="AuthenticationType">Bearer</Item>
-            <Item Key="UseClaimAsBearerToken">webhookBearerToken</Item> <!--Defining the input claim that we use as bearer token-->
+            <Item Key="AuthenticationType">None</Item>
             <Item Key="DebugMode">true</Item> <!--To send data to application insights-->
           </Metadata>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="webhookBearerToken" />
+            <InputClaim ClaimTypeReferenceId="webhookBearerToken" PartnerClaimType="provider-token"/>
             <InputClaim ClaimTypeReferenceId="identityProvider" PartnerClaimType="identity-provider"/>
           </InputClaims>
           <OutputClaims>
