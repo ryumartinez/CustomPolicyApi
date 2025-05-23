@@ -1,7 +1,8 @@
 ﻿using CustomPolicyApi.ApiService.Models;
+using CustomPolicyApi.ApiService.UserExternalData;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CustomPolicyApi.ApiService.UserExternalData;
+namespace CustomPolicyApi.ApiService.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
