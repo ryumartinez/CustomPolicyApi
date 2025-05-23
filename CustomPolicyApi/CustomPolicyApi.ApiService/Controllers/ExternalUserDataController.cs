@@ -20,7 +20,7 @@ public class ExternalUserDataController : ControllerBase
     [ProducesResponseType(typeof(UserExternalDataResponse), 400)]
     public async Task<IActionResult> GetExternalUserData()
     {
-        string? authHeader = Request.Headers["Authorization"];
+        string? authHeader = Request.Headers["provider-token"].ToString().ToLower();
         string? provider = Request.Headers["identity-provider"].ToString().ToLower();
 
         if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer ") ||
