@@ -11,7 +11,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
     public class MsGraphDataAccess : IMsGraphDataAccess
     {
         private readonly GraphServiceClient _graphClient;
-        private const string MfaExtensionAttributeName = "mfa-enabled-attribute";
+        private const string MfaExtensionAttributeName = "UserMfaExtension";
         private readonly string _domain;
 
         public MsGraphDataAccess(IOptions<Models.OAuthOptions> authSettings)
