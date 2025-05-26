@@ -11,6 +11,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
     public class MsGraphDataAccess : IMsGraphDataAccess
     {
         private readonly GraphServiceClient _graphClient;
+        private const string MfaExtensionAttributeName = "mfa-enabled-attribute";
 
         public MsGraphDataAccess(IOptions<Models.OAuthOptions> authSettings)
         {
@@ -23,7 +24,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
             _graphClient = new GraphServiceClient(clientSecretCredential, scopes);
         }
 
-        public async Task<Microsoft.Graph.Models.User?> CreateUserAsync(string email, string password)
+        public async Task<User?> CreateUserAsync(string email, string password)
         {
             var newUser = new User
             {
@@ -37,14 +38,14 @@ namespace CustomPolicyApi.ApiService.DataAccess
                     Password = password
                 },
                 Identities = new List<ObjectIdentity>
-            {
-                new ObjectIdentity
                 {
-                    SignInType = "emailAddress",
-                    Issuer = "<your-b2c-tenant-name>.onmicrosoft.com", // e.g., contoso.onmicrosoft.com
-                    IssuerAssignedId = email
+                    new ObjectIdentity
+                    {
+                        SignInType = "emailAddress",
+                        Issuer = "<your-b2c-tenant-name>.onmicrosoft.com", // Replace this
+                        IssuerAssignedId = email
+                    }
                 }
-            }
             };
 
             return await _graphClient.Users.PostAsync(newUser);
@@ -62,7 +63,6 @@ namespace CustomPolicyApi.ApiService.DataAccess
             }
             catch (Exception ex)
             {
-                // Log or rethrow as needed
                 throw new ApplicationException($"Failed to delete user '{email}' from Graph.", ex);
             }
         }
@@ -81,6 +81,53 @@ namespace CustomPolicyApi.ApiService.DataAccess
             catch (ODataError ex) when (ex.ResponseStatusCode == (int)HttpStatusCode.NotFound)
             {
                 return null;
+            }
+        }
+
+        public async Task EnableUserMfa(string email)
+        {
+            var user = await GetUserByEmail(email);
+            if (user?.Id != null)
+            {
+                await AddOrUpdateMfaExtensionAsync(user.Id, true);
+            }
+        }
+
+        public async Task DisableUserMfa(string email)
+        {
+            var user = await GetUserByEmail(email);
+            if (user?.Id != null)
+            {
+                await AddOrUpdateMfaExtensionAsync(user.Id, false);
+            }
+        }
+
+        private async Task AddOrUpdateMfaExtensionAsync(string userId, bool mfaEnabled)
+        {
+            try
+            {
+                var patchExtension = new OpenTypeExtension
+                {
+                    AdditionalData = new Dictionary<string, object>
+                    {
+                        { "MfaEnabled", mfaEnabled }
+                    }
+                };
+
+                await _graphClient.Users[userId].Extensions[MfaExtensionAttributeName].PatchAsync(patchExtension);
+            }
+            catch (ODataError ex) when (ex.ResponseStatusCode == 404)
+            {
+                var newExtension = new OpenTypeExtension
+                {
+                    ExtensionName = MfaExtensionAttributeName,
+                    AdditionalData = new Dictionary<string, object>
+                    {
+                        { "MfaEnabled", mfaEnabled }
+                    }
+                };
+
+                await _graphClient.Users[userId].Extensions.PostAsync(newExtension);
             }
         }
     }
