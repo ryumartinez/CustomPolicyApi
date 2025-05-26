@@ -6,6 +6,11 @@ using Aspire.Hosting;
 
 namespace CustomPolicyApi.Tests;
 
+public class MfaStatusResponse
+{
+    public bool MfaEnabled { get; set; }
+}
+
 public class GraphUserControllerTests
 {
     private const string BaseEndpoint = "/api/GraphUser";
@@ -49,6 +54,38 @@ public class GraphUserControllerTests
 
         var content = await response.Content.ReadAsStringAsync();
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), $"Response: {content}");
+    }
+    
+    [Test]
+    public async Task CreateUser_ReturnsOk_AndMfaIsDisabledByDefault()
+    {
+        var (app, httpClient) = await StartAppAsync();
+        await using var _ = app;
+
+        var email = GenerateUniqueEmail();
+
+        // Act – Create user
+        var createResponse = await httpClient.PostAsync(BaseEndpoint, new StringContent(JsonSerializer.Serialize(new
+        {
+            email,
+            password = DefaultPassword
+        }), Encoding.UTF8, "application/json"));
+
+        var createContent = await createResponse.Content.ReadAsStringAsync();
+        Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), $"Create Response: {createContent}");
+
+        // Act – Query MFA status
+        var mfaResponse = await httpClient.GetAsync($"{BaseEndpoint}/{Uri.EscapeDataString(email)}/mfa-status");
+        var mfaContent = await mfaResponse.Content.ReadAsStringAsync();
+
+        Assert.That(mfaResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), $"MFA Status Response: {mfaContent}");
+
+        var mfaResult = JsonSerializer.Deserialize<MfaStatusResponse>(mfaContent, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+
+        Assert.That(mfaResult?.MfaEnabled, Is.False, "Expected MFA to be disabled by default.");
     }
 
     [Test]

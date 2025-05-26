@@ -50,7 +50,16 @@ namespace CustomPolicyApi.ApiService.DataAccess
             };
 
             var createdUser = await _graphClient.Users.PostAsync(newUser);
-            await DisableUserMfa(email);
+            var newExtension = new OpenTypeExtension
+            {
+                ExtensionName = MfaExtensionAttributeName,
+                AdditionalData = new Dictionary<string, object>
+                {
+                    { "MfaEnabled", false }
+                }
+            };
+
+            await _graphClient.Users[createdUser?.Id].Extensions.PostAsync(newExtension);
             return createdUser;
         }
 
