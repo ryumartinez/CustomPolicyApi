@@ -9,5 +9,7 @@
         
         Task EnableUserMfa(string email);
         Task DisableUserMfa(string email);
+        
+        Task<bool> GetUserMfaStatus(string email);
     }
 }

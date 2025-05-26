@@ -49,7 +49,9 @@ namespace CustomPolicyApi.ApiService.DataAccess
                 }
             };
 
-            return await _graphClient.Users.PostAsync(newUser);
+            var createdUser = await _graphClient.Users.PostAsync(newUser);
+            await DisableUserMfa(email);
+            return createdUser;
         }
 
         public async Task DeleteUserByEmailAsync(string email)
@@ -100,6 +102,36 @@ namespace CustomPolicyApi.ApiService.DataAccess
             if (user?.Id != null)
             {
                 await AddOrUpdateMfaExtensionAsync(user.Id, false);
+            }
+        }
+
+        public async Task<bool> GetUserMfaStatus(string email)
+        {
+            var user = await GetUserByEmail(email);
+            if (user?.Id == null)
+            {
+                throw new InvalidOperationException($"User '{email}' not found.");
+            }
+
+            try
+            {
+                var extension = await _graphClient.Users[user.Id]
+                    .Extensions[MfaExtensionAttributeName]
+                    .GetAsync();
+
+                if (extension is OpenTypeExtension openExtension &&
+                    openExtension.AdditionalData != null &&
+                    openExtension.AdditionalData.TryGetValue("MfaEnabled", out var mfaValue) &&
+                    mfaValue is bool mfaEnabled)
+                {
+                    return mfaEnabled;
+                }
+
+                return false; // Default to false if extension or value is missing
+            }
+            catch (ODataError ex) when (ex.ResponseStatusCode == 404)
+            {
+                return false; // Extension not set = MFA disabled
             }
         }
 
