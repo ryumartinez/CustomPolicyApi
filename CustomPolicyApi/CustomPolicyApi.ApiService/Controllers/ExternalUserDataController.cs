@@ -21,21 +21,21 @@ public class ExternalUserDataController : ControllerBase
     [ProducesResponseType(typeof(UserExternalDataResponse), 400)]
     public async Task<IActionResult> GetExternalUserData()
     {
-        string? authHeader = Request.Headers["provider-token"].ToString().ToLower();
+        string? token = Request.Headers["provider-token"].ToString().ToLower();
         string? provider = Request.Headers["identity-provider"].ToString().ToLower();
 
-        if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer ") ||
-            string.IsNullOrEmpty(provider))
+        if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(provider))
         {
-            return BadRequest(new UserExternalDataResponse("unknown", "unknown"));
+            return Conflict(new { message = "Provider headers missing." });
         }
-
-        string token = authHeader.Substring("Bearer ".Length);
+        
         var result = await _externalUserDataService.GetExternalUserDataAsync(provider, token);
 
         if (result.Email == "unknown")
-            return BadRequest(result);
-
+        {
+            return Conflict(new { message = "Could not retrieve external user data." });
+        }
+        
         return Ok(result);
     }
 }
