@@ -47,6 +47,7 @@ var apiService = builder.AddProject<Projects.CustomPolicyApi_ApiService>("apiser
     .WithEnvironment("OAuth__Auth0__UriIdentifier", auth0UriIdentifier)
     .WithEnvironment("OAuth__Auth0__ClientId", auth0ClientId)
     .WithEnvironment("OAuth__Auth0__ClientSecret", auth0ClientSecret)
-    .WithEnvironment("OAuth__Auth0__Domain", auth0Domain);
+    .WithEnvironment("OAuth__Auth0__Domain", auth0Domain)
+    .WithUrl("http://localhost:5468/scalar");
 
 builder.Build().Run();
