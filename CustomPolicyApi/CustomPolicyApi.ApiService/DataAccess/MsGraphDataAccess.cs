@@ -12,6 +12,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
     {
         private readonly GraphServiceClient _graphClient;
         private const string MfaExtensionAttributeName = "mfa-enabled-attribute";
+        private readonly string _domain;
 
         public MsGraphDataAccess(IOptions<Models.OAuthOptions> authSettings)
         {
@@ -19,6 +20,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
             var clientId = authSettings.Value.MicrosoftGraph.ClientId;
             var clientSecret = authSettings.Value.MicrosoftGraph.ClientSecret;
             var scopes = new[] { "https://graph.microsoft.com/.default" };
+            _domain = authSettings.Value.MicrosoftGraph.Domain;
 
             var clientSecretCredential = new ClientSecretCredential(tenantId, clientId, clientSecret);
             _graphClient = new GraphServiceClient(clientSecretCredential, scopes);
@@ -42,7 +44,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
                     new ObjectIdentity
                     {
                         SignInType = "emailAddress",
-                        Issuer = "<your-b2c-tenant-name>.onmicrosoft.com", // Replace this
+                        Issuer = _domain,
                         IssuerAssignedId = email
                     }
                 }

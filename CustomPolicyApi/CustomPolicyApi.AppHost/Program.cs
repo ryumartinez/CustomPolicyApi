@@ -16,6 +16,7 @@ var linkedinClientSecret = builder.AddParameter("oauth-linkedin-client-secret", 
 var msGraphClientId = builder.AddParameter("oauth-microsoftgraph-client-id");
 var msGraphClientSecret = builder.AddParameter("oauth-microsoftgraph-client-secret", secret: true);
 var msGraphTenantId = builder.AddParameter("oauth-microsoftgraph-tenant-id");
+var msGraphDomain = builder.AddParameter("oauth-microsoftgraph-tenant-domain");
 
 // Auth0
 var auth0ClientId = builder.AddParameter("oauth-auth0-client-id");
@@ -41,6 +42,7 @@ var apiService = builder.AddProject<Projects.CustomPolicyApi_ApiService>("apiser
     .WithEnvironment("OAuth__MicrosoftGraph__ClientId", msGraphClientId)
     .WithEnvironment("OAuth__MicrosoftGraph__ClientSecret", msGraphClientSecret)
     .WithEnvironment("OAuth__MicrosoftGraph__TenantId", msGraphTenantId)
+    .WithEnvironment("OAuth__MicrosoftGraph__Domain", msGraphDomain)
 
     // Auth0
     .WithEnvironment("OAuth__Auth0__ManagementToken", auth0ManagementToken)
@@ -48,6 +50,8 @@ var apiService = builder.AddProject<Projects.CustomPolicyApi_ApiService>("apiser
     .WithEnvironment("OAuth__Auth0__ClientId", auth0ClientId)
     .WithEnvironment("OAuth__Auth0__ClientSecret", auth0ClientSecret)
     .WithEnvironment("OAuth__Auth0__Domain", auth0Domain)
+    
+    //Dashboard config
     .WithUrl("http://localhost:5468/scalar");
 
 builder.Build().Run();

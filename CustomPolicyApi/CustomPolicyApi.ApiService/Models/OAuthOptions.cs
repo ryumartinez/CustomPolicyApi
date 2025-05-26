@@ -18,6 +18,7 @@ public class ProviderOptions
 public class MicrosoftGraphOptions : ProviderOptions
 {
     public string TenantId { get; set; } = "";
+    public string Domain { get; set; } = "";
 }
 
 public class Auth0Options : ProviderOptions
