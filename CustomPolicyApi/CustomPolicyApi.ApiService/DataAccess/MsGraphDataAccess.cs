@@ -72,7 +72,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
 
         public async Task<User?> GetUserByEmail(string email)
         {
-            var filter = $"identities/any(id:id/issuerAssignedId eq '{email}' and id/issuer eq '<your-b2c-tenant-name>.onmicrosoft.com')";
+            var filter = $"identities/any(id:id/issuerAssignedId eq '{email}' and id/issuer eq '{_domain}')";;
 
             try
             {
