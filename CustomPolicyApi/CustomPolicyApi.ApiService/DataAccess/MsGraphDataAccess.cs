@@ -33,7 +33,6 @@ namespace CustomPolicyApi.ApiService.DataAccess
                 AccountEnabled = true,
                 DisplayName = email,
                 MailNickname = email.Split('@')[0],
-                UserPrincipalName = email,
                 PasswordProfile = new PasswordProfile
                 {
                     ForceChangePasswordNextSignIn = false,

@@ -31,8 +31,7 @@ public class GraphUserControllerTests
         return (app, httpClient);
     }
 
-    private static string GenerateUniqueEmail() =>
-        $"graphuser+{Guid.NewGuid():N}@example.com";
+    private static string GenerateUniqueEmail() => $"graphuser+{Guid.NewGuid():N}@sandboxcertiverse.onmicrosoft.com";
 
     [Test]
     public async Task CreateUser_ReturnsOk()
