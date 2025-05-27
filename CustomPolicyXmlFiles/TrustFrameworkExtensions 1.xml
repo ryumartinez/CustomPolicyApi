@@ -17,16 +17,13 @@
 
    <BuildingBlocks>
     <ClaimsSchema>
-      <!--TOTP claims-->
+      <!--MFA-->
       <ClaimType Id="requiresMfa">
-        <DisplayName>Requires MFA</DisplayName>
+        <DisplayName>requiresMfa</DisplayName>
         <DataType>boolean</DataType>
-        <DefaultPartnerClaimTypes>
-          <Protocol Name="OAuth2" PartnerClaimType="extension_requiresMfa" />
-        </DefaultPartnerClaimTypes>
-        <UserHelpText>Indicates whether MFA is required</UserHelpText>
       </ClaimType>
 
+      <!--TOTP claims-->
       <ClaimType Id="emails">
         <DisplayName>Email Addresses</DisplayName>
         <DataType>stringCollection</DataType>
@@ -568,7 +565,6 @@
           <OutputClaims>
             <!-- The userPrincipalName is required for the AzureMfaProtocolProvider technical profiles-->
             <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
-            <OutputClaim ClaimTypeReferenceId="requiresMfa" />
           </OutputClaims>
         </TechnicalProfile>
       </TechnicalProfiles>
