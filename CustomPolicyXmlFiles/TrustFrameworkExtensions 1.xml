@@ -271,7 +271,7 @@
             <InputClaim ClaimTypeReferenceId="password" />
           </InputClaims>
           <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
+            <OutputClaim ClaimTypeReferenceId="requiresMfa" DefaultValue="false"/>
           </OutputClaims>
         </TechnicalProfile>
         <!--Technical Profile Executed on form submit-->
