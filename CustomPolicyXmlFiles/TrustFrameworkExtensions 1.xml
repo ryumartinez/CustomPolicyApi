@@ -1029,7 +1029,22 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <OrchestrationStep Order="9" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <!-- Call the TOTP enrollment sub journey. If user already enrolled the sub journey will not ask the user to enroll -->
+        <OrchestrationStep Order="9" Type="InvokeSubJourney">
+          <JourneyList>
+            <Candidate SubJourneyReferenceId="TotpFactor-Input" />
+          </JourneyList>
+        </OrchestrationStep>
+
+        <!-- Call the TOTP validation sub journey-->
+        <OrchestrationStep Order="10" Type="InvokeSubJourney">
+          <JourneyList>
+            <Candidate SubJourneyReferenceId="TotpFactor-Verify" />
+          </JourneyList>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="11" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
