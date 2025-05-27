@@ -17,6 +17,15 @@
 
    <BuildingBlocks>
     <ClaimsSchema>
+      <!--MFA-->
+      <ClaimType Id="requiresMfa">
+        <DisplayName>requiresMfa</DisplayName>
+        <DataType>boolean</DataType>
+      </ClaimType>
+      <ClaimType Id="totpSecret">
+        <DisplayName>TOTP Secret</DisplayName>
+        <DataType>string</DataType>
+      </ClaimType>
       <!--Password Reset Claim -->
       <ClaimType Id="isForgotPassword">
         <DisplayName>isForgotPassword</DisplayName>
@@ -263,7 +272,8 @@
             <InputClaim ClaimTypeReferenceId="password" />
           </InputClaims>
           <OutputClaims>
-            <!-- Optional: for example, flags or messaging -->
+            <OutputClaim ClaimTypeReferenceId="requiresMfa" DefaultValue="false"/>
+            <OutputClaim ClaimTypeReferenceId="totpSecret" DefaultValue=""/>
           </OutputClaims>
         </TechnicalProfile>
         <!--Technical Profile Executed on form submit-->
