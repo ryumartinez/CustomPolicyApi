@@ -12,7 +12,7 @@
   <BasePolicy>  
     <!-- Environment Variable -->
     <TenantId>sandboxcertiverse.onmicrosoft.com</TenantId>
-    <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
+    <PolicyId>B2C_1A_Demo_TrustFrameworkExtensions_TOTP</PolicyId>
   </BasePolicy>
 
   <RelyingParty>
