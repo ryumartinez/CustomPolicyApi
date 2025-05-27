@@ -254,7 +254,7 @@
           <DisplayName>Pre-Login Check</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
           <Metadata>
-            <Item Key="ServiceUrl">https://webhook.site/0482e1a8-ee3b-4c39-8a93-f470a7a66734</Item>
+            <Item Key="ServiceUrl">https://my-worker.ryueduardo.workers.dev/api/test-error</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">None</Item>
           </Metadata>
