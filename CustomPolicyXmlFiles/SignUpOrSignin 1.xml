@@ -9,7 +9,7 @@
   PolicyId="B2C_1A_signup_signin"
   PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_signup_signin">
 
-  <BasePolicy>  
+  <BasePolicy>
     <!-- Environment Variable -->
     <TenantId>sandboxcertiverse.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
@@ -25,6 +25,7 @@
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
       <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
         <OutputClaim ClaimTypeReferenceId="profileImage"/>
         <OutputClaim ClaimTypeReferenceId="connectionType" />
         <OutputClaim ClaimTypeReferenceId="issuerUserId" />

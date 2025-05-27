@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!-- Environment Variable -->
-<TrustFrameworkPolicy 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
-  PolicySchemaVersion="0.3.0.0" 
-  TenantId="sandboxcertiverse.onmicrosoft.com" 
-  PolicyId="B2C_1A_TrustFrameworkExtensions" 
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
+  TenantId="sandboxcertiverse.onmicrosoft.com"
+  PolicyId="B2C_1A_TrustFrameworkExtensions"
   PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions">
-  
-  <BasePolicy>  
+
+  <BasePolicy>
     <!-- Environment Variable -->
     <TenantId>sandboxcertiverse.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
@@ -711,7 +711,7 @@
         <TechnicalProfile Id="Google-OAUTH">
           <DisplayName>Google</DisplayName>
           <Protocol Name="OAuth2" />
-          <Metadata>            
+          <Metadata>
             <Item Key="ProviderName">google</Item>
             <Item Key="authorization_endpoint">https://accounts.google.com/o/oauth2/auth</Item>
             <Item Key="AccessTokenEndpoint">https://accounts.google.com/o/oauth2/token</Item>
@@ -765,7 +765,7 @@
             <InputClaim ClaimTypeReferenceId="password" />
           </InputClaims>
           <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="requiresMfa" DefaultValue="false"/>
+            <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
           </OutputClaims>
         </TechnicalProfile>
         <!--Technical Profile Executed on form submit-->
@@ -793,6 +793,7 @@
             <InputClaim ClaimTypeReferenceId="signInName" DefaultValue="{OIDC:LoginHint}" AlwaysUseDefaultValue="true" />
           </InputClaims>
           <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
             <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="Username-Password-Authentication" />
             <OutputClaim ClaimTypeReferenceId="connectionType" DefaultValue="microsoft-entra-b2c" AlwaysUseDefaultValue="true" />
             <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
@@ -828,7 +829,7 @@
           </InputClaims>
         </TechnicalProfile>
       </TechnicalProfiles>
-    </ClaimsProvider>  
+    </ClaimsProvider>
     <!--SAML Session Management provider-->
     <ClaimsProvider>
       <DisplayName>Session Management</DisplayName>
@@ -1028,21 +1029,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <!-- Call the TOTP enrollment sub journey. If user already enrolled the sub journey will not ask the user to enroll -->
-        <OrchestrationStep Order="9" Type="InvokeSubJourney">
-          <JourneyList>
-            <Candidate SubJourneyReferenceId="TotpFactor-Input" />
-          </JourneyList>
-        </OrchestrationStep>
-
-        <!-- Call the TOTP validation sub journey-->
-        <OrchestrationStep Order="10" Type="InvokeSubJourney">
-          <JourneyList>
-            <Candidate SubJourneyReferenceId="TotpFactor-Verify" />
-          </JourneyList>
-        </OrchestrationStep>
-
-        <OrchestrationStep Order="11" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <OrchestrationStep Order="9" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
