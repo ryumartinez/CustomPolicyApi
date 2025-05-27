@@ -5,8 +5,6 @@ using Microsoft.Graph;
 using Microsoft.Graph.Models;
 using Microsoft.Graph.Models.ODataErrors;
 using System.Net;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace CustomPolicyApi.ApiService.DataAccess
 {
@@ -50,7 +48,6 @@ namespace CustomPolicyApi.ApiService.DataAccess
                     }
                 }
             };
-            var userTotpSecret = GenerateTotpSecret();
 
             var createdUser = await _graphClient.Users.PostAsync(newUser);
             var newExtension = new OpenTypeExtension
@@ -58,8 +55,7 @@ namespace CustomPolicyApi.ApiService.DataAccess
                 ExtensionName = MfaExtensionAttributeName,
                 AdditionalData = new Dictionary<string, object>
                 {
-                    { "MfaEnabled", false },
-                    { "MfaTotpSecret", userTotpSecret }
+                    { "MfaEnabled", false }
                 }
             };
 
@@ -148,36 +144,6 @@ namespace CustomPolicyApi.ApiService.DataAccess
             }
         }
 
-        public async Task<string?> GetUserTotpSecretAsync(string email)
-        {
-            var user = await GetUserByEmail(email);
-            if (user?.Id == null)
-            {
-                throw new InvalidOperationException($"User '{email}' not found.");
-            }
-
-            try
-            {
-                var extension = await _graphClient.Users[user.Id]
-                    .Extensions[MfaExtensionAttributeName]
-                    .GetAsync();
-
-                if (extension is OpenTypeExtension openExtension &&
-                    openExtension.AdditionalData != null &&
-                    openExtension.AdditionalData.TryGetValue("MfaTotpSecret", out var totpSecret) &&
-                    totpSecret is string secret)
-                {
-                    return secret;
-                }
-
-                return null; // Extension exists but no secret
-            }
-            catch (Microsoft.Graph.ServiceException ex) when (ex.ResponseStatusCode == 404)
-            {
-                return null; // Extension not found
-            }
-        }
-
         private async Task AddOrUpdateMfaExtensionAsync(string userId, bool mfaEnabled)
         {
             try
@@ -205,46 +171,6 @@ namespace CustomPolicyApi.ApiService.DataAccess
 
                 await _graphClient.Users[userId].Extensions.PostAsync(newExtension);
             }
-        }
-        
-        private string GenerateTotpSecret(int length = 32)
-        {
-            // 160-bit secret by default (length = 32 base32 characters)
-            byte[] secretBytes = new byte[length];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(secretBytes);
-            }
-
-            return Base32Encode(secretBytes);
-        }
-
-        // RFC 4648 Base32 encoding (no padding)
-        private string Base32Encode(byte[] data)
-        {
-            const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-            StringBuilder result = new StringBuilder();
-            int bits = 0;
-            int value = 0;
-
-            foreach (var b in data)
-            {
-                value = (value << 8) | b;
-                bits += 8;
-
-                while (bits >= 5)
-                {
-                    result.Append(alphabet[(value >> (bits - 5)) & 31]);
-                    bits -= 5;
-                }
-            }
-
-            if (bits > 0)
-            {
-                result.Append(alphabet[(value << (5 - bits)) & 31]);
-            }
-
-            return result.ToString();
         }
     }
 }
