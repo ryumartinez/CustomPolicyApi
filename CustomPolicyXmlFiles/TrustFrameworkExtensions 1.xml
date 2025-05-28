@@ -1148,6 +1148,12 @@
 
         <!-- Call the TOTP enrollment ub journey. If user already enrolled the sub journey will not ask the user to enroll -->
         <OrchestrationStep Order="2" Type="InvokeSubJourney">
+        <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
+                <Value>requiresMfa</Value>
+                <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+        </Preconditions>
           <JourneyList>
             <Candidate SubJourneyReferenceId="TotpFactor-Input" />
           </JourneyList>
@@ -1155,6 +1161,12 @@
 
         <!-- Call the TOTP validation sub journey-->
         <OrchestrationStep Order="3" Type="InvokeSubJourney">
+        <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
+                <Value>requiresMfa</Value>
+                <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+        </Preconditions>
           <JourneyList>
             <Candidate SubJourneyReferenceId="TotpFactor-Verify" />
           </JourneyList>
