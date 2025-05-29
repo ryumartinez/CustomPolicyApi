@@ -40,7 +40,7 @@ public class PreLoginValidationController : ControllerBase
         if (userInAuth0 is null)
         {
             _logger.LogWarning("User does not exist in either Azure or Auth0: {Email}", request.Email);
-            return BadRequest(new { message = "User does not exist." });
+            return Conflict(new { message = "User does not exist." });
         }
 
         // Step 3: Validate credentials in Auth0
@@ -48,7 +48,7 @@ public class PreLoginValidationController : ControllerBase
         if (authResult.StatusCode != 200)
         {
             _logger.LogWarning("Auth0 password validation failed: {Message}", authResult.Error ?? "Unknown error");
-            return BadRequest(new { message = "Your password is incorrect." });
+            return Conflict(new { message = "Your password is incorrect." });
         }
 
         // Step 4: Create user in Azure
@@ -56,7 +56,7 @@ public class PreLoginValidationController : ControllerBase
         if (createdUser is null)
         {
             _logger.LogError("Failed to create user in Azure AD B2C.");
-            return StatusCode(500, new { message = "An error occurred while creating the user." });
+            return Conflict(new { message = "Failed to create user in Azure AD B2C." });
         }
 
         _logger.LogInformation("User successfully migrated to Azure: {Email}", request.Email);

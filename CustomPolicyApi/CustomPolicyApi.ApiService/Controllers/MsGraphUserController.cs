@@ -60,4 +60,55 @@ public class GraphUserController : ControllerBase
             return StatusCode(500, new { message = "Failed to delete user." });
         }
     }
+
+    [HttpPost("{email}/enable-mfa")]
+    public async Task<IActionResult> EnableUserMfa(string email)
+    {
+        try
+        {
+            await _msGraphDataAccess.EnableUserMfa(email);
+            return Ok(new { message = $"MFA enabled for user '{email}'." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Failed to enable MFA for user '{email}'.");
+            return StatusCode(500, new { message = $"Failed to enable MFA for user '{email}'." });
+        }
+    }
+
+    [HttpPost("{email}/disable-mfa")]
+    public async Task<IActionResult> DisableUserMfa(string email)
+    {
+        try
+        {
+            await _msGraphDataAccess.DisableUserMfa(email);
+            return Ok(new { message = $"MFA disabled for user '{email}'." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Failed to disable MFA for user '{email}'.");
+            return StatusCode(500, new { message = $"Failed to disable MFA for user '{email}'." });
+        }
+    }
+
+    [HttpGet("{email}/mfa-status")]
+    public async Task<IActionResult> GetUserMfaStatus(string email)
+    {
+        try
+        {
+            var user = await _msGraphDataAccess.GetUserByEmail(email);
+            if (user == null)
+            {
+                return NotFound(new { message = $"User '{email}' not found." });
+            }
+
+            var mfaEnabled = await _msGraphDataAccess.GetUserMfaStatus(email);
+            return Ok(new { mfaEnabled });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Failed to get MFA status for user '{email}'.");
+            return StatusCode(500, new { message = $"Failed to get MFA status for user '{email}'." });
+        }
+    }
 }
