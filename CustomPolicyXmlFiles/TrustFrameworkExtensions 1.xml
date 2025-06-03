@@ -462,7 +462,7 @@
           </JourneyList>
         </OrchestrationStep>
 
-        <!-- For social IDP authentication, attempt to find the user account in the directory. -->
+        <!-- Step 4: If the user clicked a social provider button, attempt to find the user account in the directory using the AlternativeSecurityId (unique id assigned to each user social identity). -->
         <OrchestrationStep Order="4" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
