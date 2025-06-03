@@ -233,7 +233,7 @@
           />
           <Metadata> <!-- Possible metadata items https://learn.microsoft.com/en-us/azure/active-directory-b2c/restful-technical-profile#metadata -->
             <!-- Environment Variable -->
-            <Item Key="ServiceUrl">https://webhook.site/0482e1a8-ee3b-4c39-8a93-f470a7a66734</Item> <!--Endpoint to get user emails depending on the identity provider-->
+            <Item Key="ServiceUrl">https://c9dacdd3-my-worker.ryueduardo.workers.dev/api/user</Item> <!--Endpoint to get user emails depending on the identity provider-->
             <Item Key="HttpBinding">GET</Item> <!--Defining a GET method-->
             <Item Key="SendClaimsIn">Header</Item> <!--Defining the input claims as headers in the request-->
             <Item Key="AuthenticationType">None</Item>
@@ -263,7 +263,7 @@
           <DisplayName>Pre-Login Check</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
           <Metadata>
-            <Item Key="ServiceUrl">https://webhook.site/0482e1a8-ee3b-4c39-8a93-f470a7a66734</Item>
+            <Item Key="ServiceUrl">https://c9dacdd3-my-worker.ryueduardo.workers.dev/api/pre-login</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">None</Item>
             <Item Key="AllowInsecureAuthInProduction">true</Item>
