@@ -82,8 +82,52 @@
 
   </BuildingBlocks>
 
+
+
   <ClaimsProviders>
-   <!--Linkedin identity provider https://github.com/Azure-Samples/active-directory-b2c-custom-policy-starterpack/blob/fc39b7dbf7648dcfbcd5d511b49da6583671128c/scenarios/linkedin-identity-provider/TrustFrameworkExtensions.xml#L57-->
+    <!--Google identity provider-->
+    <ClaimsProvider>
+      <Domain>google.com</Domain>
+      <DisplayName>Google</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="Google-OAUTH">
+          <DisplayName>Google</DisplayName>
+          <Protocol Name="OAuth2" />
+          <Metadata>
+            <Item Key="ProviderName">google</Item>
+            <Item Key="authorization_endpoint">https://accounts.google.com/o/oauth2/auth</Item>
+            <Item Key="AccessTokenEndpoint">https://accounts.google.com/o/oauth2/token</Item>
+            <Item Key="ClaimsEndpoint">https://www.googleapis.com/oauth2/v1/userinfo</Item>
+            <Item Key="scope">email profile</Item>
+            <Item Key="HttpBinding">POST</Item>
+            <Item Key="UsePolicyInRedirectUri">false</Item>
+            <!-- Environment Variable -->
+            <Item Key="client_id">184533379541-832fdbuu7rl1r5ni83ls58vfmr6v98qc.apps.googleusercontent.com</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="client_secret" StorageReferenceId="B2C_1A_GoogleSecret" />
+          </CryptographicKeys>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="connectionType" DefaultValue="google-oauth2" AlwaysUseDefaultValue="true" />
+            <OutputClaim ClaimTypeReferenceId="issuerUserId" PartnerClaimType="id" />
+            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" />
+            <OutputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="given_name" />
+            <OutputClaim ClaimTypeReferenceId="surname" PartnerClaimType="family_name" />
+            <OutputClaim ClaimTypeReferenceId="displayName" PartnerClaimType="name" />
+            <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="google" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="socialIdpAuthentication" />
+          </OutputClaims>
+          <OutputClaimsTransformations>
+            <OutputClaimsTransformation ReferenceId="CreateRandomUPNUserName" />
+            <OutputClaimsTransformation ReferenceId="CreateUserPrincipalName" />
+            <OutputClaimsTransformation ReferenceId="CreateAlternativeSecurityId" />
+            <OutputClaimsTransformation ReferenceId="CreateSubjectClaimFromAlternativeSecurityId" />
+          </OutputClaimsTransformations>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-SocialLogin" />
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+    <!--Linkedin identity provider https://github.com/Azure-Samples/active-directory-b2c-custom-policy-starterpack/blob/fc39b7dbf7648dcfbcd5d511b49da6583671128c/scenarios/linkedin-identity-provider/TrustFrameworkExtensions.xml#L57-->
     <ClaimsProvider>
       <Domain>linkedin.com</Domain>
       <DisplayName>LinkedIn</DisplayName>
@@ -174,6 +218,9 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
+
+
+
     <!--Token Enrichment REST API Calls https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-api-connector-token-enrichment?pivots=b2c-custom-policy#add-the-restful-api-technical-profile-->
     <ClaimsProvider>
       <DisplayName>Token Enrichment REST API Calls</DisplayName>
@@ -203,49 +250,10 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
-    <ClaimsProvider>
-      <Domain>google.com</Domain>
-      <DisplayName>Google</DisplayName>
-      <TechnicalProfiles>
-        <TechnicalProfile Id="Google-OAUTH">
-          <DisplayName>Google</DisplayName>
-          <Protocol Name="OAuth2" />
-          <Metadata>            
-            <Item Key="ProviderName">google</Item>
-            <Item Key="authorization_endpoint">https://accounts.google.com/o/oauth2/auth</Item>
-            <Item Key="AccessTokenEndpoint">https://accounts.google.com/o/oauth2/token</Item>
-            <Item Key="ClaimsEndpoint">https://www.googleapis.com/oauth2/v1/userinfo</Item>
-            <Item Key="scope">email profile</Item>
-            <Item Key="HttpBinding">POST</Item>
-            <Item Key="UsePolicyInRedirectUri">false</Item>
-            <!-- Environment Variable -->
-            <Item Key="client_id">184533379541-832fdbuu7rl1r5ni83ls58vfmr6v98qc.apps.googleusercontent.com</Item>
-          </Metadata>
-          <CryptographicKeys>
-            <Key Id="client_secret" StorageReferenceId="B2C_1A_GoogleSecret" />
-          </CryptographicKeys>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="connectionType" DefaultValue="google-oauth2" AlwaysUseDefaultValue="true" />
-            <OutputClaim ClaimTypeReferenceId="issuerUserId" PartnerClaimType="id" />
-            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" />
-            <OutputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="given_name" />
-            <OutputClaim ClaimTypeReferenceId="surname" PartnerClaimType="family_name" />
-            <OutputClaim ClaimTypeReferenceId="displayName" PartnerClaimType="name" />
-            <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="google" />
-            <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="socialIdpAuthentication" />
-          </OutputClaims>
-          <OutputClaimsTransformations>
-            <OutputClaimsTransformation ReferenceId="CreateRandomUPNUserName" />
-            <OutputClaimsTransformation ReferenceId="CreateUserPrincipalName" />
-            <OutputClaimsTransformation ReferenceId="CreateAlternativeSecurityId" />
-            <OutputClaimsTransformation ReferenceId="CreateSubjectClaimFromAlternativeSecurityId" />
-          </OutputClaimsTransformations>
-          <UseTechnicalProfileForSessionManagement ReferenceId="SM-SocialLogin" />
-        </TechnicalProfile>
-      </TechnicalProfiles>
-    </ClaimsProvider>
 
-    <!--Self asserted technical profile with REST api call https://github.com/azure-ad-b2c/user-migration/blob/master/jit-migration-v1/readme.md-->
+
+
+    <!--Email and Password login with pre-login REST api call https://github.com/azure-ad-b2c/user-migration/blob/master/jit-migration-v1/readme.md-->
     <ClaimsProvider>
       <DisplayName>Self asserted technical profile with REST api call</DisplayName>
       <TechnicalProfiles>
@@ -266,7 +274,22 @@
             <!-- Optional: for example, flags or messaging -->
           </OutputClaims>
         </TechnicalProfile>
-        <!--Technical Profile Executed on form submit-->
+        <!--Login validation-->
+        <TechnicalProfile Id="login-NonInteractive">
+          <Metadata>
+            <!-- Environment Variable - ProxyIdentityExperienceFrameworkAppId -->
+            <Item Key="client_id">92f649cd-7283-4a0a-b117-c05776d459fd</Item>
+            <!-- Environment Variable - IdentityExperienceFrameworkAppId -->
+            <Item Key="IdTokenAudience">6c360c1d-239f-4112-9881-9f9dc068bbcd</Item>
+          </Metadata>
+          <InputClaims>
+            <!-- Environment Variable - ProxyIdentityExperienceFrameworkAppId -->
+            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="92f649cd-7283-4a0a-b117-c05776d459fd" />
+            <!-- Environment Variable - IdentityExperienceFrameworkAppId -->
+            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="6c360c1d-239f-4112-9881-9f9dc068bbcd" />
+          </InputClaims>
+        </TechnicalProfile>
+        <!--Form Submit-->
         <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
           <DisplayName>Local Account Signin</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
@@ -307,25 +330,26 @@
       </TechnicalProfiles>
     </ClaimsProvider>
 
+
+    <!--Password Reset https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-password-reset-policy?pivots=b2c-custom-policy#self-service-password-reset-recommended-->
     <ClaimsProvider>
-      <DisplayName>Local Account SignIn</DisplayName>
+      <DisplayName>Password Reset</DisplayName>
       <TechnicalProfiles>
-         <TechnicalProfile Id="login-NonInteractive">
-          <Metadata>
-            <!-- Environment Variable - ProxyIdentityExperienceFrameworkAppId -->
-            <Item Key="client_id">92f649cd-7283-4a0a-b117-c05776d459fd</Item>
-            <!-- Environment Variable - IdentityExperienceFrameworkAppId -->
-            <Item Key="IdTokenAudience">6c360c1d-239f-4112-9881-9f9dc068bbcd</Item>
-          </Metadata>
-          <InputClaims>
-            <!-- Environment Variable - ProxyIdentityExperienceFrameworkAppId -->
-            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="92f649cd-7283-4a0a-b117-c05776d459fd" />
-            <!-- Environment Variable - IdentityExperienceFrameworkAppId -->
-            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="6c360c1d-239f-4112-9881-9f9dc068bbcd" />
-          </InputClaims>
+        <TechnicalProfile Id="ForgotPassword">
+          <DisplayName>Forgot your password?</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.ClaimsTransformationProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="true" AlwaysUseDefaultValue="true"/>
+          </OutputClaims>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
+        </TechnicalProfile>
+        <TechnicalProfile Id="LocalAccountWritePasswordUsingObjectId">
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
         </TechnicalProfile>
       </TechnicalProfiles>
-    </ClaimsProvider>  
+    </ClaimsProvider>
+
+
     <!--SAML Session Management provider-->
     <ClaimsProvider>
       <DisplayName>Session Management</DisplayName>
@@ -380,27 +404,11 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
-
-    <!--Password Reset https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-password-reset-policy?pivots=b2c-custom-policy#self-service-password-reset-recommended-->
-    <ClaimsProvider>
-      <DisplayName>Password Reset</DisplayName>
-      <TechnicalProfiles>
-        <TechnicalProfile Id="ForgotPassword">
-          <DisplayName>Forgot your password?</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.ClaimsTransformationProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="true" AlwaysUseDefaultValue="true"/>
-          </OutputClaims>
-          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
-        </TechnicalProfile>
-        <TechnicalProfile Id="LocalAccountWritePasswordUsingObjectId">
-          <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
-        </TechnicalProfile>
-      </TechnicalProfiles>
-    </ClaimsProvider>
   </ClaimsProviders>
-  <UserJourneys>
 
+
+
+  <UserJourneys>
     <UserJourney Id="SignUpOrSignIn">
       <OrchestrationSteps>
 
