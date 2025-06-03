@@ -344,6 +344,32 @@
     <ClaimsProvider>
       <DisplayName>Password Reset</DisplayName>
       <TechnicalProfiles>
+        <!-- This technical profile forces the user to verify the email address that they provide on the UI. Only after email is verified, the user account is
+        read from the directory. -->
+        <TechnicalProfile Id="LocalAccountDiscoveryUsingEmailAddress">
+          <DisplayName>Reset password using email address</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="IpAddressClaimReferenceId">IpAddress</Item>
+            <Item Key="ContentDefinitionReferenceId">api.localaccountpasswordreset</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="issuer_secret" StorageReferenceId="B2C_1A_SigningKeyContainer" />
+          </CryptographicKeys>
+          <IncludeInSso>false</IncludeInSso>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="Username-Password-Authentication" />
+            <OutputClaim ClaimTypeReferenceId="connectionType" DefaultValue="microsoft-entra-b2c" AlwaysUseDefaultValue="true" />
+            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="Verified.Email" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="objectId" />
+            <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" />
+
+          </OutputClaims>
+          <ValidationTechnicalProfiles>
+            <ValidationTechnicalProfile ReferenceId="AAD-UserReadUsingEmailAddress" />
+          </ValidationTechnicalProfiles>
+        </TechnicalProfile>
         <TechnicalProfile Id="ForgotPassword">
           <DisplayName>Forgot your password?</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.ClaimsTransformationProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
