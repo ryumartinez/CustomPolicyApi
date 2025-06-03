@@ -489,7 +489,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <!-- Step 6: If the user submits the form, try collecting additional user data stored in the active directory-->
+        <!-- Step 6: Checks if the user was created -->
         <OrchestrationStep Order="6" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
