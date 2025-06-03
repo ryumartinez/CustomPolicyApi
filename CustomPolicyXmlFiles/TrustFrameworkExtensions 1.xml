@@ -346,6 +346,19 @@
       <TechnicalProfiles>
         <!-- This technical profile forces the user to verify the email address that they provide on the UI. Only after email is verified, the user account is
         read from the directory. -->
+        <TechnicalProfile Id="PreResetPasswordMigration">
+          <DisplayName>REST call to migrate user if needed before the password reset</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
+          <Metadata>
+            <Item Key="ServiceUrl">https://c9dacdd3-my-worker.ryueduardo.workers.dev/api/pre-login</Item>
+            <Item Key="SendClaimsIn">Body</Item>
+            <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
+          </InputClaims>
+        </TechnicalProfile>
         <TechnicalProfile Id="LocalAccountDiscoveryUsingEmailAddress">
           <DisplayName>Reset password using email address</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
@@ -366,22 +379,9 @@
             <OutputClaim ClaimTypeReferenceId="authenticationSource" />
           </OutputClaims>
           <ValidationTechnicalProfiles>
-            <ValidationTechnicalProfile ReferenceId="PreResetPasswordValidation" />
+            <ValidationTechnicalProfile ReferenceId="PreResetPasswordMigration" />
             <ValidationTechnicalProfile ReferenceId="AAD-UserReadUsingEmailAddress" />
           </ValidationTechnicalProfiles>
-        </TechnicalProfile>
-        <TechnicalProfile Id="PreResetPasswordValidation">
-          <DisplayName>REST call to enable reset password to non migrated user</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
-          <Metadata>
-            <Item Key="ServiceUrl">https://c9dacdd3-my-worker.ryueduardo.workers.dev/api/pre-login</Item>
-            <Item Key="SendClaimsIn">Body</Item>
-            <Item Key="AuthenticationType">None</Item>
-            <Item Key="AllowInsecureAuthInProduction">true</Item>
-          </Metadata>
-          <InputClaims>
-            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
-          </InputClaims>
         </TechnicalProfile>
         <TechnicalProfile Id="ForgotPassword">
           <DisplayName>Forgot your password?</DisplayName>
