@@ -237,6 +237,7 @@
             <Item Key="HttpBinding">GET</Item> <!--Defining a GET method-->
             <Item Key="SendClaimsIn">Header</Item> <!--Defining the input claims as headers in the request-->
             <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item>
             <Item Key="DebugMode">true</Item> <!--To send data to application insights-->
           </Metadata>
           <InputClaims>
@@ -265,6 +266,7 @@
             <Item Key="ServiceUrl">https://webhook.site/0482e1a8-ee3b-4c39-8a93-f470a7a66734</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item>
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
@@ -331,6 +333,7 @@
     </ClaimsProvider>
 
 
+
     <!--Password Reset https://learn.microsoft.com/en-us/azure/active-directory-b2c/add-password-reset-policy?pivots=b2c-custom-policy#self-service-password-reset-recommended-->
     <ClaimsProvider>
       <DisplayName>Password Reset</DisplayName>
@@ -348,6 +351,7 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
+
 
 
     <!--SAML Session Management provider-->
