@@ -356,7 +356,7 @@
             <Item Key="AllowInsecureAuthInProduction">true</Item>
           </Metadata>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="signInNames.emailAddress" Required="true"/>
           </InputClaims>
         </TechnicalProfile>
         <TechnicalProfile Id="LocalAccountDiscoveryUsingEmailAddress">
