@@ -364,13 +364,13 @@
             <OutputClaim ClaimTypeReferenceId="objectId" />
             <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" />
-
           </OutputClaims>
           <ValidationTechnicalProfiles>
+            <ValidationTechnicalProfile ReferenceId="PreResetPasswordValidation" />
             <ValidationTechnicalProfile ReferenceId="AAD-UserReadUsingEmailAddress" />
           </ValidationTechnicalProfiles>
         </TechnicalProfile>
-        <TechnicalProfile Id="NonMigratedAccountDiscoveryUsingREST">
+        <TechnicalProfile Id="PreResetPasswordValidation">
           <DisplayName>REST call to enable reset password to non migrated user</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
           <Metadata>
@@ -381,11 +381,7 @@
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
-            <InputClaim ClaimTypeReferenceId="password" />
           </InputClaims>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
-          </OutputClaims>
         </TechnicalProfile>
         <TechnicalProfile Id="ForgotPassword">
           <DisplayName>Forgot your password?</DisplayName>
