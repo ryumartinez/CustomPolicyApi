@@ -17,6 +17,11 @@
 
    <BuildingBlocks>
     <ClaimsSchema>
+      <!-- Claim used to store the response of the PreLogin validation REST call-->
+      <ClaimType Id="requiresMfa">
+        <DisplayName>requiresMfa</DisplayName>
+        <DataType>boolean</DataType>
+      </ClaimType>
       <!--Password Reset Claim -->
       <ClaimType Id="isForgotPassword">
         <DisplayName>isForgotPassword</DisplayName>
@@ -273,7 +278,7 @@
             <InputClaim ClaimTypeReferenceId="password" />
           </InputClaims>
           <OutputClaims>
-            <!-- Optional: for example, flags or messaging -->
+            <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
           </OutputClaims>
         </TechnicalProfile>
         <!--Login validation-->
@@ -316,6 +321,7 @@
             <InputClaim ClaimTypeReferenceId="signInName" DefaultValue="{OIDC:LoginHint}" AlwaysUseDefaultValue="true" />
           </InputClaims>
           <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
             <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="Username-Password-Authentication" />
             <OutputClaim ClaimTypeReferenceId="connectionType" DefaultValue="microsoft-entra-b2c" AlwaysUseDefaultValue="true" />
             <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
