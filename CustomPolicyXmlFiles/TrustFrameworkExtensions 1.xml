@@ -503,9 +503,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
         
-        <!-- The previous step (SelfAsserted-Social) could have been skipped if there were no attributes to collect 
-             from the user. So, in that case, create the user in the directory if one does not already exist 
-             (verified using objectId which would be set from the last step if account was created in the directory. -->
+        <!-- Step 7: If at this point the user does not exist in the directory, create it -->
         <OrchestrationStep Order="7" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
@@ -518,7 +516,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <!-- This step is called if we have a weebhookbearer token and we use that to make an additional call to an API to retrieve the email address -->
+        <!-- Step 8: If an external identity provider token is stored in a claim type, use it to call a REST endpoint to get additional data from the provider api-->
         <OrchestrationStep Order="8" Type="ClaimsExchange">
           <Preconditions>
             <!-- Skip this orchestration step if claim webhookBearerToken value does not exist. -->
