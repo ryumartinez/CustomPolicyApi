@@ -25,7 +25,6 @@
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
       <OutputClaims>
-        <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
         <OutputClaim ClaimTypeReferenceId="profileImage"/>
         <OutputClaim ClaimTypeReferenceId="connectionType" />
         <OutputClaim ClaimTypeReferenceId="issuerUserId" />
