@@ -17,6 +17,12 @@
 
    <BuildingBlocks>
     <ClaimsSchema>
+      <!-- Claim used to store the response of the PreLogin validation REST call-->
+      <ClaimType Id="requiresMfa">
+        <DisplayName>requiresMfa</DisplayName>
+        <DataType>boolean</DataType>
+      </ClaimType>
+      <!-- Claim used in reset password -->
       <ClaimType Id="isForgotPassword">
           <DisplayName>isForgotPassword</DisplayName>
           <DataType>boolean</DataType>
@@ -497,7 +503,7 @@
             <InputClaim ClaimTypeReferenceId="password" />
           </InputClaims>
           <OutputClaims>
-            <!-- Optional: for example, flags or messaging -->
+            <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
           </OutputClaims>
         </TechnicalProfile>
         <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
