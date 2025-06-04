@@ -148,67 +148,83 @@
         #api .options .accountButton:not(#LinkedInExchange, #GitHubExchange, #GoogleExchange) { display: none;}
     </style>
 
+    <style>
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrapper input[type="password"],
+        .password-wrapper input[type="text"] {
+            width: 100%;
+            padding-right: 2.5rem;
+            box-sizing: border-box;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 0.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #555;
+            padding: 0;
+            line-height: 1;
+        }
+
+    </style>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function () {
-            function makePwdToggler(pwd){
-                // Create show-password checkbox
-                var checkbox = document.createElement('input');
-                checkbox.setAttribute('type', 'checkbox');
-                var id = pwd.id + 'toggler';
-                checkbox.setAttribute('id', id);
+            function makePwdToggler(pwd) {
+                // Create wrapper
+                const wrapper = document.createElement('div');
+                wrapper.className = 'password-wrapper';
+                pwd.parentNode.insertBefore(wrapper, pwd);
+                wrapper.appendChild(pwd);
 
-                var label = document.createElement('label');
-                label.setAttribute('for', id);
-                label.appendChild(document.createTextNode('show password'));
+                // Create toggle button
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'password-toggle-btn';
+                button.setAttribute('aria-label', 'Toggle password visibility');
+                button.innerText = '👁'; // You can replace this with an icon
 
-                var div = document.createElement('div');
-                div.appendChild(checkbox);
-                div.appendChild(label);
+                wrapper.appendChild(button);
 
-                // Add show-password checkbox under password input
-                pwd.insertAdjacentElement('afterend', div);
+                // Toggle password visibility
+                button.addEventListener('click', function () {
+                    const isPassword = pwd.type === 'password';
+                    pwd.type = isPassword ? 'text' : 'password';
+                    button.innerText = isPassword ? '🙈' : '👁'; // Optional toggle icon
+                });
+            }
 
-                // Add toggle password callback
-                function toggle(){
-                    if(pwd.type === 'password'){
-                        pwd.type = 'text';
-                    } else {
-                        pwd.type = 'password';
+            function setupPwdTogglers() {
+                const pwdInputs = document.querySelectorAll('input[type=password]');
+                for (let i = 0; i < pwdInputs.length; i++) {
+                    const pwd = pwdInputs[i];
+                    if (!pwd.closest('.password-wrapper')) {
+                        makePwdToggler(pwd);
                     }
                 }
-                checkbox.onclick = toggle;
-                // For non-mouse usage
-                checkbox.onkeydown = toggle;
             }
 
-            function setupPwdTogglers(){
-                var pwdInputs = document.querySelectorAll('input[type=password]');
-                for (var i = 0; i < pwdInputs.length; i++) {
-                    makePwdToggler(pwdInputs[i]);
-                }
-            }
-
-            // Set up a MutationObserver to wait for the #password input
             const observer = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                    // Check if the #password element has been added
-                    if ($('#newPassword').length > 0) {
+                mutations.forEach(function () {
+                    if ($('#newPassword').length > 0 || $('#password').length > 0) {
                         setupPwdTogglers();
-                        observer.disconnect(); // Stop observing after initialization
-                    }
-
-                    if ($('#password').length > 0) {
-                        setupPwdTogglers();
-                        observer.disconnect(); // Stop observing after initialization
+                        observer.disconnect();
                     }
                 });
             });
 
-            // Start observing the document for changes
             observer.observe(document.body, { childList: true, subtree: true });
         });
     </script>
+
 </head>
 <body>
     <div id="background_branding_container" data-tenant-branding-background-color="true">
