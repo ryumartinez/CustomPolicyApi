@@ -20,72 +20,97 @@
             src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui_bold.WOFF);
             font-weight: bold;
         }
+
+        [id$="Exchange"] {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            display: inline-block;
+            width: 40px;  /* adjust as needed */
+            height: 40px;
+            transition: filter 0.2s ease;
+        }
+
+
         #AmazonExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/amazon.svg);
+            background-image: url('https://api.iconify.design/logos:amazon-icon.svg');
         }
         #AmazonExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/amazon.svg);
+            filter: brightness(0) invert(1);
         }
+
         #FacebookExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/facebook.svg);
+            background-image: url('https://api.iconify.design/logos:facebook.svg');
         }
         #FacebookExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/facebook.svg);
+            filter: brightness(0) invert(1);
         }
+
         #GitHubExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/github.svg);
+            background-image: url('https://api.iconify.design/logos:github-icon.svg');
         }
         #GitHubExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/github.svg);
+            background-image: url('https://api.iconify.design/logos:github.svg');
         }
-        #AppleExchange,#AppleManagedExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/apple.svg);
+
+        #AppleExchange,
+        #AppleManagedExchange {
+            background-image: url('https://api.iconify.design/logos:apple.svg');
         }
-        #AppleExchange:hover,#AppleManagedExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/apple.svg);
+        #AppleExchange:hover,
+        #AppleManagedExchange:hover {
+            filter: brightness(0) invert(1);
         }
+
         #GoogleExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/google.svg);
+            background-image: url('https://api.iconify.design/logos:google-icon.svg');
         }
         #GoogleExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/google.svg);
+            background-image: url('https://api.iconify.design/logos:google.svg');
         }
+
         #LinkedInExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/linkedin.svg);
+            background-image: url('https://api.iconify.design/logos:linkedin-icon.svg');
         }
         #LinkedInExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/linkedin.svg);
+            filter: brightness(0) invert(1);
         }
+
         #MicrosoftAccountExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/microsoft.svg);
+            background-image: url('https://api.iconify.design/logos:microsoft-icon.svg');
         }
         #MicrosoftAccountExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/microsoft.svg);
+            background-image: url('https://api.iconify.design/logos:microsoft.svg');
         }
+
         #QQExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/qq.svg);
+            background-image: url('https://api.iconify.design/logos:tencent-qq.svg');
         }
         #QQExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/qq.svg);
+            filter: brightness(0) invert(1);
         }
+
         #TwitterExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/twitter.svg);
+            background-image: url('https://api.iconify.design/logos:twitter.svg');
         }
         #TwitterExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/twitter.svg);
+            filter: brightness(0) invert(1);
         }
+
         #WeChatExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/wechat.svg);
+            background-image: url('https://api.iconify.design/logos:wechat.svg');
         }
         #WeChatExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/wechat.svg);
+            filter: brightness(0) invert(1);
         }
+
         #WeiboExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/weibo.svg);
+            background-image: url('https://api.iconify.design/logos:sina-weibo.svg');
         }
         #WeiboExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/weibo.svg);
+            filter: brightness(0) invert(1);
         }
+
         .buttons #cancel:before {
             content: url(https://login.microsoftonline.com/templates/src/images/left-arrow.svg);
         }
