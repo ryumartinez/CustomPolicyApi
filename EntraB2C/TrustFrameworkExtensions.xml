@@ -500,20 +500,31 @@
             <!-- Optional: for example, flags or messaging -->
           </OutputClaims>
         </TechnicalProfile>
-        <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email-With-REST-Call">
+        <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
           <DisplayName>Local Account Signin</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
           <Metadata>
+            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
             <Item Key="SignUpTarget">SignUpWithLogonEmailExchange</Item>
             <Item Key="setting.operatingMode">Email</Item>
             <Item Key="ContentDefinitionReferenceId">api.localaccountsignin</Item>
             <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
+            <!--Message to show if the rest call validation return error 409-->
+            <!--The endpoint error should return a response in this format
+            {
+              "version": "1.0.0",
+               "status": 409,
+               "userMessage": "Your account is blocked. Please contact support."
+             }-->
+            <Item Key="RaiseErrorIfClaimsPrincipalDoesNotExist">true</Item>
+            <Item Key="UserMessageIfClaimsPrincipalDoesNotExist">Pre-login validation failed.</Item>
           </Metadata>
           <IncludeInSso>false</IncludeInSso>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="signInName" DefaultValue="{OIDC:LoginHint}" AlwaysUseDefaultValue="true" />
           </InputClaims>
           <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
             <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="Username-Password-Authentication" />
             <OutputClaim ClaimTypeReferenceId="connectionType" DefaultValue="microsoft-entra-b2c" AlwaysUseDefaultValue="true" />
             <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
@@ -547,7 +558,7 @@
             <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
           </ClaimsProviderSelections>
           <ClaimsExchanges>
-            <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email-With-REST-Call" />
+            <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
