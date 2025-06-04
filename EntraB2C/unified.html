@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
+
     <title>Sign up or sign in</title>
 
     <meta charset="utf-8" />
@@ -165,10 +165,11 @@
         .password-toggle-btn {
             position: absolute;
             right: 0.5rem;
+            top: 0.5rem;
             background: transparent;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 3rem;
             color: #555;
             padding: 0;
             line-height: 1;
@@ -190,7 +191,7 @@
                 button.type = 'button';
                 button.className = 'password-toggle-btn';
                 button.setAttribute('aria-label', 'Toggle password visibility');
-                button.innerText = '👁'; // You can replace this with an icon
+                button.innerText = 'show'; // You can replace this with an icon
 
                 wrapper.appendChild(button);
 
@@ -198,7 +199,7 @@
                 button.addEventListener('click', function () {
                     const isPassword = pwd.type === 'password';
                     pwd.type = isPassword ? 'text' : 'password';
-                    button.innerText = isPassword ? '🙈' : '👁'; // Optional toggle icon
+                    button.innerText = isPassword ? 'hide' : 'show'; // Optional toggle icon
                 });
             }
 
@@ -227,21 +228,21 @@
 
 </head>
 <body>
-    <div id="background_branding_container" data-tenant-branding-background-color="true">
-	<!--       <img data-tenant-branding-background="true" src="https://login.microsoftonline.com/templates/src/backgrounds/1-1.png" alt="Illustration"/> -->
-    </div>
-    <div class="container  unified_container " role="presentation">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <img class="companyLogo" data-tenant-branding-logo="true" src="https://certiverse.com/assets/brand/certiverse.com/CV-Logo-horizontal.png" alt="Company Logo">
-                        <div id="api" role="main">
-                        </div>
+<div id="background_branding_container" data-tenant-branding-background-color="true">
+    <!--       <img data-tenant-branding-background="true" src="https://login.microsoftonline.com/templates/src/backgrounds/1-1.png" alt="Illustration"/> -->
+</div>
+<div class="container  unified_container " role="presentation">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img class="companyLogo" data-tenant-branding-logo="true" src="https://certiverse.com/assets/brand/certiverse.com/CV-Logo-horizontal.png" alt="Company Logo">
+                    <div id="api" role="main">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
