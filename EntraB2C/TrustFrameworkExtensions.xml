@@ -5,13 +5,13 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
   PolicySchemaVersion="0.3.0.0" 
-  TenantId="certiversedevelopment.onmicrosoft.com" 
+  TenantId="sandboxcertiverse.onmicrosoft.com" 
   PolicyId="B2C_1A_TrustFrameworkExtensions" 
-  PublicPolicyUri="http://certiversedevelopment.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions">
+  PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions">
   
   <BasePolicy>  
     <!-- Environment Variable -->
-    <TenantId>certiversedevelopment.onmicrosoft.com</TenantId>
+    <TenantId>sandboxcertiverse.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
   </BasePolicy>
 
@@ -289,6 +289,7 @@
             <Item Key="HttpBinding">GET</Item> <!--Defining a GET method-->
             <Item Key="SendClaimsIn">Header</Item> <!--Defining the input claims as headers in the request-->
             <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item>
             <Item Key="UseClaimAsBearerToken">webhookBearerToken</Item> <!--Defining the input claim that we use as bearer token-->
             <Item Key="DebugMode">true</Item> <!--To send data to application insights-->
           </Metadata>
@@ -349,18 +350,18 @@
     <ClaimsProvider>
       <DisplayName>Local Account SignIn</DisplayName>
       <TechnicalProfiles>
-         <TechnicalProfile Id="login-NonInteractive">
+        <TechnicalProfile Id="login-NonInteractive">
           <Metadata>
             <!-- Environment Variable - ProxyIdentityExperienceFrameworkAppId -->
-            <Item Key="client_id">5b009d7a-c811-4d46-975b-d64eb3e6a506</Item>
+            <Item Key="client_id">92f649cd-7283-4a0a-b117-c05776d459fd</Item>
             <!-- Environment Variable - IdentityExperienceFrameworkAppId -->
-            <Item Key="IdTokenAudience">e8c6e211-2b0b-4f3b-acf9-efbb13c72a8f</Item>
+            <Item Key="IdTokenAudience">6c360c1d-239f-4112-9881-9f9dc068bbcd</Item>
           </Metadata>
           <InputClaims>
             <!-- Environment Variable - ProxyIdentityExperienceFrameworkAppId -->
-            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="5b009d7a-c811-4d46-975b-d64eb3e6a506" />
+            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="92f649cd-7283-4a0a-b117-c05776d459fd" />
             <!-- Environment Variable - IdentityExperienceFrameworkAppId -->
-            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="e8c6e211-2b0b-4f3b-acf9-efbb13c72a8f" />
+            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="6c360c1d-239f-4112-9881-9f9dc068bbcd" />
           </InputClaims>
         </TechnicalProfile>
       </TechnicalProfiles>
@@ -494,6 +495,7 @@
             <Item Key="ServiceUrl">https://person-development.azurewebsites.net/api/AuthProvider/EntraB2C/ValidateUser</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item>
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
