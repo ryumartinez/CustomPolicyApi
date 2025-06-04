@@ -79,10 +79,10 @@
       </ClaimsTransformation>
     </ClaimsTransformations>
 
-    <ContentDefinitions>
+<!--    <ContentDefinitions>
 
-      <!--Content definition verions https://learn.microsoft.com/en-us/azure/active-directory-b2c/page-layout#unified-sign-in-and-sign-up-page-with-password-reset-link-unifiedssp-->
-      <!-- This content definition is to render an error page that displays unhandled errors. -->
+      &lt;!&ndash;Content definition verions https://learn.microsoft.com/en-us/azure/active-directory-b2c/page-layout#unified-sign-in-and-sign-up-page-with-password-reset-link-unifiedssp&ndash;&gt;
+      &lt;!&ndash; This content definition is to render an error page that displays unhandled errors. &ndash;&gt;
       <ContentDefinition Id="api.error">
         <LoadUri>~/tenant/templates/AzureBlue/exception.cshtml</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
@@ -176,7 +176,7 @@
         </Metadata>
       </ContentDefinition>
 
-    </ContentDefinitions>
+    </ContentDefinitions>-->
 
 
   </BuildingBlocks>
