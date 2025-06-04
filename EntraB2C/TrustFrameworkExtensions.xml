@@ -80,10 +80,10 @@
       </ClaimsTransformation>
     </ClaimsTransformations>
 
-<!--    <ContentDefinitions>
+    <ContentDefinitions>
 
-      &lt;!&ndash;Content definition verions https://learn.microsoft.com/en-us/azure/active-directory-b2c/page-layout#unified-sign-in-and-sign-up-page-with-password-reset-link-unifiedssp&ndash;&gt;
-      &lt;!&ndash; This content definition is to render an error page that displays unhandled errors. &ndash;&gt;
+      <!--Content definition verions https://learn.microsoft.com/en-us/azure/active-directory-b2c/page-layout#unified-sign-in-and-sign-up-page-with-password-reset-link-unifiedssp-->
+      <!-- This content definition is to render an error page that displays unhandled errors. -->
       <ContentDefinition Id="api.error">
         <LoadUri>~/tenant/templates/AzureBlue/exception.cshtml</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
@@ -104,7 +104,7 @@
       </ContentDefinition>
 
       <ContentDefinition Id="api.idpselections.signup">
-        <LoadUri>https://pvaluedevelopmentb2c.blob.core.windows.net/public/unified.html</LoadUri>
+        <LoadUri>https://staticwebsitescontainer.blob.core.windows.net/custompolicyhtmltemplates/unified.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:providerselection:1.2.4</DataUri>
         <Metadata>
@@ -114,7 +114,7 @@
       </ContentDefinition>
 
       <ContentDefinition Id="api.signuporsignin">
-        <LoadUri>https://pvaluedevelopmentb2c.blob.core.windows.net/public/unified.html</LoadUri>
+        <LoadUri>https://staticwebsitescontainer.blob.core.windows.net/custompolicyhtmltemplates/unified.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:2.1.5</DataUri>
         <Metadata>
@@ -142,7 +142,7 @@
       </ContentDefinition>
 
       <ContentDefinition Id="api.localaccountsignup">
-        <LoadUri>https://pvaluedevelopmentb2c.blob.core.windows.net/public/unified.html</LoadUri>
+        <LoadUri>https://staticwebsitescontainer.blob.core.windows.net/custompolicyhtmltemplates/unified.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.34</DataUri>
         <Metadata>
@@ -151,7 +151,7 @@
       </ContentDefinition>
 
       <ContentDefinition Id="api.localaccountpasswordreset">
-        <LoadUri>https://pvaluedevelopmentb2c.blob.core.windows.net/public/unified.html</LoadUri>
+        <LoadUri>https://staticwebsitescontainer.blob.core.windows.net/custompolicyhtmltemplates/unified.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.34</DataUri>
         <Metadata>
@@ -160,7 +160,7 @@
       </ContentDefinition>
 
       <ContentDefinition Id="api.socialccountsignup">
-        <LoadUri>https://pvaluedevelopmentb2c.blob.core.windows.net/public/unified.html</LoadUri>
+        <LoadUri>https://staticwebsitescontainer.blob.core.windows.net/custompolicyhtmltemplates/unified.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.34</DataUri>
         <Metadata>
@@ -177,7 +177,7 @@
         </Metadata>
       </ContentDefinition>
 
-    </ContentDefinitions>-->
+    </ContentDefinitions>
 
 
   </BuildingBlocks>
