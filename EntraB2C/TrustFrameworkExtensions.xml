@@ -5,18 +5,19 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
   PolicySchemaVersion="0.3.0.0" 
-  TenantId="certiversedevelopment.onmicrosoft.com" 
+  TenantId="sandboxcertiverse.onmicrosoft.com" 
   PolicyId="B2C_1A_TrustFrameworkExtensions" 
-  PublicPolicyUri="http://certiversedevelopment.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions">
+  PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions">
   
   <BasePolicy>  
     <!-- Environment Variable -->
-    <TenantId>certiversedevelopment.onmicrosoft.com</TenantId>
+    <TenantId>sandboxcertiverse.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
   </BasePolicy>
 
    <BuildingBlocks>
     <ClaimsSchema>
+      <!-- Claim used in reset password -->
       <ClaimType Id="isForgotPassword">
           <DisplayName>isForgotPassword</DisplayName>
           <DataType>boolean</DataType>
@@ -79,10 +80,10 @@
       </ClaimsTransformation>
     </ClaimsTransformations>
 
-    <ContentDefinitions>
+<!--    <ContentDefinitions>
 
-      <!--Content definition verions https://learn.microsoft.com/en-us/azure/active-directory-b2c/page-layout#unified-sign-in-and-sign-up-page-with-password-reset-link-unifiedssp-->
-      <!-- This content definition is to render an error page that displays unhandled errors. -->
+      &lt;!&ndash;Content definition verions https://learn.microsoft.com/en-us/azure/active-directory-b2c/page-layout#unified-sign-in-and-sign-up-page-with-password-reset-link-unifiedssp&ndash;&gt;
+      &lt;!&ndash; This content definition is to render an error page that displays unhandled errors. &ndash;&gt;
       <ContentDefinition Id="api.error">
         <LoadUri>~/tenant/templates/AzureBlue/exception.cshtml</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
@@ -176,7 +177,7 @@
         </Metadata>
       </ContentDefinition>
 
-    </ContentDefinitions>
+    </ContentDefinitions>-->
 
 
   </BuildingBlocks>
@@ -289,6 +290,7 @@
             <Item Key="HttpBinding">GET</Item> <!--Defining a GET method-->
             <Item Key="SendClaimsIn">Header</Item> <!--Defining the input claims as headers in the request-->
             <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item>
             <Item Key="UseClaimAsBearerToken">webhookBearerToken</Item> <!--Defining the input claim that we use as bearer token-->
             <Item Key="DebugMode">true</Item> <!--To send data to application insights-->
           </Metadata>
@@ -349,18 +351,18 @@
     <ClaimsProvider>
       <DisplayName>Local Account SignIn</DisplayName>
       <TechnicalProfiles>
-         <TechnicalProfile Id="login-NonInteractive">
+        <TechnicalProfile Id="login-NonInteractive">
           <Metadata>
             <!-- Environment Variable - ProxyIdentityExperienceFrameworkAppId -->
-            <Item Key="client_id">5b009d7a-c811-4d46-975b-d64eb3e6a506</Item>
+            <Item Key="client_id">92f649cd-7283-4a0a-b117-c05776d459fd</Item>
             <!-- Environment Variable - IdentityExperienceFrameworkAppId -->
-            <Item Key="IdTokenAudience">e8c6e211-2b0b-4f3b-acf9-efbb13c72a8f</Item>
+            <Item Key="IdTokenAudience">6c360c1d-239f-4112-9881-9f9dc068bbcd</Item>
           </Metadata>
           <InputClaims>
             <!-- Environment Variable - ProxyIdentityExperienceFrameworkAppId -->
-            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="5b009d7a-c811-4d46-975b-d64eb3e6a506" />
+            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="92f649cd-7283-4a0a-b117-c05776d459fd" />
             <!-- Environment Variable - IdentityExperienceFrameworkAppId -->
-            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="e8c6e211-2b0b-4f3b-acf9-efbb13c72a8f" />
+            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="6c360c1d-239f-4112-9881-9f9dc068bbcd" />
           </InputClaims>
         </TechnicalProfile>
       </TechnicalProfiles>
@@ -431,13 +433,13 @@
           <DisplayName>REST call to migrate user if needed before the password reset</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
           <Metadata>
-            <Item Key="ServiceUrl">https://person-development.azurewebsites.net/api/AuthProvider/EntraB2C/ResetPassword</Item>
+            <Item Key="ServiceUrl">https://my-worker.ryueduardo.workers.dev/api/pre-reset</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">None</Item>
             <Item Key="AllowInsecureAuthInProduction">true</Item>
           </Metadata>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
+            <InputClaim ClaimTypeReferenceId="email" Required="true"/>
           </InputClaims>
         </TechnicalProfile>
         <TechnicalProfile Id="LocalAccountDiscoveryUsingEmailAddress">
@@ -472,11 +474,6 @@
           </OutputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
         </TechnicalProfile>
-        <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
-          <Metadata>
-            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
-          </Metadata>
-        </TechnicalProfile>
         <TechnicalProfile Id="LocalAccountWritePasswordUsingObjectId">
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
         </TechnicalProfile>
@@ -494,23 +491,31 @@
             <Item Key="ServiceUrl">https://person-development.azurewebsites.net/api/AuthProvider/EntraB2C/ValidateUser</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">None</Item>
+            <Item Key="AllowInsecureAuthInProduction">true</Item>
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
             <InputClaim ClaimTypeReferenceId="password" />
           </InputClaims>
-          <OutputClaims>
-            <!-- Optional: for example, flags or messaging -->
-          </OutputClaims>
         </TechnicalProfile>
-        <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email-With-REST-Call">
+        <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
           <DisplayName>Local Account Signin</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
           <Metadata>
+            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
             <Item Key="SignUpTarget">SignUpWithLogonEmailExchange</Item>
             <Item Key="setting.operatingMode">Email</Item>
             <Item Key="ContentDefinitionReferenceId">api.localaccountsignin</Item>
             <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
+            <!--Message to show if the rest call validation return error 409-->
+            <!--The endpoint error should return a response in this format
+            {
+              "version": "1.0.0",
+               "status": 409,
+               "userMessage": "Your account is blocked. Please contact support."
+             }-->
+            <Item Key="RaiseErrorIfClaimsPrincipalDoesNotExist">true</Item>
+            <Item Key="UserMessageIfClaimsPrincipalDoesNotExist">Pre-login validation failed.</Item>
           </Metadata>
           <IncludeInSso>false</IncludeInSso>
           <InputClaims>
@@ -550,7 +555,7 @@
             <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
           </ClaimsProviderSelections>
           <ClaimsExchanges>
-            <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email-With-REST-Call" />
+            <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
@@ -661,57 +666,6 @@
         </OrchestrationStep>
         
         <OrchestrationStep Order="8" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
-
-      </OrchestrationSteps>
-      <ClientDefinition ReferenceId="DefaultWeb" />
-    </UserJourney>
-
-    <UserJourney Id="ProfileEdit">
-      <OrchestrationSteps>
-
-        <OrchestrationStep Order="1" Type="ClaimsProviderSelection" ContentDefinitionReferenceId="api.idpselections">
-          <ClaimsProviderSelections>
-            <ClaimsProviderSelection TargetClaimsExchangeId="GoogleExchange" />
-            <ClaimsProviderSelection TargetClaimsExchangeId="LocalAccountSigninEmailExchange" />
-          </ClaimsProviderSelections>
-        </OrchestrationStep>
-        <OrchestrationStep Order="2" Type="ClaimsExchange">
-          <ClaimsExchanges>
-            <ClaimsExchange Id="GoogleExchange" TechnicalProfileReferenceId="Google-OAUTH" />
-            <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-        <OrchestrationStep Order="3" Type="ClaimsExchange">
-          <Preconditions>
-            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
-              <Value>authenticationSource</Value>
-              <Value>localAccountAuthentication</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="AADUserRead" TechnicalProfileReferenceId="AAD-UserReadUsingAlternativeSecurityId" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-        <OrchestrationStep Order="4" Type="ClaimsExchange">
-          <Preconditions>
-            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
-              <Value>authenticationSource</Value>
-              <Value>socialIdpAuthentication</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-
-        <OrchestrationStep Order="5" Type="ClaimsExchange">
-          <ClaimsExchanges>
-            <ClaimsExchange Id="B2CUserProfileUpdateExchange" TechnicalProfileReferenceId="SelfAsserted-ProfileUpdate" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
