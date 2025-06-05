@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Environment Variable -->
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
+  TenantId="sandboxcertiverse.onmicrosoft.com"
+  PolicyId="B2C_1A_signup_signin_auth0"
+  PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_signup_signin_auth0">
+
+  <BasePolicy>
+    <!-- Environment Variable -->
+    <TenantId>sandboxcertiverse.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
+  </BasePolicy>
+
+  <ClaimsProviders>
+    <!--Auth0 SAML identity provider-->
+    <ClaimsProvider>
+      <Domain>auth-saml2</Domain>
+      <DisplayName>Auth0</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="Auth0-SAML2">
+          <DisplayName>Auth0SAML</DisplayName>
+          <Description>Login with your auth0 account</Description>
+          <Protocol Name="SAML2" />
+          <Metadata>
+            <!-- Environment Variable - ProxyIdentityExperienceFrameworkAppId -->
+            <Item Key="PartnerEntity">https://pvalue-dev-sso-client2.us.auth0.com/samlp/metadata/ekGJ4bFyrinXHIVuSDauQy7D0lywkPdr</Item>
+            <!-- Message signing configurations -->
+            <Item Key="WantsSignedAssertions">false</Item>
+            <Item Key="ResponsesSigned">false</Item>
+            <Item Key="WantsSignedRequests">false</Item>
+            <!-- Aligns with NameID format from SAML metadata -->
+            <Item Key="NameIdPolicyFormat">urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <!--Reference to .pfx signing certificate uploaded in 'Policy keys'-->
+            <Key Id="SamlMessageSigning" StorageReferenceId="B2C_1A_SAMLSigningCert" />
+          </CryptographicKeys>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="connectionType" DefaultValue="samlp" AlwaysUseDefaultValue="true" />
+            <OutputClaim ClaimTypeReferenceId="issuerUserId" PartnerClaimType="user_id" />
+            <OutputClaim ClaimTypeReferenceId="email" />
+            <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="auth-saml2" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="socialIdpAuthentication" />
+          </OutputClaims>
+          <OutputClaimsTransformations>
+            <OutputClaimsTransformation ReferenceId="CreateRandomUPNUserName" />
+            <OutputClaimsTransformation ReferenceId="CreateUserPrincipalName" />
+            <OutputClaimsTransformation ReferenceId="CreateAlternativeSecurityId" />
+            <OutputClaimsTransformation ReferenceId="CreateSubjectClaimFromAlternativeSecurityId" />
+          </OutputClaimsTransformations>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Saml-idp" />
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+  </ClaimsProviders>
+
+  <UserJourneys>
+    <UserJourney Id="SignUpOrSignIn">
+      <OrchestrationSteps>
+
+        <!-- Step 1: Renders the form, and handles submission -->
+        <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
+          <ClaimsProviderSelections>
+            <ClaimsProviderSelection TargetClaimsExchangeId="Auth0SAMLExchange" />
+          </ClaimsProviderSelections>
+        </OrchestrationStep>
+
+        <!-- Step 2: Associate the buttons and links with Technical Profiles -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="Auth0SAMLExchange" TechnicalProfileReferenceId="Auth0-SAML2" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+      </OrchestrationSteps>
+      <ClientDefinition ReferenceId="DefaultWeb" />
+    </UserJourney>
+  </UserJourneys>
+
+  <RelyingParty>
+    <DefaultUserJourney ReferenceId="SignUpOrSignIn" />
+    <Endpoints>
+      <!--points to refresh token journey when app makes refresh token request-->
+      <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
+    </Endpoints>
+    <TechnicalProfile Id="PolicyProfile">
+      <DisplayName>PolicyProfile</DisplayName>
+      <Protocol Name="OpenIdConnect" />
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="requiresMfa"/>
+        <OutputClaim ClaimTypeReferenceId="profileImage"/>
+        <OutputClaim ClaimTypeReferenceId="connectionType" />
+        <OutputClaim ClaimTypeReferenceId="issuerUserId" />
+        <OutputClaim ClaimTypeReferenceId="displayName" />
+        <OutputClaim ClaimTypeReferenceId="givenName" />
+        <OutputClaim ClaimTypeReferenceId="surname" />
+        <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
+        <OutputClaim ClaimTypeReferenceId="email" />
+        <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub"/>
+        <OutputClaim ClaimTypeReferenceId="identityProvider" />
+        <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
+      </OutputClaims>
+      <SubjectNamingInfo ClaimType="sub" />
+    </TechnicalProfile>
+  </RelyingParty>
+
+</TrustFrameworkPolicy>
