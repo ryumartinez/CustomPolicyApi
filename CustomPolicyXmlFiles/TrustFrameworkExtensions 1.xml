@@ -244,6 +244,9 @@
             <Item Key="AuthenticationType">ApiKeyHeader</Item>
             <Item Key="DebugMode">true</Item> <!--To send data to application insights-->
           </Metadata>
+          <CryptographicKeys>
+            <Key Id="x-functions-key" StorageReferenceId="B2C_1A_RestApiKey" />
+          </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="webhookBearerToken" PartnerClaimType="provider-token"/>
             <InputClaim ClaimTypeReferenceId="identityProvider" PartnerClaimType="identity-provider"/>
@@ -271,6 +274,9 @@
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">ApiKeyHeader</Item>
           </Metadata>
+          <CryptographicKeys>
+            <Key Id="x-functions-key" StorageReferenceId="B2C_1A_RestApiKey" />
+          </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
             <InputClaim ClaimTypeReferenceId="password" />
@@ -352,6 +358,9 @@
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">ApiKeyHeader</Item>
           </Metadata>
+          <CryptographicKeys>
+            <Key Id="x-functions-key" StorageReferenceId="B2C_1A_RestApiKey" />
+          </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email" Required="true"/>
           </InputClaims>
