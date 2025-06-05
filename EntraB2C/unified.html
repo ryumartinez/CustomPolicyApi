@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
+
     <title>Sign up or sign in</title>
 
     <meta charset="utf-8" />
@@ -20,72 +20,97 @@
             src: url(https://login.microsoftonline.com/templates/src/fonts/segoeui_bold.WOFF);
             font-weight: bold;
         }
+
+        [id$="Exchange"] {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            display: inline-block;
+            width: 40px;  /* adjust as needed */
+            height: 40px;
+            transition: filter 0.2s ease;
+        }
+
+
         #AmazonExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/amazon.svg);
+            background-image: url('https://api.iconify.design/logos:amazon-icon.svg');
         }
         #AmazonExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/amazon.svg);
+            filter: brightness(0) invert(1);
         }
+
         #FacebookExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/facebook.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'%3E%3Cpath fill='%231877f2' d='M256 128C256 57.308 198.692 0 128 0S0 57.308 0 128c0 63.888 46.808 116.843 108 126.445V165H75.5v-37H108V99.8c0-32.08 19.11-49.8 48.348-49.8C170.352 50 185 52.5 185 52.5V84h-16.14C152.959 84 148 93.867 148 103.99V128h35.5l-5.675 37H148v89.445c61.192-9.602 108-62.556 108-126.445'/%3E%3Cpath fill='%23fff' d='m177.825 165l5.675-37H148v-24.01C148 93.866 152.959 84 168.86 84H185V52.5S170.352 50 156.347 50C127.11 50 108 67.72 108 99.8V128H75.5v37H108v89.445A129 129 0 0 0 128 256a129 129 0 0 0 20-1.555V165z'/%3E%3C/svg%3E");
         }
         #FacebookExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/facebook.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'%3E%3Cpath fill='%231877f2' d='M256 128C256 57.308 198.692 0 128 0S0 57.308 0 128c0 63.888 46.808 116.843 108 126.445V165H75.5v-37H108V99.8c0-32.08 19.11-49.8 48.348-49.8C170.352 50 185 52.5 185 52.5V84h-16.14C152.959 84 148 93.867 148 103.99V128h35.5l-5.675 37H148v89.445c61.192-9.602 108-62.556 108-126.445'/%3E%3Cpath fill='%23fff' d='m177.825 165l5.675-37H148v-24.01C148 93.866 152.959 84 168.86 84H185V52.5S170.352 50 156.347 50C127.11 50 108 67.72 108 99.8V128H75.5v37H108v89.445A129 129 0 0 0 128 256a129 129 0 0 0 20-1.555V165z'/%3E%3C/svg%3E");
         }
+
         #GitHubExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/github.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='250' viewBox='0 0 256 250'%3E%3Cpath fill='%23161614' d='M128.001 0C57.317 0 0 57.307 0 128.001c0 56.554 36.676 104.535 87.535 121.46c6.397 1.185 8.746-2.777 8.746-6.158c0-3.052-.12-13.135-.174-23.83c-35.61 7.742-43.124-15.103-43.124-15.103c-5.823-14.795-14.213-18.73-14.213-18.73c-11.613-7.944.876-7.78.876-7.78c12.853.902 19.621 13.19 19.621 13.19c11.417 19.568 29.945 13.911 37.249 10.64c1.149-8.272 4.466-13.92 8.127-17.116c-28.431-3.236-58.318-14.212-58.318-63.258c0-13.975 5-25.394 13.188-34.358c-1.329-3.224-5.71-16.242 1.24-33.874c0 0 10.749-3.44 35.21 13.121c10.21-2.836 21.16-4.258 32.038-4.307c10.878.049 21.837 1.47 32.066 4.307c24.431-16.56 35.165-13.12 35.165-13.12c6.967 17.63 2.584 30.65 1.255 33.873c8.207 8.964 13.173 20.383 13.173 34.358c0 49.163-29.944 59.988-58.447 63.157c4.591 3.972 8.682 11.762 8.682 23.704c0 17.126-.148 30.91-.148 35.126c0 3.407 2.304 7.398 8.792 6.14C219.37 232.5 256 184.537 256 128.002C256 57.307 198.691 0 128.001 0m-80.06 182.34c-.282.636-1.283.827-2.194.39c-.929-.417-1.45-1.284-1.15-1.922c.276-.655 1.279-.838 2.205-.399c.93.418 1.46 1.293 1.139 1.931m6.296 5.618c-.61.566-1.804.303-2.614-.591c-.837-.892-.994-2.086-.375-2.66c.63-.566 1.787-.301 2.626.591c.838.903 1 2.088.363 2.66m4.32 7.188c-.785.545-2.067.034-2.86-1.104c-.784-1.138-.784-2.503.017-3.05c.795-.547 2.058-.055 2.861 1.075c.782 1.157.782 2.522-.019 3.08m7.304 8.325c-.701.774-2.196.566-3.29-.49c-1.119-1.032-1.43-2.496-.726-3.27c.71-.776 2.213-.558 3.315.49c1.11 1.03 1.45 2.505.701 3.27m9.442 2.81c-.31 1.003-1.75 1.459-3.199 1.033c-1.448-.439-2.395-1.613-2.103-2.626c.301-1.01 1.747-1.484 3.207-1.028c1.446.436 2.396 1.602 2.095 2.622m10.744 1.193c.036 1.055-1.193 1.93-2.715 1.95c-1.53.034-2.769-.82-2.786-1.86c0-1.065 1.202-1.932 2.733-1.958c1.522-.03 2.768.818 2.768 1.868m10.555-.405c.182 1.03-.875 2.088-2.387 2.37c-1.485.271-2.861-.365-3.05-1.386c-.184-1.056.893-2.114 2.376-2.387c1.514-.263 2.868.356 3.061 1.403'/%3E%3C/svg%3E");
         }
         #GitHubExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/github.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='250' viewBox='0 0 256 250'%3E%3Cpath fill='%23161614' d='M128.001 0C57.317 0 0 57.307 0 128.001c0 56.554 36.676 104.535 87.535 121.46c6.397 1.185 8.746-2.777 8.746-6.158c0-3.052-.12-13.135-.174-23.83c-35.61 7.742-43.124-15.103-43.124-15.103c-5.823-14.795-14.213-18.73-14.213-18.73c-11.613-7.944.876-7.78.876-7.78c12.853.902 19.621 13.19 19.621 13.19c11.417 19.568 29.945 13.911 37.249 10.64c1.149-8.272 4.466-13.92 8.127-17.116c-28.431-3.236-58.318-14.212-58.318-63.258c0-13.975 5-25.394 13.188-34.358c-1.329-3.224-5.71-16.242 1.24-33.874c0 0 10.749-3.44 35.21 13.121c10.21-2.836 21.16-4.258 32.038-4.307c10.878.049 21.837 1.47 32.066 4.307c24.431-16.56 35.165-13.12 35.165-13.12c6.967 17.63 2.584 30.65 1.255 33.873c8.207 8.964 13.173 20.383 13.173 34.358c0 49.163-29.944 59.988-58.447 63.157c4.591 3.972 8.682 11.762 8.682 23.704c0 17.126-.148 30.91-.148 35.126c0 3.407 2.304 7.398 8.792 6.14C219.37 232.5 256 184.537 256 128.002C256 57.307 198.691 0 128.001 0m-80.06 182.34c-.282.636-1.283.827-2.194.39c-.929-.417-1.45-1.284-1.15-1.922c.276-.655 1.279-.838 2.205-.399c.93.418 1.46 1.293 1.139 1.931m6.296 5.618c-.61.566-1.804.303-2.614-.591c-.837-.892-.994-2.086-.375-2.66c.63-.566 1.787-.301 2.626.591c.838.903 1 2.088.363 2.66m4.32 7.188c-.785.545-2.067.034-2.86-1.104c-.784-1.138-.784-2.503.017-3.05c.795-.547 2.058-.055 2.861 1.075c.782 1.157.782 2.522-.019 3.08m7.304 8.325c-.701.774-2.196.566-3.29-.49c-1.119-1.032-1.43-2.496-.726-3.27c.71-.776 2.213-.558 3.315.49c1.11 1.03 1.45 2.505.701 3.27m9.442 2.81c-.31 1.003-1.75 1.459-3.199 1.033c-1.448-.439-2.395-1.613-2.103-2.626c.301-1.01 1.747-1.484 3.207-1.028c1.446.436 2.396 1.602 2.095 2.622m10.744 1.193c.036 1.055-1.193 1.93-2.715 1.95c-1.53.034-2.769-.82-2.786-1.86c0-1.065 1.202-1.932 2.733-1.958c1.522-.03 2.768.818 2.768 1.868m10.555-.405c.182 1.03-.875 2.088-2.387 2.37c-1.485.271-2.861-.365-3.05-1.386c-.184-1.056.893-2.114 2.376-2.387c1.514-.263 2.868.356 3.061 1.403'/%3E%3C/svg%3E");
         }
-        #AppleExchange,#AppleManagedExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/apple.svg);
+
+        #AppleExchange,
+        #AppleManagedExchange {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='315' viewBox='0 0 256 315'%3E%3Cpath d='M213.803 167.03c.442 47.58 41.74 63.413 42.197 63.615c-.35 1.116-6.599 22.563-21.757 44.716c-13.104 19.153-26.705 38.235-48.13 38.63c-21.05.388-27.82-12.483-51.888-12.483c-24.061 0-31.582 12.088-51.51 12.871c-20.68.783-36.428-20.71-49.64-39.793c-27-39.033-47.633-110.3-19.928-158.406c13.763-23.89 38.36-39.017 65.056-39.405c20.307-.387 39.475 13.662 51.889 13.662c12.406 0 35.699-16.895 60.186-14.414c10.25.427 39.026 4.14 57.503 31.186c-1.49.923-34.335 20.044-33.978 59.822M174.24 50.199c10.98-13.29 18.369-31.79 16.353-50.199c-15.826.636-34.962 10.546-46.314 23.828c-10.173 11.763-19.082 30.589-16.678 48.633c17.64 1.365 35.66-8.964 46.64-22.262'/%3E%3C/svg%3E");
         }
-        #AppleExchange:hover,#AppleManagedExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/apple.svg);
+        #AppleExchange:hover,
+        #AppleManagedExchange:hover {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='315' viewBox='0 0 256 315'%3E%3Cpath d='M213.803 167.03c.442 47.58 41.74 63.413 42.197 63.615c-.35 1.116-6.599 22.563-21.757 44.716c-13.104 19.153-26.705 38.235-48.13 38.63c-21.05.388-27.82-12.483-51.888-12.483c-24.061 0-31.582 12.088-51.51 12.871c-20.68.783-36.428-20.71-49.64-39.793c-27-39.033-47.633-110.3-19.928-158.406c13.763-23.89 38.36-39.017 65.056-39.405c20.307-.387 39.475 13.662 51.889 13.662c12.406 0 35.699-16.895 60.186-14.414c10.25.427 39.026 4.14 57.503 31.186c-1.49.923-34.335 20.044-33.978 59.822M174.24 50.199c10.98-13.29 18.369-31.79 16.353-50.199c-15.826.636-34.962 10.546-46.314 23.828c-10.173 11.763-19.082 30.589-16.678 48.633c17.64 1.365 35.66-8.964 46.64-22.262'/%3E%3C/svg%3E");
         }
+
         #GoogleExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/google.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='262' viewBox='0 0 256 262'%3E%3Cpath fill='%234285f4' d='M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622l38.755 30.023l2.685.268c24.659-22.774 38.875-56.282 38.875-96.027'/%3E%3Cpath fill='%2334a853' d='M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055c-34.523 0-63.824-22.773-74.269-54.25l-1.531.13l-40.298 31.187l-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1'/%3E%3Cpath fill='%23fbbc05' d='M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82c0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602z'/%3E%3Cpath fill='%23eb4335' d='M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251'/%3E%3C/svg%3E");
         }
         #GoogleExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/google.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='262' viewBox='0 0 256 262'%3E%3Cpath fill='%234285f4' d='M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622l38.755 30.023l2.685.268c24.659-22.774 38.875-56.282 38.875-96.027'/%3E%3Cpath fill='%2334a853' d='M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055c-34.523 0-63.824-22.773-74.269-54.25l-1.531.13l-40.298 31.187l-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1'/%3E%3Cpath fill='%23fbbc05' d='M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82c0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602z'/%3E%3Cpath fill='%23eb4335' d='M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251'/%3E%3C/svg%3E");
         }
+
         #LinkedInExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/linkedin.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'%3E%3Cpath fill='%230a66c2' d='M218.123 218.127h-37.931v-59.403c0-14.165-.253-32.4-19.728-32.4c-19.756 0-22.779 15.434-22.779 31.369v60.43h-37.93V95.967h36.413v16.694h.51a39.91 39.91 0 0 1 35.928-19.733c38.445 0 45.533 25.288 45.533 58.186zM56.955 79.27c-12.157.002-22.014-9.852-22.016-22.009s9.851-22.014 22.008-22.016c12.157-.003 22.014 9.851 22.016 22.008A22.013 22.013 0 0 1 56.955 79.27m18.966 138.858H37.95V95.967h37.97zM237.033.018H18.89C8.58-.098.125 8.161-.001 18.471v219.053c.122 10.315 8.576 18.582 18.89 18.474h218.144c10.336.128 18.823-8.139 18.966-18.474V18.454c-.147-10.33-8.635-18.588-18.966-18.453'/%3E%3C/svg%3E");
         }
         #LinkedInExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/linkedin.svg);
+            filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'%3E%3Cpath fill='%230a66c2' d='M218.123 218.127h-37.931v-59.403c0-14.165-.253-32.4-19.728-32.4c-19.756 0-22.779 15.434-22.779 31.369v60.43h-37.93V95.967h36.413v16.694h.51a39.91 39.91 0 0 1 35.928-19.733c38.445 0 45.533 25.288 45.533 58.186zM56.955 79.27c-12.157.002-22.014-9.852-22.016-22.009s9.851-22.014 22.008-22.016c12.157-.003 22.014 9.851 22.016 22.008A22.013 22.013 0 0 1 56.955 79.27m18.966 138.858H37.95V95.967h37.97zM237.033.018H18.89C8.58-.098.125 8.161-.001 18.471v219.053c.122 10.315 8.576 18.582 18.89 18.474h218.144c10.336.128 18.823-8.139 18.966-18.474V18.454c-.147-10.33-8.635-18.588-18.966-18.453'/%3E%3C/svg%3E");
         }
+
         #MicrosoftAccountExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/microsoft.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'%3E%3Cpath fill='%23f1511b' d='M121.666 121.666H0V0h121.666z'/%3E%3Cpath fill='%2380cc28' d='M256 121.666H134.335V0H256z'/%3E%3Cpath fill='%2300adef' d='M121.663 256.002H0V134.336h121.663z'/%3E%3Cpath fill='%23fbbc09' d='M256 256.002H134.335V134.336H256z'/%3E%3C/svg%3E");
         }
         #MicrosoftAccountExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/microsoft.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'%3E%3Cpath fill='%23f1511b' d='M121.666 121.666H0V0h121.666z'/%3E%3Cpath fill='%2380cc28' d='M256 121.666H134.335V0H256z'/%3E%3Cpath fill='%2300adef' d='M121.663 256.002H0V134.336h121.663z'/%3E%3Cpath fill='%23fbbc09' d='M256 256.002H134.335V134.336H256z'/%3E%3C/svg%3E");
         }
+
         #QQExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/qq.svg);
+            background-image: url('https://api.iconify.design/logos:tencent-qq.svg');
         }
         #QQExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/qq.svg);
+            background-image: url('https://api.iconify.design/logos:tencent-qq.svg');
         }
+
         #TwitterExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/twitter.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='251' height='256' viewBox='0 0 251 256'%3E%3Cpath d='M149.079 108.399L242.33 0h-22.098l-80.97 94.12L74.59 0H0l97.796 142.328L0 256h22.1l85.507-99.395L175.905 256h74.59L149.073 108.399zM118.81 143.58l-9.909-14.172l-78.84-112.773h33.943l63.625 91.011l9.909 14.173l82.705 118.3H186.3l-67.49-96.533z'/%3E%3C/svg%3E");
         }
         #TwitterExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/twitter.svg);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='251' height='256' viewBox='0 0 251 256'%3E%3Cpath d='M149.079 108.399L242.33 0h-22.098l-80.97 94.12L74.59 0H0l97.796 142.328L0 256h22.1l85.507-99.395L175.905 256h74.59L149.073 108.399zM118.81 143.58l-9.909-14.172l-78.84-112.773h33.943l63.625 91.011l9.909 14.173l82.705 118.3H186.3l-67.49-96.533z'/%3E%3C/svg%3E");
         }
+
         #WeChatExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/wechat.svg);
+            background-image: url('https://api.iconify.design/logos:wechat.svg');
         }
         #WeChatExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/wechat.svg);
+            filter: brightness(0) invert(1);
         }
+
         #WeiboExchange {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/colored/weibo.svg);
+            background-image: url('https://api.iconify.design/logos:sina-weibo.svg');
         }
         #WeiboExchange:hover {
-          background-image: url(https://login.microsoftonline.com/templates/src/idp_logos/white/weibo.svg);
+            filter: brightness(0) invert(1);
         }
+
         .buttons #cancel:before {
             content: url(https://login.microsoftonline.com/templates/src/images/left-arrow.svg);
         }
@@ -106,46 +131,118 @@
             background-color: transparent !important;
         }
     </style>
-
     <style>
         /* Following are generated styles via gulp. */
         /* inject: css */
         html{background:0 0}body{font-family:Segoe UI,SegoeUI,"Helvetica Neue",Helvetica,Arial,sans-serif;background-attachment:fixed;background-color:#fff;background-position:center;background-repeat:no-repeat;background-size:cover;text-align:left;font:-apple-system-body}p{margin:0}a:focus{outline:0}input,select{border:1px solid #605e5c}input::placeholder{color:#6a6a6a;opacity:1}img[data-tenant-branding-background=true]{width:100%;height:100%;object-fit:cover;z-index:0;position:fixed;left:0;overflow:hidden;top:0}div[data-tenant-branding-background-color=true]{width:100%;height:100%;position:fixed;z-index:0}.container{text-align:center;width:100%;display:table;height:100vh;padding:0}#api{margin:0 auto}.heading h1{margin-bottom:20px}.col-lg-6{max-width:470px;width:100%;float:none;display:inline-block;vertical-align:top;padding:0}.row{width:100%;margin:0;display:table-cell;vertical-align:middle}ul{padding:0}#simplemodal-container .simplemodal-data{padding:5px 8px;overflow:hidden;background-color:#fff;border-radius:3px;font-style:italic}#LocalAccountSigninEmailExchange,#LocalAccountSigninUsernameExchange,#SignInWithLogonEmailExchange,#SignInWithLogonNameExchange,#SignUpWithLogonEmailExchange,#SignUpWithLogonNameExchange{background-color:#296ec6;background-image:url(none);background-size:10%;background-position-x:95%;background-position-y:50%;background-repeat:no-repeat;border-radius:.5rem;width:100%;width:100%;font-size:1em;margin-left:auto}#LocalAccountSigninEmailExchange:hover,#LocalAccountSigninUsernameExchange:hover,#SignInWithLogonEmailExchange:hover,#SignInWithLogonNameExchange:hover,#SignUpWithLogonEmailExchange:hover,#SignUpWithLogonNameExchange:hover{background-color:#1662c7!important}#AmazonExchange:hover{background-color:#36474f!important}#FacebookExchange:hover{background-color:#3b5595!important}#GitHubExchange:hover{background-color:#0f0f0f!important}#AppleExchange:hover,#AppleManagedExchange:hover{background-color:#0f0f0f!important}#GoogleExchange:hover{background-color:#c64a29!important}#LinkedInExchange:hover{background-color:#0274b3!important}#MicrosoftAccountExchange:hover{background-color:#01a4ef!important}#QQExchange:hover{background-color:#1a97df!important}#TwitterExchange:hover{background-color:#1da1f2!important}#WeChatExchange:hover{background-color:#4cc522!important}#WeiboExchange:hover{background-color:#e81123!important}.buttons button{margin:0 auto;width:60%;height:50px;background-color:#296ec6;border-radius:.5rem;border:none;color:#fff;font-size:1em;margin-top:10px}.buttons button:hover{background-color:#1662c7;border-color:#204d74}.buttons button[aria-disabled=true]{opacity:.3}.buttons button:not([aria-disabled=true]){opacity:1}.buttons #cancel{padding:0;margin-left:auto;background:0 0;border:0;width:inherit;position:absolute;background-color:transparent;top:2px;left:15px;font-size:1em;color:#505050;box-shadow:none;text-align:left}.buttons #cancel:hover{color:#000!important}.buttons #cancel:before{padding:10px;vertical-align:sub;zoom:90%;display:inline-block}#attributeList ul{padding:0}#attributeList ul li{list-style:none;margin:1rem 0}label{font-weight:600}#attributeList ul li label{display:block;text-align:left;float:none}#attributeList ul li.EmailBox label,#attributeList ul li.Password label,#attributeList ul li.TextBox label{display:none!important}#attributeList ul li label[for=country]{float:left;display:inline-block!important;margin-bottom:.5rem}#attributeList ul li label[for=cpiminternal_legalCountry]{float:none;display:block!important;text-align:left;margin-bottom:.5rem}#attributeList ul li label[for=cpiminternal_dateOfBirth]{float:none;text-align:left;display:block!important;margin-bottom:.5rem}#attributeList ul li input{height:50px;width:70%;border-radius:.5rem;text-indent:20px}#attributeList ul li input::-webkit-input-placeholder{text-indent:20px}#attributeList ul li .attrEntry.validate input.invalid,#attributeList ul li .attrEntry.validate input:invalid{border:1px solid #b00}#attributeList ul li .attrEntry .verify{margin-top:2rem;padding-bottom:10px;position:relative}#attributeList ul li .attrEntry .verificationControlContent .buttons{margin-top:2rem;padding-bottom:10px;position:relative}#attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send]{width:60%;height:50px;background-color:#296ec6;color:#fff;border-radius:.5rem}#attributeList ul li .attrEntry .verificationControlContent .sendCode{width:60%;height:50px;background-color:#296ec6;color:#fff;border-radius:.5rem}#attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_send]:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verificationControlContent .sendCode:hover{background-color:#1662c7}@media screen and (-ms-high-contrast:active){#attributeList ul li .attrEntry .verify button,.buttons #continue{border:1px dashed #fff!important}#attributeList ul li .attrEntry .verify button:hover,.buttons #continue:hover{border:1px solid #fff!important}}#attributeList ul li .attrEntry .verify .verifyButton{width:inherit;padding:0 20px;height:50px;background-color:#296ec6;color:#fff;margin-right:5px;border-radius:.5rem}#attributeList ul li .attrEntry .verificationControlContent .verifyCode{width:inherit;padding:0 20px;height:50px;background-color:#296ec6;color:#fff;margin-right:5px;border-radius:.5rem}#attributeList ul li .attrEntry .verify .verifyButton:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verificationControlContent .verifyCode:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend]{width:inherit;padding:0 20px;border:0;font-size:1em;height:50px;right:0;bottom:-38px;background-color:#296ec6;color:#fff;border-radius:.5rem}#attributeList ul li .attrEntry .verificationControlContent .sendNewCode{width:inherit;padding:0 20px;border:0;font-size:1em;height:50px;right:0;bottom:-38px;background-color:#296ec6;color:#fff;border-radius:.5rem}#attributeList ul li .attrEntry .verify .sendButton[id$=ver_but_resend]:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verificationControlContent .sendNewCode:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verify .editButton{border:none;color:#fff;background-color:#296ec6;width:60%;height:50px;border-radius:.5rem}#attributeList ul li .attrEntry .verificationControlContent .changeClaims{border:none;color:#fff;background-color:#296ec6;width:60%;height:50px;border-radius:.5rem}#attributeList ul li .attrEntry .verify .editButton:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verificationControlContent .changeClaims:hover{background-color:#1662c7}#attributeList ul li .attrEntry .verify #email_ver_input_label{display:none!important}#api .working{background:url(data:image/gif;base64,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) no-repeat;height:30px;width:auto;background-position:center bottom}#attributeList ul li .attrEntry .itemLevel{display:none}input[type=email],input[type=password],input[type=text]{-webkit-appearance:none}#attributeList ul li .attrEntry .dropdown_single{height:45px;border-radius:.5rem;width:100%;padding-left:15px}#attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date{display:table;width:100%}#attributeList ul li .attrEntry div#cpiminternal_dateOfBirth.date select{border-radius:.5rem;display:inline-block;height:50px;padding-left:15px}#attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_day.day{margin-right:3%;width:23%}#attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_month.month{margin-right:3%;width:38%}#attributeList ul li .attrEntry div#cpiminternal_dateOfBirth select#cpiminternal_dateOfBirth_year.year{width:33%}#attributeList ul li .helpLink{display:none}#attributeVerification .buttons{margin-top:30px}@media screen and (max-width:100%){.row .panel-default .panel-body{margin-top:40px}.row .panel-default .panel-body .branding img{display:block;height:80px;width:auto;margin:0 auto}.row .panel-default .panel-body .branding h1{display:none}.row .panel-default .panel-body h3{font-size:1.5em;margin-top:15px}#attributeVerification #attributeList ul li input{width:60%;height:40px;border-radius:.5rem;border:1px solid #605e5c;text-indent:10px}#attributeVerification #attributeList ul li input::-webkit-input-placeholder{text-indent:10px}#attributeVerification #attributeList ul li #email{width:65%;float:left;position:relative;z-index:2}#attributeVerification #attributeList ul li #email_ver_but_verify{background:0 0;border:0;color:#496ad8;font-size:1em;position:relative;right:0;top:60px;font-size:1.1em;width:auto;z-index:1;height:20px}#attributeVerification #attributeList ul li #email_ver_input{min-width:50%;width:60%;float:left}#attributeVerification #attributeList ul li #email_ver_but_resend{top:10px;font-size:1.1em;height:20px}#attributeVerification #attributeList ul li .attrEntry #email{height:40px}#attributeVerification #attributeList ul li .attrEntry .verify #email_ver_but_send:after{content:" Verify";font-size:1.1em;font-style:bold;margin-left:40%}#attributeVerification #attributeList ul li .attrEntry .verify #email_ver_but_send{height:40px;width:auto;float:right;overflow:hidden;text-indent:-200px}#attributeVerification #attributeList ul li .attrEntry .verify #email_ver_but_edit{margin-bottom:15px;border:none;color:#fff;background-color:#496ad8;border-radius:.5rem;font-size:1em;box-shadow:0 0 40px 2px #dae1f7;width:30%;height:40px;overflow:hidden;padding-top:6px;margin-left:40%}#attributeVerification #attributeList ul li .attrEntry .verify:after{content:" ";display:block;clear:both}#attributeVerification #attributeList #verifying_blurb{margin-top:15px}#attributeVerification .buttons #continue{height:40px}#attributeVerification .buttons #cancel{font-size:1em;left:40%}}.panel,.panel_layout,.panel_layout_row,body,html{height:100%}@media only screen and (max-width:600px){img[data-tenant-branding-background=true]{display:none}.container{background-color:#fff}.container .row .panel-default{border-radius:0;border:none;box-shadow:none}}
         /* endinject */
     </style>
-    
-    
     <style>
         /* Following are generated styles via gulp. */
         /* inject: css */
         .unified_container .row .panel-default{padding:40px 30px;margin-top:auto;margin-bottom:auto;height:100%;background-color:#fff}.unified_container .row .panel-default .panel-body{max-width:380px;width:auto;margin:0 auto;padding:0}.unified_container .row .panel-default .panel-body .companyName{font-size:1.5em;margin-bottom:45px}.unified_container .row .panel-default .panel-body .companyLogo{display:block}.unified_container .row .panel-default .panel-body img{max-width:100%;width:auto;height:70px;margin:0 auto;display:block}.unified_container .row .panel-default .panel-body h3{font-size:1.5em;display:none}.unified_container .row .panel-default #api{display:table;margin:0;width:100%}.unified_container .row .panel-default #api .intro{display:block;text-align:left}.unified_container .row .panel-default #api .intro h2{font-size:20px}.unified_container .row .panel-default #api .divider{display:none}.unified_container .row .panel-default #api .localAccount{top:10px;width:100%}.unified_container .row .panel-default #api .localAccount .intro h2{font-size:20px}.unified_container .row .panel-default #api .localAccount .error{color:#b00;text-align:left}.unified_container .row .panel-default #api .localAccount .entry .buttons{margin:0 0 23px 0;text-align:left}.unified_container .row .panel-default #api .localAccount .entry .buttons button{background-image:none;background-color:#296ec6;border:none;border-radius:.5rem;cursor:pointer;display:inline-block;font-size:1em;font-weight:400;height:inherit;line-height:1.3333333;margin-top:2rem;margin-right:0;margin-bottom:1.2rem;margin-left:0;padding:10px 16px;text-align:center;touch-action:manipulation;user-select:none;vertical-align:middle;white-space:nowrap;width:inherit;-moz-user-select:none;-ms-touch-action:manipulation;-ms-user-select:none;-webkit-user-select:none;color:#fff;width:63%;box-shadow:0 0 30px 0 #dae1f7}@media screen and (-ms-high-contrast:active){.unified_container .row .panel-default #api .accountButton,.unified_container .row .panel-default #api .localAccount .entry .buttons button{border:1px dashed #fff}.unified_container .row .panel-default #api .accountButton:hover,.unified_container .row .panel-default #api .localAccount .entry .buttons button:hover{border:1px solid #fff}}.unified_container .row .panel-default #api .localAccount .entry .buttons button:focus,.unified_container .row .panel-default #api .localAccount .entry .buttons button:hover{-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;background-color:#1662c7;color:#fff}.unified_container .row .panel-default #api .localAccount .entry .entry-item{position:relative;width:100%;padding-top:6px;padding-bottom:6px;display:block}.unified_container .row .panel-default #api .localAccount .entry .entry-item label{display:none}.unified_container .row .panel-default #api .localAccount .entry .entry-item input:focus{border:2px solid #000}.unified_container .row .panel-default #api .localAccount .entry .entry-item input{outline:0;background-color:#fff!important;background-image:none!important;border-radius:.5rem!important;color:#555;display:inline-block;font-size:1em;height:50px;line-height:1.42857143;padding:6px 20px;transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;width:100%!important;-o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;-webkit-transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s!important}.unified_container .row .panel-default #api .localAccount .entry .entry-item #password{margin-bottom:20px}.unified_container .row .panel-default #api .localAccount .entry .entry-item .password-label{text-align:left;height:0;left:0;width:100%}.forgot-password{text-align:left}.forgot-password.center-height{position:absolute;bottom:0;clear:right;cursor:pointer;text-align:right}@keyframes slideInFromRight{0%{opacity:0;transform:translateX(50%)}100%{opacity:1;transform:translateX(0)}}.unified_container .row .panel-default #api .localAccount .entry .entry-item .password-label #forgotPassword{position:absolute;bottom:0;clear:right;cursor:pointer;text-align:right}.unified_container .row .panel-default #api .localAccount .rememberMe{margin-top:-2rem;text-align:right;margin-left:59%;position:relative;width:15rem}.unified_container .row .panel-default #api .localAccount .rememberMe.align-to-left{margin-top:.5rem;text-align:left;margin-left:0;width:100%}.working{display:none}.unified_container .row .panel-default #api .claims-provider-list-text-links p,.unified_container .row .panel-default #api .localAccount .create p{text-align:left;margin-top:-3rem;margin-bottom:3rem}.unified_container .row .panel-default #api .localAccount .create #createAccount{border-radius:.5rem;display:inline-block;font-size:1em;font-weight:400;height:inherit;line-height:1.3333333;padding:10px 16px;text-align:center;touch-action:manipulation;user-select:none;white-space:nowrap;-moz-user-select:none;-ms-touch-action:manipulation;-ms-user-select:none;-webkit-user-select:none;width:auto;margin-top:-3rem;cursor:pointer;animation:.5s ease-out 0s 1 slideInFromRight}.unified_container .row .panel-default #api .social{display:table-footer-group;position:relative;top:1px;width:auto}.unified_container .row .panel-default #api .accountButton{background-size:10% 70%;background-position-x:3%;background-position-y:50%;background-repeat:no-repeat;display:block;font-size:16px;height:45px;width:100%;margin-left:auto;overflow:hidden;padding:0 50px;max-width:380px;border:1px solid #605e5c;background-color:#fff;-moz-border-radius:.5rem;-webkit-border-radius:.5rem;border-radius:.5rem;margin-top:10px}.unified_container .row .panel-default #api .accountButton:hover{color:#fff;background-color:#1662c7}.claims-provider-list-text-links-bottom-under-form{text-align:left}@media (max-width:100%){.unified_container .row .panel-default{margin-top:auto;margin-bottom:auto;height:550px}.unified_container .row .panel-default .panel-body{padding:5rem 3rem;margin-top:20px}.unified_container .row .panel-default .panel-body .companyName{display:none}.unified_container .row .panel-default .panel-body .companyLogo{display:block}.unified_container .row .panel-default .panel-body h3{display:block}.unified_container .row .panel-default .panel-body #api{width:auto}.unified_container .row .panel-default .panel-body #api .social{top:370px;width:auto}.unified_container .row .panel-default .panel-body #api .social .options .accountButton{height:40px}.unified_container .row .panel-default .panel-body #api .social .options #FacebookExchange{background-size:12px;background-position:50% 75%;margin-bottom:10px}.unified_container .row .panel-default .panel-body #api .social .options #GoogleExchange{background-size:20px;background-position:50% 75%;margin-bottom:10px}.unified_container .row .panel-default .panel-body #api .social .options #TwitterExchange{background-size:20px;background-position-x:56px;background-position-y:14px;margin-bottom:10px}.unified_container .row .panel-default .panel-body #api .localAccount{top:20px}.unified_container .row .panel-default .panel-body #api .localAccount .entry .entry-item{display:block;width:100%;margin-bottom:10px}.unified_container .row .panel-default .panel-body #api .localAccount .entry .entry-item .password-label{top:145px}.unified_container .row .panel-default .panel-body #api .localAccount .entry .entry-item #logonIdentifier{height:40px}.unified_container .row .panel-default .panel-body #api .localAccount .entry .entry-item #password{height:40px}.unified_container .row .panel-default .panel-body #api .localAccount .entry .entry-item:nth-child(2){width:auto;float:left}.unified_container .row .panel-default .panel-body #api .localAccount .entry .buttons #next{width:auto;text-indent:-4px;height:40px;line-height:0;position:relative;bottom:5px;left:8px}}@media screen and (max-width:320px){.unified_container .row .panel-default #api .localAccount .rememberMe{margin-top:1.75rem;text-align:left;margin-left:0;width:100%}.unified_container .row .panel-default #api .localAccount .entry .entry-item .password-label #forgotPassword{bottom:-1rem}.forgot-password.center-height{top:0;right:12rem;position:relative}}
         /* endinject */
     </style>
-	
-	<style>
-		/* Custom CSS class, lets hide all buttons except linked, github and google exchange, basically hide other SSOs. */
-		#api .options .accountButton:not(#LinkedInExchange, #GitHubExchange, #GoogleExchange) {
-		display: none;
-		}
-	</style>
+    <style>
+        /* Custom CSS class, lets hide all buttons except linked, github and google exchange, basically hide other SSOs. */
+        #api .options .accountButton:not(#LinkedInExchange, #GitHubExchange, #GoogleExchange) { display: none;}
+    </style>
+
+    <style>
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrapper input[type="password"],
+        .password-wrapper input[type="text"] {
+            width: 100%;
+            padding-right: 2.5rem;
+            box-sizing: border-box;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 0.5rem;
+            top: 0.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 3rem;
+            color: #555;
+            padding: 0;
+            line-height: 1;
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function makePwdToggler(pwd) {
+                // Create wrapper
+                const wrapper = document.createElement('div');
+                wrapper.className = 'password-wrapper';
+                pwd.parentNode.insertBefore(wrapper, pwd);
+                wrapper.appendChild(pwd);
+
+                // Create toggle button
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'password-toggle-btn';
+                button.setAttribute('aria-label', 'Toggle password visibility');
+                button.innerText = 'show'; // You can replace this with an icon
+
+                wrapper.appendChild(button);
+
+                // Toggle password visibility
+                button.addEventListener('click', function () {
+                    const isPassword = pwd.type === 'password';
+                    pwd.type = isPassword ? 'text' : 'password';
+                    button.innerText = isPassword ? 'hide' : 'show'; // Optional toggle icon
+                });
+            }
+
+            function setupPwdTogglers() {
+                const pwdInputs = document.querySelectorAll('input[type=password]');
+                for (let i = 0; i < pwdInputs.length; i++) {
+                    const pwd = pwdInputs[i];
+                    if (!pwd.closest('.password-wrapper')) {
+                        makePwdToggler(pwd);
+                    }
+                }
+            }
+
+            const observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function () {
+                    if ($('#newPassword').length > 0 || $('#password').length > 0) {
+                        setupPwdTogglers();
+                        observer.disconnect();
+                    }
+                });
+            });
+
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
 
 </head>
 <body>
-    <div id="background_branding_container" data-tenant-branding-background-color="true">
-	<!--       <img data-tenant-branding-background="true" src="https://login.microsoftonline.com/templates/src/backgrounds/1-1.png" alt="Illustration"/> -->
-    </div>
-    <div class="container  unified_container " role="presentation">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <img class="companyLogo" data-tenant-branding-logo="true" src="https://certiverse.com/assets/brand/certiverse.com/CV-Logo-horizontal.png" alt="Company Logo">
-                        <div id="api" role="main">
-                        </div>
+<div id="background_branding_container" data-tenant-branding-background-color="true">
+    <!--       <img data-tenant-branding-background="true" src="https://login.microsoftonline.com/templates/src/backgrounds/1-1.png" alt="Illustration"/> -->
+</div>
+<div class="container  unified_container " role="presentation">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img class="companyLogo" data-tenant-branding-logo="true" src="https://certiverse.com/assets/brand/certiverse.com/CV-Logo-horizontal.png" alt="Company Logo">
+                    <div id="api" role="main">
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
