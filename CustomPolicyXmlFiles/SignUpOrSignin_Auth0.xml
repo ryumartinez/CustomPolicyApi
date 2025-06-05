@@ -14,7 +14,7 @@
     <TenantId>sandboxcertiverse.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
   </BasePolicy>
-  
+
   <ClaimsProviders>
     <!--Auth0 SAML identity provider-->
     <ClaimsProvider>
