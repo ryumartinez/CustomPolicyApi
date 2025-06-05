@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!-- Environment Variable -->
-<TrustFrameworkPolicy 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
-  PolicySchemaVersion="0.3.0.0" 
-  TenantId="sandboxcertiverse.onmicrosoft.com" 
-  PolicyId="B2C_1A_TrustFrameworkExtensions" 
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
+  TenantId="sandboxcertiverse.onmicrosoft.com"
+  PolicyId="B2C_1A_TrustFrameworkExtensions"
   PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions">
-  
-  <BasePolicy>  
+
+  <BasePolicy>
     <!-- Environment Variable -->
     <TenantId>sandboxcertiverse.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
   </BasePolicy>
 
-   <BuildingBlocks>
+  <BuildingBlocks>
     <ClaimsSchema>
       <!-- Claim used to store the response of the PreLogin validation REST call-->
       <ClaimType Id="requiresMfa">
@@ -241,8 +241,7 @@
             <Item Key="ServiceUrl">https://c9dacdd3-my-worker.ryueduardo.workers.dev/api/user</Item> <!--Endpoint to get user emails depending on the identity provider-->
             <Item Key="HttpBinding">GET</Item> <!--Defining a GET method-->
             <Item Key="SendClaimsIn">Header</Item> <!--Defining the input claims as headers in the request-->
-            <Item Key="AuthenticationType">None</Item>
-            <Item Key="AllowInsecureAuthInProduction">true</Item>
+            <Item Key="AuthenticationType">ApiKeyHeader</Item>
             <Item Key="DebugMode">true</Item> <!--To send data to application insights-->
           </Metadata>
           <InputClaims>
@@ -270,8 +269,7 @@
           <Metadata>
             <Item Key="ServiceUrl">https://c9dacdd3-my-worker.ryueduardo.workers.dev/api/pre-login</Item>
             <Item Key="SendClaimsIn">Body</Item>
-            <Item Key="AuthenticationType">None</Item>
-            <Item Key="AllowInsecureAuthInProduction">true</Item>
+            <Item Key="AuthenticationType">ApiKeyHeader</Item>
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
@@ -352,8 +350,7 @@
           <Metadata>
             <Item Key="ServiceUrl">https://my-worker.ryueduardo.workers.dev/api/pre-reset</Item>
             <Item Key="SendClaimsIn">Body</Item>
-            <Item Key="AuthenticationType">None</Item>
-            <Item Key="AllowInsecureAuthInProduction">true</Item>
+            <Item Key="AuthenticationType">ApiKeyHeader</Item>
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email" Required="true"/>
@@ -465,7 +462,7 @@
         <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
           <ClaimsProviderSelections>
             <ClaimsProviderSelection TargetClaimsExchangeId="ForgotPasswordExchange" />
-            <ClaimsProviderSelection TargetClaimsExchangeId="Auth0SAMLExchange" /> 
+            <ClaimsProviderSelection TargetClaimsExchangeId="Auth0SAMLExchange" />
             <ClaimsProviderSelection TargetClaimsExchangeId="LinkedInExchange" />
             <ClaimsProviderSelection TargetClaimsExchangeId="GitHubExchange" />
             <ClaimsProviderSelection TargetClaimsExchangeId="GoogleExchange" />
@@ -547,7 +544,7 @@
             <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
           </ClaimsExchanges>
         </OrchestrationStep>
-        
+
         <!-- Step 7: If at this point the user does not exist in the directory, create it -->
         <OrchestrationStep Order="7" Type="ClaimsExchange">
           <Preconditions>
@@ -643,7 +640,7 @@
         </OrchestrationStep>
 
         <!-- Extra steps can be added before or after this step for REST API or claims transformation calls-->
-        
+
         <OrchestrationStep Order="2" Type="ClaimsExchange">
           <ClaimsExchanges>
             <ClaimsExchange Id="CheckRefreshTokenDateFromAadExchange" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId-CheckRefreshTokenDate" />
