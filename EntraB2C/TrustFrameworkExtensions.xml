@@ -584,6 +584,8 @@
           </JourneyList>
         </OrchestrationStep>
 
+        <OrchestrationStep Order="4" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
     </UserJourney>
@@ -698,13 +700,8 @@
             <ClaimsExchange Id="WebhookCall" TechnicalProfileReferenceId="GetUserEmail" />
           </ClaimsExchanges>
         </OrchestrationStep>
-
-        <!-- Step 6 (was Step 8): SendClaims -->
-        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
-
       </OrchestrationSteps>
     </SubJourney>
-
   </SubJourneys>
 
 </TrustFrameworkPolicy>
