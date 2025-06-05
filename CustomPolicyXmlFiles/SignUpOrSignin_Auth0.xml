@@ -6,8 +6,8 @@
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
   TenantId="sandboxcertiverse.onmicrosoft.com"
-  PolicyId="B2C_1A_signup_signin_sso_auth0"
-  PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_signup_signin_sso_auth0">
+  PolicyId="B2C_1A_signup_signin_auth0"
+  PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_signup_signin_auth0">
 
   <BasePolicy>
     <!-- Environment Variable -->
