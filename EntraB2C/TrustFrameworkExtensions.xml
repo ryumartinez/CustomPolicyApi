@@ -576,96 +576,13 @@
             <ClaimsExchange Id="SignUpWithLogonEmailExchange" TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail" />
           </ClaimsExchanges>
         </OrchestrationStep>
-        
-        <!--Step 3: If the user clicked 'Forgot Password', execute the PasswordReset Subjourney-->
+
+        <!-- Step 3 (New): SubJourney call -->
         <OrchestrationStep Order="3" Type="InvokeSubJourney">
-          <Preconditions>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
-              <Value>isForgotPassword</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
           <JourneyList>
-            <Candidate SubJourneyReferenceId="PasswordReset" />
+            <Candidate SubJourneyReferenceId="PostSignInProcessing" />
           </JourneyList>
         </OrchestrationStep>
-      
-        <!-- For social IDP authentication, attempt to find the user account in the directory. -->
-        <OrchestrationStep Order="4" Type="ClaimsExchange">
-          <Preconditions>
-            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
-              <Value>authenticationSource</Value>
-              <Value>localAccountAuthentication</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="AADUserReadUsingAlternativeSecurityId" TechnicalProfileReferenceId="AAD-UserReadUsingAlternativeSecurityId-NoError" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-
-        <!-- Show self-asserted page only if the directory does not have the user account already (i.e. we do not have an objectId). 
-          This can only happen when authentication happened using a social IDP. If local account was created or authentication done
-          using ESTS in step 2, then an user account must exist in the directory by this time. -->
-        <!-- 
-        <OrchestrationStep Order="5" Type="ClaimsExchange">
-          <Preconditions>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>objectId</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="SelfAsserted-Social" TechnicalProfileReferenceId="SelfAsserted-Social" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-         -->
-
-        <!-- This step reads any user attributes that we may not have received when authenticating using ESTS so they can be sent 
-          in the token. -->
-        <OrchestrationStep Order="5" Type="ClaimsExchange">
-          <Preconditions>
-            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
-              <Value>authenticationSource</Value>
-              <Value>socialIdpAuthentication</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-        
-        <!-- The previous step (SelfAsserted-Social) could have been skipped if there were no attributes to collect 
-             from the user. So, in that case, create the user in the directory if one does not already exist 
-             (verified using objectId which would be set from the last step if account was created in the directory. -->
-        <OrchestrationStep Order="6" Type="ClaimsExchange">
-          <Preconditions>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>objectId</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="AADUserWrite" TechnicalProfileReferenceId="AAD-UserWriteUsingAlternativeSecurityId" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-
-        <!-- This step is called if we have a weebhookbearer token and we use that to make an additional call to an API to retrieve the email address -->
-        <OrchestrationStep Order="7" Type="ClaimsExchange">
-          <Preconditions>
-            <!-- Skip this orchestration step if claim webhookBearerToken value does not exist. -->
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
-              <Value>webhookBearerToken</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="WebhookCall" TechnicalProfileReferenceId="GetUserEmail" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-        
-        <OrchestrationStep Order="8" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
@@ -710,8 +627,84 @@
           </ClaimsExchanges>
         </OrchestrationStep>
       </OrchestrationSteps>
-
     </SubJourney>
+
+    <SubJourney Id="PostSignInProcessing" Type="Call">
+      <OrchestrationSteps>
+
+        <!-- Step 1 in subjourney (was Step 3): Forgot Password -->
+        <OrchestrationStep Order="1" Type="InvokeSubJourney">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
+              <Value>isForgotPassword</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <JourneyList>
+            <Candidate SubJourneyReferenceId="PasswordReset" />
+          </JourneyList>
+        </OrchestrationStep>
+
+        <!-- Step 2 (was Step 4): AAD-UserReadUsingAlternativeSecurityId -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>authenticationSource</Value>
+              <Value>localAccountAuthentication</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadUsingAlternativeSecurityId" TechnicalProfileReferenceId="AAD-UserReadUsingAlternativeSecurityId-NoError" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 3 (was Step 5): AAD-UserReadUsingObjectId -->
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>authenticationSource</Value>
+              <Value>socialIdpAuthentication</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 4 (was Step 6): AAD-UserWriteUsingAlternativeSecurityId -->
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserWrite" TechnicalProfileReferenceId="AAD-UserWriteUsingAlternativeSecurityId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 5 (was Step 7): WebhookCall -->
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
+              <Value>webhookBearerToken</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="WebhookCall" TechnicalProfileReferenceId="GetUserEmail" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 6 (was Step 8): SendClaims -->
+        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+
+      </OrchestrationSteps>
+    </SubJourney>
+
   </SubJourneys>
 
 </TrustFrameworkPolicy>
