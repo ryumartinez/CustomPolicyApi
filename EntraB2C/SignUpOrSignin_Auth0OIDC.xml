@@ -24,8 +24,10 @@
           <Description>Login with your Auth0 account via OpenID Connect</Description>
           <Protocol Name="OpenIdConnect" />
           <Metadata>
-            <Item Key="client_id">YOUR_AUTH0_CLIENT_ID</Item>
-            <Item Key="METADATA">https://YOUR_AUTH0_DOMAIN/.well-known/openid-configuration</Item>
+            <!--YOUR_AUTH0_CLIENT_ID-->
+            <Item Key="client_id">aZAVBHfkpBdXxDE0BUTuYl3Z98cOMsuz</Item>
+            <!--https://YOUR_AUTH0_DOMAIN/.well-known/openid-configuration-->
+            <Item Key="METADATA">https://dev-ouxr23hn.us.auth0.com/.well-known/openid-configuration</Item>
             <Item Key="response_types">code</Item>
             <Item Key="response_mode">form_post</Item>
             <Item Key="scope">openid profile email</Item>
