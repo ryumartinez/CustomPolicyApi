@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Environment Variable -->
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
+  TenantId="sandboxcertiverse.onmicrosoft.com"
+  PolicyId="B2C_1A_signup_signin_MockSamlV2"
+  PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_signup_signin_MockSamlV2">
+
+  <BasePolicy>
+    <!-- Environment Variable -->
+    <TenantId>sandboxcertiverse.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
+  </BasePolicy>
+
+  <ClaimsProviders>
+    <!--Mock SAML identity provider-->
+    <ClaimsProvider>
+      <Domain>mocksaml.com</Domain>
+      <DisplayName>MockSAML</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="MockSAMLV2-SAML2">
+          <DisplayName>MockSAML</DisplayName>
+          <Description>Login with your MockSAML account</Description>
+          <Protocol Name="SAML2" />
+          <Metadata>
+            <!-- SAML identity provider hardcoded metadata -->
+            <Item Key="PartnerEntity">
+              <![CDATA[
+                  <md:EntityDescriptor
+                      entityID="https://saml.example.com/entityid"
+                      xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+                      xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+
+                    <md:IDPSSODescriptor
+                        protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+
+                      <md:KeyDescriptor use="signing">
+                        <ds:KeyInfo>
+                          <ds:X509Data>
+                            <ds:X509Certificate>
+                              MIIC4jCCAcoCCQC33wnybT5QZDANBgkqhkiG9w0BAQsFADAyMQswCQYDVQQGEwJV SzEPMA0GA1UECgwGQm94eUhRMRIwEAYDVQQDDAlNb2NrIFNBTUwwIBcNMjIwMjI4 MjE0NjM4WhgPMzAyMTA3MDEyMTQ2MzhaMDIxCzAJBgNVBAYTAlVLMQ8wDQYDVQQK DAZCb3h5SFExEjAQBgNVBAMMCU1vY2sgU0FNTDCCASIwDQYJKoZIhvcNAQEBBQAD ggEPADCCAQoCggEBALGfYettMsct1T6tVUwTudNJH5Pnb9GGnkXi9Zw/e6x45DD0 RuRONbFlJ2T4RjAE/uG+AjXxXQ8o2SZfb9+GgmCHuTJFNgHoZ1nFVXCmb/Hg8Hpd 4vOAGXndixaReOiq3EH5XvpMjMkJ3+8+9VYMzMZOjkgQtAqO36eAFFfNKX7dTj3V pwLkvz6/KFCq8OAwY+AUi4eZm5J57D31GzjHwfjH9WTeX0MyndmnNB1qV75qQR3b 2/W5sGHRv+9AarggJkF+ptUkXoLtVA51wcfYm6hILptpde5FQC8RWY1YrswBWAEZ NfyrR4JeSweElNHg4NVOs4TwGjOPwWGqzTfgTlECAwEAATANBgkqhkiG9w0BAQsF AAOCAQEAAYRlYflSXAWoZpFfwNiCQVE5d9zZ0DPzNdWhAybXcTyMf0z5mDf6FWBW 5Gyoi9u3EMEDnzLcJNkwJAAc39Apa4I2/tml+Jy29dk8bTyX6m93ngmCgdLh5Za4 khuU3AM3L63g7VexCuO7kwkjh/+LqdcIXsVGO6XDfu2QOs1Xpe9zIzLpwm/RNYeX UjbSj5ce/jekpAw7qyVVL4xOyh8AtUW1ek3wIw1MJvEgEPt0d16oshWJpoS1OT8L r/22SvYEo3EmSGdTVGgk3x3s+A0qWAqTcyjr7Q4s/GKYRFfomGwz0TZ4Iw1ZN99M m0eo2USlSRTVl7QHRTuiuSThHpLKQQ==
+                            </ds:X509Certificate>
+                          </ds:X509Data>
+                        </ds:KeyInfo>
+                      </md:KeyDescriptor>
+
+                      <md:SingleSignOnService
+                          Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                          Location="https://mocksaml.com/api/saml/sso"/>
+
+                    </md:IDPSSODescriptor>
+                  </md:EntityDescriptor>
+              ]]>
+            </Item>
+            <!-- Message signing configurations -->
+            <Item Key="WantsSignedAssertions">false</Item>
+            <Item Key="ResponsesSigned">false</Item>
+            <Item Key="WantsSignedRequests">false</Item>
+            <!-- Aligns with NameID format from MockSAML metadata -->
+            <Item Key="NameIdPolicyFormat">urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</Item>
+          </Metadata>
+          <CryptographicKeys>
+            <!--Reference to .pfx signing certificate uploaded in 'Policy keys'-->
+            <Key Id="SamlMessageSigning" StorageReferenceId="B2C_1A_SAMLSigningCert" />
+          </CryptographicKeys>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="issuerUserId" PartnerClaimType="assertionSubjectName" />
+            <OutputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="given_name" />
+            <OutputClaim ClaimTypeReferenceId="surname" PartnerClaimType="family_name" />
+            <OutputClaim ClaimTypeReferenceId="email" />
+            <OutputClaim ClaimTypeReferenceId="displayName" PartnerClaimType="http://schemas.auth0.com/name" />
+            <OutputClaim ClaimTypeReferenceId="identityProvider" DefaultValue="mocksaml.com" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="socialIdpAuthentication" />
+          </OutputClaims>
+          <OutputClaimsTransformations>
+            <OutputClaimsTransformation ReferenceId="CreateRandomUPNUserName" />
+            <OutputClaimsTransformation ReferenceId="CreateUserPrincipalName" />
+            <OutputClaimsTransformation ReferenceId="CreateAlternativeSecurityId" />
+            <OutputClaimsTransformation ReferenceId="CreateSubjectClaimFromAlternativeSecurityId" />
+          </OutputClaimsTransformations>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Saml-idp" />
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+  </ClaimsProviders>
+
+  <UserJourneys>
+    <UserJourney Id="SignUpOrSignInMockSamlV2">
+      <OrchestrationSteps>
+        <OrchestrationStep Order="1" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="MockSamlSAMLExchange" TechnicalProfileReferenceId="MockSAMLV2-SAML2" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="2" Type="InvokeSubJourney">
+          <JourneyList>
+            <Candidate SubJourneyReferenceId="PostSignInProcessing" />
+          </JourneyList>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="3" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+      </OrchestrationSteps>
+      <ClientDefinition ReferenceId="DefaultWeb" />
+    </UserJourney>
+  </UserJourneys>
+
+  <RelyingParty>
+    <DefaultUserJourney ReferenceId="SignUpOrSignInMockSamlV2" />
+    <Endpoints>
+      <!--points to refresh token journey when app makes refresh token request-->
+      <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
+    </Endpoints>
+    <TechnicalProfile Id="PolicyProfile">
+      <DisplayName>PolicyProfile</DisplayName>
+      <Protocol Name="OpenIdConnect" />
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="profileImage"/>
+        <OutputClaim ClaimTypeReferenceId="connectionType" />
+        <OutputClaim ClaimTypeReferenceId="issuerUserId" />
+        <OutputClaim ClaimTypeReferenceId="displayName" />
+        <OutputClaim ClaimTypeReferenceId="givenName" />
+        <OutputClaim ClaimTypeReferenceId="surname" />
+        <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
+        <OutputClaim ClaimTypeReferenceId="email" />
+        <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub"/>
+        <OutputClaim ClaimTypeReferenceId="identityProvider" />
+        <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
+      </OutputClaims>
+      <SubjectNamingInfo ClaimType="sub" />
+    </TechnicalProfile>
+  </RelyingParty>
+
+</TrustFrameworkPolicy>
