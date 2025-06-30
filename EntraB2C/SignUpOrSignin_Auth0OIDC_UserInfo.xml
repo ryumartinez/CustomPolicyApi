@@ -5,8 +5,8 @@
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
   TenantId="sandboxcertiverse.onmicrosoft.com"
-  PolicyId="B2C_1A_signup_signin_auth0_oidc_restful"
-  PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_signup_signin_auth0_oidc_restful">
+  PolicyId="B2C_1A_signup_signin_auth0_oidc_user_info"
+  PublicPolicyUri="http://sandboxcertiverse.onmicrosoft.com/B2C_1A_signup_signin_auth0_oidc_user_info">
 
   <BasePolicy>
     <TenantId>sandboxcertiverse.onmicrosoft.com</TenantId>
@@ -36,7 +36,7 @@
           <Metadata>
             <Item Key="client_id">aZAVBHfkpBdXxDE0BUTuYl3Z98cOMsuz</Item>
             <Item Key="METADATA">https://dev-ouxr23hn.us.auth0.com/.well-known/openid-configuration</Item>
-            <Item Key="response_types">token</Item>
+            <Item Key="response_types">code</Item>
             <Item Key="response_mode">form_post</Item>
             <Item Key="scope">openid profile email</Item>
             <Item Key="HttpBinding">POST</Item>
@@ -46,7 +46,7 @@
             <Key Id="client_secret" StorageReferenceId="B2C_1A_Auth0Secret" />
           </CryptographicKeys>
           <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="auth0_oidc_access_token" PartnerClaimType="token" />
+            <OutputClaim ClaimTypeReferenceId="auth0_oidc_access_token" PartnerClaimType="{oauth2:access_token}"/>
             <OutputClaim ClaimTypeReferenceId="connectionType" DefaultValue="oidc" AlwaysUseDefaultValue="true" />
             <OutputClaim ClaimTypeReferenceId="issuerUserId" PartnerClaimType="sub" />
             <OutputClaim ClaimTypeReferenceId="email" />
@@ -76,7 +76,7 @@
             <Item Key="UseClaimAsBearerToken">auth0_oidc_access_token</Item>
           </Metadata>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="auth0_oidc_access_token" PartnerClaimType="token" />
+            <InputClaim ClaimTypeReferenceId="auth0_oidc_access_token"/>
           </InputClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" />
@@ -125,7 +125,7 @@
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
       <OutputClaims>
-        <OutputClaim ClaimTypeReferenceId="auth0_oidc_access_token" PartnerClaimType="access_token"/>
+        <OutputClaim ClaimTypeReferenceId="auth0_oidc_access_token"/>
         <OutputClaim ClaimTypeReferenceId="profileImage"/>
         <OutputClaim ClaimTypeReferenceId="connectionType" />
         <OutputClaim ClaimTypeReferenceId="issuerUserId" />
