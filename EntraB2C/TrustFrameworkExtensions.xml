@@ -289,11 +289,13 @@
             <Item Key="ServiceUrl">https://person-development.azurewebsites.net/api/AuthProvider/Socials/ExternalUser</Item> <!--Endpoint to get user emails depending on the identity provider-->
             <Item Key="HttpBinding">GET</Item> <!--Defining a GET method-->
             <Item Key="SendClaimsIn">Header</Item> <!--Defining the input claims as headers in the request-->
-            <Item Key="AuthenticationType">None</Item>
-            <Item Key="AllowInsecureAuthInProduction">true</Item>
+            <Item Key="AuthenticationType">ApiKeyHeader</Item>
             <Item Key="UseClaimAsBearerToken">webhookBearerToken</Item> <!--Defining the input claim that we use as bearer token-->
             <Item Key="DebugMode">true</Item> <!--To send data to application insights-->
           </Metadata>
+          <CryptographicKeys>
+            <Key Id="x-anon-app-id" StorageReferenceId="B2C_1A_RestApiKey"/>
+          </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="webhookBearerToken" PartnerClaimType="provider-token"/>
             <InputClaim ClaimTypeReferenceId="identityProvider" PartnerClaimType="identity-provider"/>
@@ -393,9 +395,11 @@
           <Metadata>
             <Item Key="ServiceUrl">https://my-worker.ryueduardo.workers.dev/api/pre-reset</Item>
             <Item Key="SendClaimsIn">Body</Item>
-            <Item Key="AuthenticationType">None</Item>
-            <Item Key="AllowInsecureAuthInProduction">true</Item>
+            <Item Key="AuthenticationType">ApiKeyHeader</Item>
           </Metadata>
+          <CryptographicKeys>
+            <Key Id="x-anon-app-id" StorageReferenceId="B2C_1A_RestApiKey"/>
+          </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email" Required="true"/>
           </InputClaims>
@@ -448,9 +452,11 @@
           <Metadata>
             <Item Key="ServiceUrl">https://person-development.azurewebsites.net/api/AuthProvider/EntraB2C/ValidateUser</Item>
             <Item Key="SendClaimsIn">Body</Item>
-            <Item Key="AuthenticationType">None</Item>
-            <Item Key="AllowInsecureAuthInProduction">true</Item>
+            <Item Key="AuthenticationType">ApiKeyHeader</Item>
           </Metadata>
+          <CryptographicKeys>
+            <Key Id="x-anon-app-id" StorageReferenceId="B2C_1A_RestApiKey"/>
+          </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email"/>
             <InputClaim ClaimTypeReferenceId="password" />
